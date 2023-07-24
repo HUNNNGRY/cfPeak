@@ -1,0 +1,3 @@
+Patient	Gender	Age	Metastasis	Library	Library_date	Library yield (ng)	Lib kit
+W1	M	59	No	QIAseq miR	20230608	286	#1
+Y1	F	68	Yes	QIAseq miR	20230608	496	#1

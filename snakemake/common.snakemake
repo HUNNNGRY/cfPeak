@@ -1,0 +1,110 @@
+shell.prefix('set -x; set -e;')
+import os
+import yaml
+import re
+from glob import glob
+
+from snakemake.utils import min_version
+from snakemake.utils import validate
+
+# Define minimum Snakemake version.
+min_version("6.0.0")
+
+# # Import and validate sample list.
+# samples = pd.read_table("samples.tsv")
+# validate(samples, schema="../schemas/samples.schema.yaml")
+
+def require_variable(variable, condition=None):
+    value = config.get(variable)
+    if value is None:
+        raise ValueError('configuration variable "{}" is required'.format(variable))
+    if (condition == 'input_dir') and (not os.path.isdir(value)):
+        raise ValueError('cannot find input directory {}: {}'.format(variable, value))
+    elif (condition == 'input_file') and (not os.path.isfile(value)):
+        raise ValueError('cannot find input file {}: {}'.format(variable, value))
+    return value
+
+def get_ratio(variable):
+    value = str(variable) # config.get(variable)
+    if (value == '00' or value == '1'):
+        value2 = "1.0"
+    else:
+        value2 = str("0."+value)
+    return [value,value2]
+
+# setup global variables
+root_dir = require_variable('root_dir', 'input_dir')
+config_dir = require_variable('config_dir', 'input_dir')
+# load default config
+with open(os.path.join(config['config_dir'], 'default_config.yaml'), 'r') as f:
+    default_config = yaml.load(f,Loader=yaml.FullLoader)
+
+default_config.update(config)
+config = default_config
+
+validate(config, schema="./schemas/config.schema.yaml") # Define and validate configuration file.
+
+dataset = config['dataset']
+data_dir = require_variable('data_dir', 'input_dir')
+genome_dir = require_variable('genome_dir', 'input_dir')
+bin_dir = require_variable('bin_dir', 'input_dir')
+output_dir = require_variable('output_dir')
+peak_dir = config['output_dir']+"/"+config['peak_subdir']
+rna_types = require_variable('rna_types')
+rna_types0 = list(filter(lambda x: x not in ( 'spikein', 'univec'), rna_types)) # 'rRNA', 
+rna_types1 = list(filter(lambda x: x not in ('repeats_rev'), rna_types))
+rna_types2 = list(filter(lambda x: x not in ( 'spikein', 'univec', 'intron_for','intron_rev','promoter_for','promoter_rev','enhancer_for','enhancer_rev','repeats_for','repeats_rev'), rna_types)) # 'rRNA',
+#tools_dir = require_variable('tools_dir')
+temp_dir = require_variable('temp_dir')
+# create temp_dir
+if not os.path.isdir(temp_dir):
+    os.makedirs(temp_dir)
+    
+# read sample ids from file
+with open(os.path.join(data_dir, 'sample_ids.txt'), 'r') as f:
+    sample_ids = f.read().split()
+for sample_id in sample_ids:
+    if '.' in sample_id:
+        raise ValueError('"." is not allowed in sample ID: {}'.format(sample_id))
+
+
+
+
+
+priority = ",".join(list(rna_types))
+strand = "+"
+strandness = config['strandness']
+if strandness == "reverse": strandness2 =  "True"
+else: strandness2 =  "False"
+if (config['remove_duplicates'] and config['UMI']):
+    bam_dedup_dir = "bam-deduped" # output_dir+'/tbam/{wildcards.sample_id}/bam-deduped/{wildcards.rna_type}.bam'  
+elif (config['remove_duplicates'] and (not config['UMI'])):
+    bam_dedup_dir = "bam-deduped-samtools" # output_dir+'/tbam/{wildcards.sample_id}/bam-deduped-samtools/{wildcards.rna_type}.bam'  
+else: bam_dedup_dir = "bam"
+
+pvalue_piranha=get_ratio(config['call_peak_pvalue_piranha'])[0]
+pvalue_piranha_param=get_ratio(config['call_peak_pvalue_piranha'])[1]
+pvalue_clipper=get_ratio(config['call_peak_pvalue_clipper'])[0]
+pvalue_clipper_param=get_ratio(config['call_peak_pvalue_clipper'])[1]
+pvalue_clam=get_ratio(config['call_peak_pvalue_clam'])[0]
+pvalue_clam_param=get_ratio(config['call_peak_pvalue_clam'])[1]
+pvalue_cfpeak=get_ratio(config['call_peak_pvalue_cfpeak'])[0]
+pvalue_cfpeak_param=get_ratio(config['call_peak_pvalue_cfpeak'])[1]
+decay=config['decay_ratio']
+bin_size = config['bin_size']
+cov_threshold=max(1,len(sample_ids)*config['cov_threshold']) if len(sample_ids)>1 else 1
+
+# print("pvalue_piranha: ",pvalue_piranha) 
+# print("pvalue_clipper: ",pvalue_clipper)
+# print("pvalue_clam: ",pvalue_clam)
+# print("pvalue_cfpeak: ",pvalue_cfpeak) 
+# print("decay: ",decay) 
+# print("bam_dedup_dir: "+bam_dedup_dir) # print func. cause dag/rulegraph error
+# print("sampleID: ",sample_ids) 
+
+# print("cov_threshold: ",config['cov_threshold']) 
+
+
+
+
+

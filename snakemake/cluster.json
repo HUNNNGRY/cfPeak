@@ -1,0 +1,166 @@
+{
+    "__default__": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07]"
+    },
+    "transcript_index": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.rna_type}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07]"
+    },
+    "transcript_index_long": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.rna_type}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07]"
+    },
+    "transcript_index_star": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.rna_type}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07]"
+    },
+    "map_spikein": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "10",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"    
+    },
+    "call_domains": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07]"
+    },
+    "call_domain_localmax": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07]"
+    },
+    "call_domain_localmax2": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07]"
+    },
+    "mapping_tx": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "10",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    },
+    "mapping_tx_long": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "16",
+        "resources": "span[hosts=1]"
+    },
+    "mapping_tx_repeats": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "6",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    },
+    "mapping_tx_star": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "6",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    },
+    "dedup": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    },
+    "bam_rescue_multi_19": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "16",
+        "resources": "span[hosts=1]"
+    },
+    "bam_rescue_multi_11RNA": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "16",
+        "resources": "span[hosts=1]"
+    },
+    "tbedgraph_to_tbigwig": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    },
+    "domain_read_counts": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards.sample_id}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    },
+    "domain_count_matrix_localmax": {
+        "queue": "TEST-1U",
+        "name": "{rule}.{wildcards}",
+        "stderr": "logs/cluster/{dataset}/{rule}.{wildcards}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.{wildcards}.stdout",
+        "threads": "6",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    },
+    "rand1_domain_count_matrix_localmax":
+    {
+        "queue": "TEST-1U",
+        "name": "{rule}",
+        "stderr": "logs/cluster/{dataset}/{rule}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    },
+    "fullLength_domain_count_matrix_localmax":
+    {
+        "queue": "TEST-1U",
+        "name": "{rule}",
+        "stderr": "logs/cluster/{dataset}/{rule}.stderr",
+        "stdout": "logs/cluster/{dataset}/{rule}.stdout",
+        "threads": "{threads}",
+        "resources": "span[hosts=1] -R select[hname!=node1u07] -R select[hname!=node1u06]"
+    }
+}
+# - R select[hname != node1u06]# - R select[hname != node1u06]
+

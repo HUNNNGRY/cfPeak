@@ -1,0 +1,14 @@
+#! /bin/sh
+for remote in /lulab/lustre2/shibinbin/projects/exSeek \
+    /BioII/lulab_b/shibinbin/projects/exSeek;do
+    for dataset in `ls output`;do
+        rsync -rav -R output/$dataset/count_matrix \
+            data/$dataset/sample_ids.txt \
+            data/$dataset/sample_classes.txt \
+            data/$dataset/batch_info.txt \
+            output/$dataset/select_preprocess_method \
+            output/$dataset/clustering_scores \
+            output/$dataset/matrix_processing \
+            "$remote"
+    done
+done
