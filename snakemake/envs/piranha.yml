@@ -1,0 +1,13 @@
+#Channels from which the packages are searched.
+channels:
+- anaconda
+- bioconda
+- conda-forge
+
+#Required packages.
+dependencies:
+ - r-base=3.6.3
+ - r-argparse=2.0.3
+ - r-countreg=0.2_1
+ - r-mass=7.3_53.1
+ - bedtoolsr=2.30.0

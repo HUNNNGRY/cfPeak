@@ -1,0 +1,2 @@
+#! /bin/sh
+rsync -rav --exclude='source/' --delete /Share2/home/lulab/shibinbin/projects/exSeek-dev/genome/hg38/ /BioII/lulab_b/shared/genomes/hg38

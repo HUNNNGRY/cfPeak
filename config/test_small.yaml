@@ -1,0 +1,81 @@
+
+# file paths
+dataset: test_small
+root_dir: .
+input_dir: data
+config_dir: config
+annotation_dir: genome/hg38
+genome_dir: genome/hg38
+bin_dir: bin
+output_dir: output/test_small
+temp_dir: tmp
+data_dir: data/test_small
+peak_subdir: call_peak_dedup # call_peak_dedupByPos, call_peak_all
+
+# thread parameters
+threads: 2
+threads_compress: 2 # threads for pigz
+threads_mapping: 6 # threads for mapping
+
+
+# mapping parameters
+## sequential ap/align order
+rna_types: [spikein, univec, rRNA, miRNA, lncRNA, mRNA, piRNA, snoRNA, snRNA, srpRNA, tRNA, tucpRNA, Y_RNA,
+        intron_for, intron_rev, promoter_for, promoter_rev, enhancer_for, enhancer_rev, repeats_for, repeats_rev]
+## insert size range (nt) 
+min_insert_size: 10 
+max_insert_size: 200 
+## mapping tools
+aligner: bowtie2 # current only support bowtie2
+paired_end: false # reads are paired end or not
+strandness: forward # strandness of Read1 relative to original template RNA
+remove_duplicates: true # whether or not to remove duplicated reads
+min_map_quality: 0 # minimum map quality
+UMI: true # reads have UMI (unique molecular identifier)
+#EM: true
+#small_rna: true # small RNA 
+
+
+# downsampling params
+downsample_fq: "30" # 30 means 0.30
+downsample: "99" # 99 means 0.99
+min_fq_num: 5000000 # downsampling min 5M
+max_fq_num: 20000000 # downsampling max 20M
+seed: 1234
+
+
+# peak caller specific params
+
+## piranha 
+run_piranha: false 
+call_peak_pvalue_piranha: "01" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (not filter)
+#distribution: ZeroTruncatedNegativeBinomial
+
+## clipper
+run_clipper: false 
+call_peak_pvalue_clipper: "05" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (not filter)
+
+## clam
+run_clam: false 
+call_peak_pvalue_clam: "005" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (not filter)
+
+## cfpeak
+run_cfpeak: True
+#cfpeak_EM: True # use EM-rescued multi-mapped reads for cfPeak peak calling
+call_peak_pvalue_cfpeak: "1" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (not filter)
+decay_ratio: "50" # 50 means 0.50
+minLocalmaxBinCov: 2
+
+
+# peak caller nonspecific params
+
+## bin size to compute read coverage
+bin_size: 5 
+
+## Define consensus/recurrent peak
+cov_threshold: 0.21 # minimum recurrent sample num/total sample number: 3/14=0.21
+
+## peak size range (nt)
+min_peak_size: 10
+max_peak_size: 200
+

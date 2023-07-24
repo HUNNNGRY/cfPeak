@@ -1,0 +1,17 @@
+# Channels from which the packages are searched.
+channels:
+  - anaconda
+  - bioconda
+  - conda-forge
+
+# Required packages.
+dependencies:
+ - python==3.8.13
+ - pip==23.1.2
+ - keras==2.11.0
+ - tensorflow==2.11.0
+ - matplotlib==3.5.2
+ - numpy==1.23.5
+ - pandas==1.5.3
+ - pyBigWig==0.3.17
+ - scikit-learn==1.0.2

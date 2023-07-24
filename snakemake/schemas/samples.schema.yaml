@@ -1,0 +1,15 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+
+description: Sample sheet for Snakemake pipeline
+
+properties:
+  sample:
+    type: string
+    description: Sample name or identifier
+  fastq:
+    type: string
+    description: Name of the fastq file
+
+required:
+  - sample
+  - fastq
