@@ -1,9 +1,0 @@
-Run	Source
-SRR8507736	HCC_plasma
-SRR8507737	HCC_plasma
-SRR8507774	NC_plasma
-SRR8507775	NC_plasma
-SRR8507779	NC_exosome_mix
-SRR8507780	NC_exosome_mix
-SRR8507781	HCC_exosome_mix
-SRR8507782	HCC_exosome_mix

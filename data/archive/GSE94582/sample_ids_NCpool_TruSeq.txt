@@ -1,6 +1,0 @@
-TruSeq_Lab1
-TruSeq_Lab2
-TruSeq_Lab3
-TruSeq_Lab4
-TruSeq_Lab5
-TruSeq_Lab6

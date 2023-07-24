@@ -1,7 +1,0 @@
-TCGA-AC-A6IX-06A-11R-A32K-13_mirna_gdc_realn
-TCGA-BH-A18V-06A-11R-A214-13_mirna_gdc_realn
-TCGA-BH-A1ES-06A-12R-A24J-13_mirna_gdc_realn
-TCGA-BH-A1FE-06A-11R-A214-13_mirna_gdc_realn
-TCGA-E2-A15A-06A-11R-A12C-13_mirna_gdc_realn
-TCGA-E2-A15E-06A-11R-A12C-13_mirna_gdc_realn
-TCGA-E2-A15K-06A-11R-A12O-13_mirna_gdc_realn
