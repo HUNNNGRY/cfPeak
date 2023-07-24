@@ -1,0 +1,5 @@
+sample_id       label
+SRR1223408	NormalSerum
+SRR1223406	BreastCancerSerum
+SRR1223409	BreastCancerSerum
+SRR1223407	BreastCancerTissue

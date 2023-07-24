@@ -1,0 +1,189 @@
+accession	AvgSpotLen	Developmental_Stage	Instrument	LibraryLayout	LibrarySelection	sex	source_name	strain	tissue
+SRR13274576	50	adult	BGISEQ-500	SINGLE	size fractionation	male	adipocyte_2	Not applicable	adipocyte
+SRR13274577	50	adult	BGISEQ-500	SINGLE	size fractionation	female	thyroid_5	Not applicable	thyroid
+SRR13274579	50	adult	BGISEQ-500	SINGLE	size fractionation	male	esophagus_2	Not applicable	esophagus
+SRR13274582	50	adult	BGISEQ-500	SINGLE	size fractionation	male	skin_1	Not applicable	skin
+SRR13274585	50	adult	BGISEQ-500	SINGLE	size fractionation	female	glandular breast tissue_5	Not applicable	glandular breast tissue
+SRR13274591	50	adult	BGISEQ-500	SINGLE	size fractionation	female	heart-atrial appendage_3	Not applicable	heart-atrial appendage
+SRR13274592	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bone_3	Not applicable	bone
+SRR13274594	50	adult	BGISEQ-500	SINGLE	size fractionation	male	heart-ventricle_4 (1)	Not applicable	heart-ventricle
+SRR13274596	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain_6	Not applicable	brain
+SRR13274598	50	adult	BGISEQ-500	SINGLE	size fractionation	male	skin_2	Not applicable	skin
+SRR13274606	50	adult	BGISEQ-500	SINGLE	size fractionation	male	urethra_4	Not applicable	urethra
+SRR13274608	50	adult	BGISEQ-500	SINGLE	size fractionation	female	nerve_3 (1)	Not applicable	nerve
+SRR13274610	50	adult	BGISEQ-500	SINGLE	size fractionation	male	heart-muscle_2	Not applicable	heart-muscle
+SRR13274615	50	adult	BGISEQ-500	SINGLE	size fractionation	female	heart-pericardium_5	Not applicable	heart-pericardium
+SRR13274616	50	adult	BGISEQ-500	SINGLE	size fractionation	female	spinal cord_3	Not applicable	spinal cord
+SRR13274620	50	adult	BGISEQ-500	SINGLE	size fractionation	male	heart-ventricle_4 (2)	Not applicable	heart-ventricle
+SRR13274623	50	adult	BGISEQ-500	SINGLE	size fractionation	male	submandibular gland_2	Not applicable	submandibular gland
+SRR13274624	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-small intestine_6	Not applicable	bowel-small intestine
+SRR13274625	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bone_2	Not applicable	bone
+SRR13274627	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lung-bronchus_4	Not applicable	lung-bronchus
+SRR13274636	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-temporal lobe_1	Not applicable	brain-temporal lobe
+SRR13274637	50	adult	BGISEQ-500	SINGLE	size fractionation	female	nerve_5	Not applicable	nerve
+SRR13274641	50	adult	BGISEQ-500	SINGLE	size fractionation	male	adipocyte_4	Not applicable	adipocyte
+SRR13274642	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-hypothalamus_3	Not applicable	brain-hypothalamus
+SRR13274644	50	adult	BGISEQ-500	SINGLE	size fractionation	female	heart-muscle_3 (1)	Not applicable	heart-muscle
+SRR13274645	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bowel-jejunum_3	Not applicable	bowel-jejunum
+SRR13274649	50	adult	BGISEQ-500	SINGLE	size fractionation	male	pancreas_4	Not applicable	pancreas
+SRR13274650	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-arachnoid mater_3	Not applicable	brain-arachnoid mater
+SRR13274658	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-dura mater_3	Not applicable	brain-dura mater
+SRR13274660	50	adult	BGISEQ-500	SINGLE	size fractionation	male	artery_1	Not applicable	artery
+SRR13274665	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bowel-ileum_3	Not applicable	bowel-ileum
+SRR13274668	50	adult	BGISEQ-500	SINGLE	size fractionation	male	pancreas_1	Not applicable	pancreas
+SRR13274671	50	adult	BGISEQ-500	SINGLE	size fractionation	female	kidney-cortex_3	Not applicable	kidney-cortex
+SRR13274673	50	adult	BGISEQ-500	SINGLE	size fractionation	male	prostate_1	Not applicable	prostate
+SRR13274676	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lung_4 (2)	Not applicable	lung
+SRR13274681	50	adult	BGISEQ-500	SINGLE	size fractionation	female	artery_3	Not applicable	artery
+SRR13274682	50	adult	BGISEQ-500	SINGLE	size fractionation	male	testis_1	Not applicable	testis
+SRR13274683	50	adult	BGISEQ-500	SINGLE	size fractionation	male	stomach_2	Not applicable	stomach
+SRR13274684	50	adult	BGISEQ-500	SINGLE	size fractionation	female	esophagus_3	Not applicable	esophagus
+SRR13274686	50	adult	BGISEQ-500	SINGLE	size fractionation	male	liver_4 (2)	Not applicable	liver
+SRR13274691	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lung_1	Not applicable	lung
+SRR13274694	50	adult	BGISEQ-500	SINGLE	size fractionation	female	pancreas_3	Not applicable	pancreas
+SRR13274695	50	adult	BGISEQ-500	SINGLE	size fractionation	male	liver_1	Not applicable	liver
+SRR13274698	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-nucleus caudatus_1	Not applicable	brain-nucleus caudatus
+SRR13274701	50	adult	BGISEQ-500	SINGLE	size fractionation	male	testis_6	Not applicable	testis
+SRR13274708	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-hippocampus_2	Not applicable	brain-hippocampus
+SRR13274709	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bone_1	Not applicable	bone
+SRR13274711	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-pituitary gland_1	Not applicable	brain-pituitary gland
+SRR13274717	50	adult	BGISEQ-500	SINGLE	size fractionation	male	thyroid_2	Not applicable	thyroid
+SRR13274718	50	adult	BGISEQ-500	SINGLE	size fractionation	male	heart-muscle_1	Not applicable	heart-muscle
+SRR13274719	50	adult	BGISEQ-500	SINGLE	size fractionation	male	trachea_4 (2)	Not applicable	trachea
+SRR13274720	50	adult	BGISEQ-500	SINGLE	size fractionation	male	testis_4	Not applicable	testis
+SRR13274724	50	adult	BGISEQ-500	SINGLE	size fractionation	male	artery_6	Not applicable	artery
+SRR13274727	50	adult	BGISEQ-500	SINGLE	size fractionation	male	heart-atrium_4 (2)	Not applicable	heart-atrium
+SRR13274737	50	adult	BGISEQ-500	SINGLE	size fractionation	female	lung-bronchus_5	Not applicable	lung-bronchus
+SRR13274743	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-white matter_2 (2)	Not applicable	brain-white matter
+SRR13274744	50	adult	BGISEQ-500	SINGLE	size fractionation	male	testis_2	Not applicable	testis
+SRR13274746	50	adult	BGISEQ-500	SINGLE	size fractionation	female	pancreas_5	Not applicable	pancreas
+SRR13274749	50	adult	BGISEQ-500	SINGLE	size fractionation	female	heart-muscle_5	Not applicable	heart-muscle
+SRR13274755	50	adult	BGISEQ-500	SINGLE	size fractionation	male	pancreas_2 (2)	Not applicable	pancreas
+SRR13274756	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bone_5	Not applicable	bone
+SRR13274759	50	adult	BGISEQ-500	SINGLE	size fractionation	male	liver_2	Not applicable	liver
+SRR13274761	50	adult	BGISEQ-500	SINGLE	size fractionation	female	salivary gland_5	Not applicable	salivary gland
+SRR13274655	50	adult	BGISEQ-500	SINGLE	size fractionation	male	vein_1	Not applicable	vein
+SRR13274622	50	adult	BGISEQ-500	SINGLE	size fractionation	female	nerve_3 (2)	Not applicable	nerve
+SRR13274692	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-grey matter_1	Not applicable	brain-grey matter
+SRR13274725	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lung_2	Not applicable	lung
+SRR13274583	50	adult	BGISEQ-500	SINGLE	size fractionation	male	muscle_2	Not applicable	muscle
+SRR13274587	50	adult	BGISEQ-500	SINGLE	size fractionation	male	nerve_2 (1)	Not applicable	nerve
+SRR13274597	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-arachnoid mater_6	Not applicable	brain-arachnoid mater
+SRR13274635	50	adult	BGISEQ-500	SINGLE	size fractionation	female	lung_3	Not applicable	lung
+SRR13274640	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-small intestine_4 (1)	Not applicable	bowel-small intestine
+SRR13274669	50	adult	BGISEQ-500	SINGLE	size fractionation	female	liver_3	Not applicable	liver
+SRR13274689	50	adult	BGISEQ-500	SINGLE	size fractionation	male	kidney_1 (1)	Not applicable	kidney
+SRR13274699	50	adult	BGISEQ-500	SINGLE	size fractionation	female	pleurae_3	Not applicable	pleurae
+SRR13274702	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-white matter_2 (1)	Not applicable	brain-white matter
+SRR13274722	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-substantia nigra_2 (2)	Not applicable	brain-substantia nigra
+SRR13274739	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bladder_5	Not applicable	bladder
+SRR13274741	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-frontal lobe_2	Not applicable	brain-frontal lobe
+SRR13274758	50	adult	BGISEQ-500	SINGLE	size fractionation	female	spleen_5	Not applicable	spleen
+SRR13274586	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-dura mater_2	Not applicable	brain-dura mater
+SRR13274595	50	adult	BGISEQ-500	SINGLE	size fractionation	male	thyroid_1	Not applicable	thyroid
+SRR13274602	50	adult	BGISEQ-500	SINGLE	size fractionation	female	adipocyte_3	Not applicable	adipocyte
+SRR13274614	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-colon_4	Not applicable	bowel-colon
+SRR13274656	50	adult	BGISEQ-500	SINGLE	size fractionation	female	vein_5	Not applicable	vein
+SRR13274667	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-substantia nigra_2 (1)	Not applicable	brain-substantia nigra
+SRR13274696	50	adult	BGISEQ-500	SINGLE	size fractionation	male	muscle_1	Not applicable	muscle
+SRR13274730	50	adult	BGISEQ-500	SINGLE	size fractionation	female	heart-pericardium_3	Not applicable	heart-pericardium
+SRR13274731	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-parietal lobe_3	Not applicable	brain-parietal lobe
+SRR13274613	50	adult	BGISEQ-500	SINGLE	size fractionation	male	muscle_4	Not applicable	muscle
+SRR13274748	50	adult	BGISEQ-500	SINGLE	size fractionation	male	diaphragm_4	Not applicable	diaphragm
+SRR13274763	50	adult	BGISEQ-500	SINGLE	size fractionation	female	tongue_5	Not applicable	tongue
+SRR13274580	50	adult	BGISEQ-500	SINGLE	size fractionation	female	adipocyte_5	Not applicable	adipocyte
+SRR13274601	50	adult	BGISEQ-500	SINGLE	size fractionation	male	stomach_6	Not applicable	stomach
+SRR13274604	50	adult	BGISEQ-500	SINGLE	size fractionation	male	liver_6	Not applicable	liver
+SRR13274661	50	adult	BGISEQ-500	SINGLE	size fractionation	male	esophagus_1	Not applicable	esophagus
+SRR13274670	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bowel-small intestine_5	Not applicable	bowel-small intestine
+SRR13274716	50	adult	BGISEQ-500	SINGLE	size fractionation	female	adrenal gland_3	Not applicable	adrenal gland
+SRR13274740	50	adult	BGISEQ-500	SINGLE	size fractionation	female	esophagus_5	Not applicable	esophagus
+SRR13274751	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-grey matter_2	Not applicable	brain-grey matter
+SRR13274584	50	adult	BGISEQ-500	SINGLE	size fractionation	male	pleurae_2	Not applicable	pleurae
+SRR13274589	50	adult	BGISEQ-500	SINGLE	size fractionation	male	gallbladder_2	Not applicable	gallbladder
+SRR13274593	50	adult	BGISEQ-500	SINGLE	size fractionation	female	vein_3	Not applicable	vein
+SRR13274599	50	adult	BGISEQ-500	SINGLE	size fractionation	male	heart-pericardium_2	Not applicable	heart-pericardium
+SRR13274600	50	adult	BGISEQ-500	SINGLE	size fractionation	male	stomach_1	Not applicable	stomach
+SRR13274621	50	adult	BGISEQ-500	SINGLE	size fractionation	male	skin_6	Not applicable	skin
+SRR13274638	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lung_4 (1)	Not applicable	lung
+SRR13274678	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bladder_6	Not applicable	bladder
+SRR13274713	50	adult	BGISEQ-500	SINGLE	size fractionation	male	skin_4	Not applicable	skin
+SRR13274733	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-temporal lobe_2	Not applicable	brain-temporal lobe
+SRR13274581	50	adult	BGISEQ-500	SINGLE	size fractionation	female	sclera_5	Not applicable	sclera
+SRR13274590	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-colon_6	Not applicable	bowel-colon
+SRR13274611	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bladder_2	Not applicable	bladder
+SRR13274639	50	adult	BGISEQ-500	SINGLE	size fractionation	male	spinal cord_1	Not applicable	spinal cord
+SRR13274643	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-white matter_3	Not applicable	brain-white matter
+SRR13274680	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lymph node_1	Not applicable	lymph node
+SRR13274700	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-white matter_1	Not applicable	brain-white matter
+SRR13274734	50	adult	BGISEQ-500	SINGLE	size fractionation	female	muscle_5	Not applicable	muscle
+SRR13274742	50	adult	BGISEQ-500	SINGLE	size fractionation	male	gallbladder_4	Not applicable	gallbladder
+SRR13274648	50	adult	BGISEQ-500	SINGLE	size fractionation	female	lung_5	Not applicable	lung
+SRR13274690	50	adult	BGISEQ-500	SINGLE	size fractionation	female	stomach_3	Not applicable	stomach
+SRR13274707	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-cerebellum_1	Not applicable	brain-cerebellum
+SRR13274726	50	adult	BGISEQ-500	SINGLE	size fractionation	male	kidney_1 (3)	Not applicable	kidney
+SRR13274617	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-medulla oblongata_3	Not applicable	brain-medulla oblongata
+SRR13274618	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-thalamus_2	Not applicable	brain-thalamus
+SRR13274653	50	adult	BGISEQ-500	SINGLE	size fractionation	male	artery_4	Not applicable	artery
+SRR13274705	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-duodenum_1	Not applicable	bowel-duodenum
+SRR13274754	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-pituitary gland_2	Not applicable	brain-pituitary gland
+SRR13274663	50	adult	BGISEQ-500	SINGLE	size fractionation	male	tongue_4	Not applicable	tongue
+SRR13274712	50	adult	BGISEQ-500	SINGLE	size fractionation	male	kidney_1 (2)	Not applicable	kidney
+SRR13274728	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-occipital lobe_1	Not applicable	brain-occipital lobe
+SRR13274753	50	adult	BGISEQ-500	SINGLE	size fractionation	male	kidney_2	Not applicable	kidney
+SRR13274603	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bowel-colon_3	Not applicable	bowel-colon
+SRR13274657	50	adult	BGISEQ-500	SINGLE	size fractionation	male	heart-atrium_4 (1)	Not applicable	heart-atrium
+SRR13274747	50	adult	BGISEQ-500	SINGLE	size fractionation	male	spleen_4	Not applicable	spleen
+SRR13274619	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-colon_2	Not applicable	bowel-colon
+SRR13274714	50	adult	BGISEQ-500	SINGLE	size fractionation	male	kidney_4	Not applicable	kidney
+SRR13274715	50	adult	BGISEQ-500	SINGLE	size fractionation	male	adrenal gland_1	Not applicable	adrenal gland
+SRR13274723	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-jejunum_1	Not applicable	bowel-jejunum
+SRR13274628	50	adult	BGISEQ-500	SINGLE	size fractionation	male	nerve_6	Not applicable	nerve
+SRR13274662	50	adult	BGISEQ-500	SINGLE	size fractionation	male	liver_4 (1)	Not applicable	liver
+SRR13274672	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-thalamus_1	Not applicable	brain-thalamus
+SRR13274693	50	adult	BGISEQ-500	SINGLE	size fractionation	male	nerve_1	Not applicable	nerve
+SRR13274760	50	adult	BGISEQ-500	SINGLE	size fractionation	male	esophagus_4	Not applicable	esophagus
+SRR13274659	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-colon_1	Not applicable	bowel-colon
+SRR13274735	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bladder_4	Not applicable	bladder
+SRR13274578	50	adult	BGISEQ-500	SINGLE	size fractionation	male	artery_2	Not applicable	artery
+SRR13274607	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lung-bronchus_2	Not applicable	lung-bronchus
+SRR13274679	50	adult	BGISEQ-500	SINGLE	size fractionation	male	adipocyte_1	Not applicable	adipocyte
+SRR13274721	50	adult	BGISEQ-500	SINGLE	size fractionation	female	pleurae_5	Not applicable	pleurae
+SRR13274736	50	adult	BGISEQ-500	SINGLE	size fractionation	female	liver_5	Not applicable	liver
+SRR13274652	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-dura mater_1	Not applicable	brain-dura mater
+SRR13274685	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lymph node_4 (2)	Not applicable	lymph node
+SRR13274729	50	adult	BGISEQ-500	SINGLE	size fractionation	female	stomach_5	Not applicable	stomach
+SRR13274605	50	adult	BGISEQ-500	SINGLE	size fractionation	male	stomach_4	Not applicable	stomach
+SRR13274626	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-nucleus caudatus_3	Not applicable	brain-nucleus caudatus
+SRR13274633	50	adult	BGISEQ-500	SINGLE	size fractionation	male	pancreas_2 (1)	Not applicable	pancreas
+SRR13274675	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-temporal lobe_3	Not applicable	brain-temporal lobe
+SRR13274750	50	adult	BGISEQ-500	SINGLE	size fractionation	female	kidney_5	Not applicable	kidney
+SRR13274752	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bowel-small intestine_4 (2)	Not applicable	bowel-small intestine
+SRR13274738	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bowel-duodenum_5	Not applicable	bowel-duodenum
+SRR13274631	50	adult	BGISEQ-500	SINGLE	size fractionation	male	bone_4	Not applicable	bone
+SRR13274688	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-nucleus caudatus_2	Not applicable	brain-nucleus caudatus
+SRR13274632	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-grey matter_3	Not applicable	brain-grey matter
+SRR13274634	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-frontal lobe_1	Not applicable	brain-frontal lobe
+SRR13274757	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bowel-colon_5	Not applicable	bowel-colon
+SRR13274629	50	adult	BGISEQ-500	SINGLE	size fractionation	female	bowel-duodenum_3	Not applicable	bowel-duodenum
+SRR13274654	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-thalamus_3	Not applicable	brain-thalamus
+SRR13274687	50	adult	BGISEQ-500	SINGLE	size fractionation	male	spleen_1	Not applicable	spleen
+SRR13274706	50	adult	BGISEQ-500	SINGLE	size fractionation	female	skin_3	Not applicable	skin
+SRR13274609	50	adult	BGISEQ-500	SINGLE	size fractionation	male	trachea_4 (1)	Not applicable	trachea
+SRR13274666	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-frontal lobe_3	Not applicable	brain-frontal lobe
+SRR13274677	50	adult	BGISEQ-500	SINGLE	size fractionation	male	pleurae_1	Not applicable	pleurae
+SRR13274762	50	adult	BGISEQ-500	SINGLE	size fractionation	male	submandibular gland_4	Not applicable	submandibular gland
+SRR13274588	50	adult	BGISEQ-500	SINGLE	size fractionation	male	vein_2	Not applicable	vein
+SRR13274697	50	adult	BGISEQ-500	SINGLE	size fractionation	female	skin_5	Not applicable	skin
+SRR13274651	50	adult	BGISEQ-500	SINGLE	size fractionation	female	uterus_3	Not applicable	uterus
+SRR13274664	50	adult	BGISEQ-500	SINGLE	size fractionation	female	heart-muscle_3 (2)	Not applicable	heart-muscle
+SRR13274704	50	adult	BGISEQ-500	SINGLE	size fractionation	female	spleen_3	Not applicable	spleen
+SRR13274732	50	adult	BGISEQ-500	SINGLE	size fractionation	male	heart-muscle_6	Not applicable	heart-muscle
+SRR13274612	50	adult	BGISEQ-500	SINGLE	size fractionation	female	thyroid_3	Not applicable	thyroid
+SRR13274745	50	adult	BGISEQ-500	SINGLE	size fractionation	male	brain-occipital lobe_2	Not applicable	brain-occipital lobe
+SRR13274630	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-cerebellum_3	Not applicable	brain-cerebellum
+SRR13274647	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-occipital lobe_3	Not applicable	brain-occipital lobe
+SRR13274674	50	adult	BGISEQ-500	SINGLE	size fractionation	male	lymph node_4 (1)	Not applicable	lymph node
+SRR13274703	50	adult	BGISEQ-500	SINGLE	size fractionation	female	brain-pituitary gland_3	Not applicable	brain-pituitary gland
+SRR13274646	50	adult	BGISEQ-500	SINGLE	size fractionation	female	artery_5	Not applicable	artery
+SRR13274710	50	adult	BGISEQ-500	SINGLE	size fractionation	male	nerve_2 (2)	Not applicable	nerve

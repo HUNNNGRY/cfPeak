@@ -1,0 +1,15 @@
+Patient ID	Gender	Age	Metastasis	Origin	Library	Lib date	Lib kit	Lib yield (ng)
+W1	M	59	Yes	cavity	QIAseq miR	20230608	1	286
+W2	F	67	No	cavity	QIAseq miR	20230608	1	692
+W3	F	55	No	tongue	QIAseq miR	20230605	2	416
+W4	M	59	No	cavity	QIAseq miR	20230605	2	424
+W5	M	56	No	cavity	QIAseq miR	20230605	2	290
+W6	F	58	No	tongue	QIAseq miR	20230608	2	632
+W7	M	55	No	cavity	QIAseq miR	20230608	2	362
+Y1	F	68	Yes	tongue	QIAseq miR	20230608	1	496
+Y2	M	63	Yes	lip	QIAseq miR	20230605	2	236
+Y3	F	42	Yes	cavity	QIAseq miR	20230605	2	420
+Y4	M	54	Yes	lip	QIAseq miR	20230605	2	452
+Y5	M	62	Yes	cavity	QIAseq miR	20230608	1	412
+Y6	F	66	Yes	cavity	QIAseq miR	20230608	2	294
+Y7	F	65	Yes	tongue	QIAseq miR	20230608	2	192.8

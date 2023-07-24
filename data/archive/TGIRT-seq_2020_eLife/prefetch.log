@@ -1,0 +1,553 @@
+ls: cannot access ./sra/*.sra: No such file or directory
+ls: cannot access ./sra/*/*.sra: No such file or directory
+
+2022-08-22T02:14:30 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T02:14:32 prefetch.2.11.2: 1) Downloading 'SRR12047399'...
+2022-08-22T02:14:32 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T02:14:32 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T02:30:24 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T02:30:24 prefetch.2.11.2:   verifying 'SRR12047399'...
+2022-08-22T02:30:27 prefetch.2.11.2:  'SRR12047399' is valid
+2022-08-22T02:30:27 prefetch.2.11.2: 1) 'SRR12047399' was downloaded successfully
+2022-08-22T02:30:27 prefetch.2.11.2: 'SRR12047399' has 0 unresolved dependencies
+
+2022-08-22T02:30:28 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T02:30:30 prefetch.2.11.2: 2) Downloading 'SRR12047400'...
+2022-08-22T02:30:30 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T02:30:30 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T02:39:45 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T02:39:47 prefetch.2.11.2:  'SRR12047400' is valid
+2022-08-22T02:39:47 prefetch.2.11.2: 2) 'SRR12047400' was downloaded successfully
+2022-08-22T02:39:47 prefetch.2.11.2: 'SRR12047400' has 0 unresolved dependencies
+
+2022-08-22T02:39:48 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T02:39:50 prefetch.2.11.2: 3) Downloading 'SRR12047401'...
+2022-08-22T02:39:50 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T02:39:50 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T02:45:33 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T02:45:34 prefetch.2.11.2:  'SRR12047401' is valid
+2022-08-22T02:45:34 prefetch.2.11.2: 3) 'SRR12047401' was downloaded successfully
+2022-08-22T02:45:34 prefetch.2.11.2: 'SRR12047401' has 0 unresolved dependencies
+
+2022-08-22T02:45:36 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T02:45:37 prefetch.2.11.2: 4) Downloading 'SRR12047402'...
+2022-08-22T02:45:37 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T02:45:37 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T02:52:05 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T02:52:07 prefetch.2.11.2:  'SRR12047402' is valid
+2022-08-22T02:52:07 prefetch.2.11.2: 4) 'SRR12047402' was downloaded successfully
+2022-08-22T02:52:07 prefetch.2.11.2: 'SRR12047402' has 0 unresolved dependencies
+
+2022-08-22T02:52:09 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T02:52:10 prefetch.2.11.2: 5) Downloading 'SRR12047403'...
+2022-08-22T02:52:10 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T02:52:10 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T02:58:39 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T02:58:41 prefetch.2.11.2:  'SRR12047403' is valid
+2022-08-22T02:58:41 prefetch.2.11.2: 5) 'SRR12047403' was downloaded successfully
+2022-08-22T02:58:41 prefetch.2.11.2: 'SRR12047403' has 0 unresolved dependencies
+
+2022-08-22T02:58:42 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T02:58:43 prefetch.2.11.2: 6) Downloading 'SRR12047404'...
+2022-08-22T02:58:43 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T02:58:43 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T03:04:40 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T03:04:42 prefetch.2.11.2:  'SRR12047404' is valid
+2022-08-22T03:04:42 prefetch.2.11.2: 6) 'SRR12047404' was downloaded successfully
+2022-08-22T03:04:42 prefetch.2.11.2: 'SRR12047404' has 0 unresolved dependencies
+
+2022-08-22T03:04:43 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T03:04:44 prefetch.2.11.2: 7) Downloading 'SRR12047405'...
+2022-08-22T03:04:44 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T03:04:44 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T03:28:28 prefetch.2.11.2 int: timeout exhausted while reading file within network system module - Cannot KStreamRead: switching to KFileRead...: /BioII/lulab_b/baopengfei/shared_data/pub_cfEV/TGIRT-seq_2020_eLife/sra/SRR12047405/SRR12047405.sra
+2022-08-22T06:49:35 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T06:49:35 prefetch.2.11.2:   verifying 'SRR12047405'...
+2022-08-22T06:49:51 prefetch.2.11.2:  'SRR12047405' is valid
+2022-08-22T06:49:51 prefetch.2.11.2: 7) 'SRR12047405' was downloaded successfully
+2022-08-22T06:49:51 prefetch.2.11.2: 'SRR12047405' has 0 unresolved dependencies
+
+2022-08-22T06:49:52 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T06:49:54 prefetch.2.11.2: 8) Downloading 'SRR12047406'...
+2022-08-22T06:49:54 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T06:49:54 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T07:04:39 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T07:04:39 prefetch.2.11.2:   verifying 'SRR12047406'...
+2022-08-22T07:04:47 prefetch.2.11.2:  'SRR12047406' is valid
+2022-08-22T07:04:47 prefetch.2.11.2: 8) 'SRR12047406' was downloaded successfully
+2022-08-22T07:04:47 prefetch.2.11.2: 'SRR12047406' has 0 unresolved dependencies
+
+2022-08-22T07:04:48 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T07:04:50 prefetch.2.11.2: 9) Downloading 'SRR12047407'...
+2022-08-22T07:04:50 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T07:04:50 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T07:29:13 prefetch.2.11.2 int: timeout exhausted while reading file within network system module - Cannot KStreamRead: switching to KFileRead...: /BioII/lulab_b/baopengfei/shared_data/pub_cfEV/TGIRT-seq_2020_eLife/sra/SRR12047407/SRR12047407.sra
+2022-08-22T08:34:49 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T08:34:49 prefetch.2.11.2:   verifying 'SRR12047407'...
+2022-08-22T08:34:57 prefetch.2.11.2:  'SRR12047407' is valid
+2022-08-22T08:34:57 prefetch.2.11.2: 9) 'SRR12047407' was downloaded successfully
+2022-08-22T08:34:57 prefetch.2.11.2: 'SRR12047407' has 0 unresolved dependencies
+
+2022-08-22T08:34:58 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T08:34:59 prefetch.2.11.2: 10) Downloading 'SRR12047408'...
+2022-08-22T08:34:59 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T08:34:59 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T09:27:26 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T09:27:26 prefetch.2.11.2:   verifying 'SRR12047408'...
+2022-08-22T09:27:43 prefetch.2.11.2:  'SRR12047408' is valid
+2022-08-22T09:27:43 prefetch.2.11.2: 10) 'SRR12047408' was downloaded successfully
+2022-08-22T09:27:43 prefetch.2.11.2: 'SRR12047408' has 0 unresolved dependencies
+
+2022-08-22T09:27:44 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T09:27:45 prefetch.2.11.2: 11) Downloading 'SRR12047409'...
+2022-08-22T09:27:45 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T09:27:45 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T10:25:53 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T10:25:53 prefetch.2.11.2:   verifying 'SRR12047409'...
+2022-08-22T10:26:07 prefetch.2.11.2:  'SRR12047409' is valid
+2022-08-22T10:26:07 prefetch.2.11.2: 11) 'SRR12047409' was downloaded successfully
+2022-08-22T10:26:07 prefetch.2.11.2: 'SRR12047409' has 0 unresolved dependencies
+
+2022-08-22T10:26:08 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T10:26:09 prefetch.2.11.2: 12) Downloading 'SRR12047410'...
+2022-08-22T10:26:09 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T10:26:09 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T10:28:59 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T10:29:01 prefetch.2.11.2:  'SRR12047410' is valid
+2022-08-22T10:29:01 prefetch.2.11.2: 12) 'SRR12047410' was downloaded successfully
+2022-08-22T10:29:01 prefetch.2.11.2: 'SRR12047410' has 0 unresolved dependencies
+
+2022-08-22T10:29:02 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T10:29:04 prefetch.2.11.2: 13) Downloading 'SRR12047411'...
+2022-08-22T10:29:04 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T10:29:04 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T10:33:56 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T10:33:56 prefetch.2.11.2:   verifying 'SRR12047411'...
+2022-08-22T10:33:58 prefetch.2.11.2:  'SRR12047411' is valid
+2022-08-22T10:33:58 prefetch.2.11.2: 13) 'SRR12047411' was downloaded successfully
+2022-08-22T10:33:58 prefetch.2.11.2: 'SRR12047411' has 0 unresolved dependencies
+
+2022-08-22T10:33:59 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T10:34:00 prefetch.2.11.2: 14) Downloading 'SRR12047412'...
+2022-08-22T10:34:00 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T10:34:00 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T10:40:15 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T10:40:15 prefetch.2.11.2:   verifying 'SRR12047412'...
+2022-08-22T10:40:17 prefetch.2.11.2:  'SRR12047412' is valid
+2022-08-22T10:40:17 prefetch.2.11.2: 14) 'SRR12047412' was downloaded successfully
+2022-08-22T10:40:17 prefetch.2.11.2: 'SRR12047412' has 0 unresolved dependencies
+
+2022-08-22T10:40:18 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T10:40:19 prefetch.2.11.2: 15) Downloading 'SRR12047413'...
+2022-08-22T10:40:19 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T10:40:19 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T10:44:45 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T10:44:47 prefetch.2.11.2:  'SRR12047413' is valid
+2022-08-22T10:44:47 prefetch.2.11.2: 15) 'SRR12047413' was downloaded successfully
+2022-08-22T10:44:47 prefetch.2.11.2: 'SRR12047413' has 0 unresolved dependencies
+
+2022-08-22T10:44:48 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T10:44:50 prefetch.2.11.2: 16) Downloading 'SRR12047414'...
+2022-08-22T10:44:50 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T10:44:50 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T10:48:50 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T10:48:52 prefetch.2.11.2:  'SRR12047414' is valid
+2022-08-22T10:48:52 prefetch.2.11.2: 16) 'SRR12047414' was downloaded successfully
+2022-08-22T10:48:52 prefetch.2.11.2: 'SRR12047414' has 0 unresolved dependencies
+
+2022-08-22T10:48:53 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T10:48:55 prefetch.2.11.2: 17) Downloading 'SRR12047415'...
+2022-08-22T10:48:55 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T10:48:55 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T10:56:51 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T10:56:51 prefetch.2.11.2:   verifying 'SRR12047415'...
+2022-08-22T10:56:56 prefetch.2.11.2:  'SRR12047415' is valid
+2022-08-22T10:56:56 prefetch.2.11.2: 17) 'SRR12047415' was downloaded successfully
+2022-08-22T10:56:56 prefetch.2.11.2: 'SRR12047415' has 0 unresolved dependencies
+
+2022-08-22T10:56:57 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T10:56:58 prefetch.2.11.2: 18) Downloading 'SRR12047416'...
+2022-08-22T10:56:58 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T10:56:58 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:07:35 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:07:35 prefetch.2.11.2:   verifying 'SRR12047416'...
+2022-08-22T11:07:39 prefetch.2.11.2:  'SRR12047416' is valid
+2022-08-22T11:07:39 prefetch.2.11.2: 18) 'SRR12047416' was downloaded successfully
+2022-08-22T11:07:39 prefetch.2.11.2: 'SRR12047416' has 0 unresolved dependencies
+
+2022-08-22T11:07:40 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:07:42 prefetch.2.11.2: 19) Downloading 'SRR12047417'...
+2022-08-22T11:07:42 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:07:42 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:10:13 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:10:14 prefetch.2.11.2:  'SRR12047417' is valid
+2022-08-22T11:10:14 prefetch.2.11.2: 19) 'SRR12047417' was downloaded successfully
+2022-08-22T11:10:14 prefetch.2.11.2: 'SRR12047417' has 0 unresolved dependencies
+
+2022-08-22T11:10:15 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:10:17 prefetch.2.11.2: 20) Downloading 'SRR12047418'...
+2022-08-22T11:10:17 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:10:17 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:15:09 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:15:09 prefetch.2.11.2:   verifying 'SRR12047418'...
+2022-08-22T11:15:12 prefetch.2.11.2:  'SRR12047418' is valid
+2022-08-22T11:15:12 prefetch.2.11.2: 20) 'SRR12047418' was downloaded successfully
+2022-08-22T11:15:12 prefetch.2.11.2: 'SRR12047418' has 0 unresolved dependencies
+
+2022-08-22T11:15:12 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:15:13 prefetch.2.11.2: 21) Downloading 'SRR12047419'...
+2022-08-22T11:15:13 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:15:13 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:21:11 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:21:13 prefetch.2.11.2:  'SRR12047419' is valid
+2022-08-22T11:21:13 prefetch.2.11.2: 21) 'SRR12047419' was downloaded successfully
+2022-08-22T11:21:13 prefetch.2.11.2: 'SRR12047419' has 0 unresolved dependencies
+
+2022-08-22T11:21:14 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:21:16 prefetch.2.11.2: 22) Downloading 'SRR12047420'...
+2022-08-22T11:21:16 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:21:16 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:28:22 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:28:22 prefetch.2.11.2:   verifying 'SRR12047420'...
+2022-08-22T11:28:25 prefetch.2.11.2:  'SRR12047420' is valid
+2022-08-22T11:28:25 prefetch.2.11.2: 22) 'SRR12047420' was downloaded successfully
+2022-08-22T11:28:25 prefetch.2.11.2: 'SRR12047420' has 0 unresolved dependencies
+
+2022-08-22T11:28:26 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:28:27 prefetch.2.11.2: 23) Downloading 'SRR12047421'...
+2022-08-22T11:28:27 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:28:27 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:32:36 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:32:38 prefetch.2.11.2:  'SRR12047421' is valid
+2022-08-22T11:32:38 prefetch.2.11.2: 23) 'SRR12047421' was downloaded successfully
+2022-08-22T11:32:38 prefetch.2.11.2: 'SRR12047421' has 0 unresolved dependencies
+
+2022-08-22T11:32:39 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:32:40 prefetch.2.11.2: 24) Downloading 'SRR12047422'...
+2022-08-22T11:32:40 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:32:40 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:40:36 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:40:36 prefetch.2.11.2:   verifying 'SRR12047422'...
+2022-08-22T11:40:39 prefetch.2.11.2:  'SRR12047422' is valid
+2022-08-22T11:40:39 prefetch.2.11.2: 24) 'SRR12047422' was downloaded successfully
+2022-08-22T11:40:39 prefetch.2.11.2: 'SRR12047422' has 0 unresolved dependencies
+
+2022-08-22T11:40:40 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:40:41 prefetch.2.11.2: 25) Downloading 'SRR12047423'...
+2022-08-22T11:40:41 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:40:41 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:45:22 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:45:22 prefetch.2.11.2:   verifying 'SRR12047423'...
+2022-08-22T11:45:24 prefetch.2.11.2:  'SRR12047423' is valid
+2022-08-22T11:45:24 prefetch.2.11.2: 25) 'SRR12047423' was downloaded successfully
+2022-08-22T11:45:24 prefetch.2.11.2: 'SRR12047423' has 0 unresolved dependencies
+
+2022-08-22T11:45:25 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:45:27 prefetch.2.11.2: 26) Downloading 'SRR12047424'...
+2022-08-22T11:45:27 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:45:27 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:52:18 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:52:18 prefetch.2.11.2:   verifying 'SRR12047424'...
+2022-08-22T11:52:20 prefetch.2.11.2:  'SRR12047424' is valid
+2022-08-22T11:52:20 prefetch.2.11.2: 26) 'SRR12047424' was downloaded successfully
+2022-08-22T11:52:20 prefetch.2.11.2: 'SRR12047424' has 0 unresolved dependencies
+
+2022-08-22T11:52:21 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:52:22 prefetch.2.11.2: 27) Downloading 'SRR12047425'...
+2022-08-22T11:52:22 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:52:22 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:56:19 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:56:21 prefetch.2.11.2:  'SRR12047425' is valid
+2022-08-22T11:56:21 prefetch.2.11.2: 27) 'SRR12047425' was downloaded successfully
+2022-08-22T11:56:21 prefetch.2.11.2: 'SRR12047425' has 0 unresolved dependencies
+
+2022-08-22T11:56:22 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:56:23 prefetch.2.11.2: 28) Downloading 'SRR12047426'...
+2022-08-22T11:56:23 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:56:23 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T11:59:25 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T11:59:26 prefetch.2.11.2:  'SRR12047426' is valid
+2022-08-22T11:59:26 prefetch.2.11.2: 28) 'SRR12047426' was downloaded successfully
+2022-08-22T11:59:26 prefetch.2.11.2: 'SRR12047426' has 0 unresolved dependencies
+
+2022-08-22T11:59:27 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T11:59:28 prefetch.2.11.2: 29) Downloading 'SRR12047427'...
+2022-08-22T11:59:28 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T11:59:28 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T12:03:43 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T12:03:43 prefetch.2.11.2:   verifying 'SRR12047427'...
+2022-08-22T12:03:46 prefetch.2.11.2:  'SRR12047427' is valid
+2022-08-22T12:03:46 prefetch.2.11.2: 29) 'SRR12047427' was downloaded successfully
+2022-08-22T12:03:46 prefetch.2.11.2: 'SRR12047427' has 0 unresolved dependencies
+
+2022-08-22T12:03:47 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T12:03:48 prefetch.2.11.2: 30) Downloading 'SRR12047428'...
+2022-08-22T12:03:48 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T12:03:48 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T12:08:55 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T12:08:56 prefetch.2.11.2:  'SRR12047428' is valid
+2022-08-22T12:08:56 prefetch.2.11.2: 30) 'SRR12047428' was downloaded successfully
+2022-08-22T12:08:56 prefetch.2.11.2: 'SRR12047428' has 0 unresolved dependencies
+
+2022-08-22T12:08:57 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T12:08:58 prefetch.2.11.2: 31) Downloading 'SRR12047429'...
+2022-08-22T12:08:58 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T12:08:58 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T12:15:28 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T12:15:28 prefetch.2.11.2:   verifying 'SRR12047429'...
+2022-08-22T12:15:31 prefetch.2.11.2:  'SRR12047429' is valid
+2022-08-22T12:15:31 prefetch.2.11.2: 31) 'SRR12047429' was downloaded successfully
+2022-08-22T12:15:32 prefetch.2.11.2: 'SRR12047429' has 0 unresolved dependencies
+
+2022-08-22T12:15:32 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T12:15:34 prefetch.2.11.2: 32) Downloading 'SRR12047430'...
+2022-08-22T12:15:34 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T12:15:34 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T12:19:09 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T12:19:11 prefetch.2.11.2:  'SRR12047430' is valid
+2022-08-22T12:19:11 prefetch.2.11.2: 32) 'SRR12047430' was downloaded successfully
+2022-08-22T12:19:11 prefetch.2.11.2: 'SRR12047430' has 0 unresolved dependencies
+
+2022-08-22T12:19:12 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T12:19:13 prefetch.2.11.2: 33) Downloading 'SRR12047431'...
+2022-08-22T12:19:13 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T12:19:13 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T12:24:32 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T12:24:32 prefetch.2.11.2:   verifying 'SRR12047431'...
+2022-08-22T12:24:35 prefetch.2.11.2:  'SRR12047431' is valid
+2022-08-22T12:24:35 prefetch.2.11.2: 33) 'SRR12047431' was downloaded successfully
+2022-08-22T12:24:35 prefetch.2.11.2: 'SRR12047431' has 0 unresolved dependencies
+
+2022-08-22T12:24:36 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T12:24:37 prefetch.2.11.2: 34) Downloading 'SRR12047432'...
+2022-08-22T12:24:37 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T12:24:37 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T12:29:31 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T12:29:31 prefetch.2.11.2:   verifying 'SRR12047432'...
+2022-08-22T12:29:33 prefetch.2.11.2:  'SRR12047432' is valid
+2022-08-22T12:29:33 prefetch.2.11.2: 34) 'SRR12047432' was downloaded successfully
+2022-08-22T12:29:33 prefetch.2.11.2: 'SRR12047432' has 0 unresolved dependencies
+
+2022-08-22T12:29:34 prefetch.2.11.2: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
+2022-08-22T12:29:36 prefetch.2.11.2: 35) Downloading 'SRR12047433'...
+2022-08-22T12:29:36 prefetch.2.11.2: SRA Normalized Format file is being retrieved, if this is different from your preference, it may be due to current file availability.
+2022-08-22T12:29:36 prefetch.2.11.2:  Downloading via HTTPS...
+2022-08-22T12:33:34 prefetch.2.11.2:  HTTPS download succeed
+2022-08-22T12:33:36 prefetch.2.11.2:  'SRR12047433' is valid
+2022-08-22T12:33:36 prefetch.2.11.2: 35) 'SRR12047433' was downloaded successfully
+2022-08-22T12:33:36 prefetch.2.11.2: 'SRR12047433' has 0 unresolved dependencies
+ls: cannot access ./sra/*.sra: No such file or directory
+./sra/SRR12047399/*.sra exist, will dump to ./fastq
+SRR12047399 start at Mon Aug 22 20:33:37 CST 2022!
+Read 27149578 spots for ./sra/SRR12047399/SRR12047399.sra
+Written 27149578 spots for ./sra/SRR12047399/SRR12047399.sra
+SRR12047399 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047399/SRR12047399.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047400 start at Mon Aug 22 20:33:37 CST 2022!
+Read 14321566 spots for ./sra/SRR12047400/SRR12047400.sra
+Written 14321566 spots for ./sra/SRR12047400/SRR12047400.sra
+SRR12047400 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047400/SRR12047400.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047401 start at Mon Aug 22 20:33:37 CST 2022!
+Read 11572310 spots for ./sra/SRR12047401/SRR12047401.sra
+Written 11572310 spots for ./sra/SRR12047401/SRR12047401.sra
+SRR12047401 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047401/SRR12047401.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047402 start at Mon Aug 22 20:33:37 CST 2022!
+Read 12428429 spots for ./sra/SRR12047402/SRR12047402.sra
+Written 12428429 spots for ./sra/SRR12047402/SRR12047402.sra
+SRR12047402 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047402/SRR12047402.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047403 start at Mon Aug 22 20:33:37 CST 2022!
+Read 13188083 spots for ./sra/SRR12047403/SRR12047403.sra
+Written 13188083 spots for ./sra/SRR12047403/SRR12047403.sra
+SRR12047403 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047403/SRR12047403.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047404 start at Mon Aug 22 20:33:37 CST 2022!
+Read 10798548 spots for ./sra/SRR12047404/SRR12047404.sra
+Written 10798548 spots for ./sra/SRR12047404/SRR12047404.sra
+SRR12047404 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047404/SRR12047404.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047405 start at Mon Aug 22 20:33:37 CST 2022!
+Read 96579324 spots for ./sra/SRR12047405/SRR12047405.sra
+Written 96579324 spots for ./sra/SRR12047405/SRR12047405.sra
+SRR12047405 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047405/SRR12047405.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047406 start at Mon Aug 22 20:33:37 CST 2022!
+Read 54594842 spots for ./sra/SRR12047406/SRR12047406.sra
+Written 54594842 spots for ./sra/SRR12047406/SRR12047406.sra
+SRR12047406 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047406/SRR12047406.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047407 start at Mon Aug 22 20:33:37 CST 2022!
+Read 60869441 spots for ./sra/SRR12047407/SRR12047407.sra
+Written 60869441 spots for ./sra/SRR12047407/SRR12047407.sra
+SRR12047407 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047407/SRR12047407.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047408 start at Mon Aug 22 20:33:37 CST 2022!
+Read 115662210 spots for ./sra/SRR12047408/SRR12047408.sra
+Written 115662210 spots for ./sra/SRR12047408/SRR12047408.sra
+SRR12047408 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047408/SRR12047408.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047409 start at Mon Aug 22 20:33:37 CST 2022!
+Read 104603910 spots for ./sra/SRR12047409/SRR12047409.sra
+Written 104603910 spots for ./sra/SRR12047409/SRR12047409.sra
+SRR12047409 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047409/SRR12047409.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047410 start at Mon Aug 22 20:33:37 CST 2022!
+Read 9835292 spots for ./sra/SRR12047410/SRR12047410.sra
+Written 9835292 spots for ./sra/SRR12047410/SRR12047410.sra
+SRR12047410 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047410/SRR12047410.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047411 start at Mon Aug 22 20:33:37 CST 2022!
+Read 22677784 spots for ./sra/SRR12047411/SRR12047411.sra
+Written 22677784 spots for ./sra/SRR12047411/SRR12047411.sra
+SRR12047411 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047411/SRR12047411.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047412 start at Mon Aug 22 20:33:37 CST 2022!
+Read 22141277 spots for ./sra/SRR12047412/SRR12047412.sra
+Written 22141277 spots for ./sra/SRR12047412/SRR12047412.sra
+SRR12047412 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047412/SRR12047412.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047413 start at Mon Aug 22 20:33:37 CST 2022!
+Read 9799773 spots for ./sra/SRR12047413/SRR12047413.sra
+Written 9799773 spots for ./sra/SRR12047413/SRR12047413.sra
+SRR12047413 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047413/SRR12047413.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047414 start at Mon Aug 22 20:33:37 CST 2022!
+Read 11017474 spots for ./sra/SRR12047414/SRR12047414.sra
+Written 11017474 spots for ./sra/SRR12047414/SRR12047414.sra
+SRR12047414 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047414/SRR12047414.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047415 start at Mon Aug 22 20:33:37 CST 2022!
+Read 36967198 spots for ./sra/SRR12047415/SRR12047415.sra
+Written 36967198 spots for ./sra/SRR12047415/SRR12047415.sra
+SRR12047415 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047415/SRR12047415.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047416 start at Mon Aug 22 20:33:37 CST 2022!
+Read 28593070 spots for ./sra/SRR12047416/SRR12047416.sra
+Written 28593070 spots for ./sra/SRR12047416/SRR12047416.sra
+SRR12047416 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047416/SRR12047416.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047417 start at Mon Aug 22 20:33:37 CST 2022!
+Read 9102660 spots for ./sra/SRR12047417/SRR12047417.sra
+Written 9102660 spots for ./sra/SRR12047417/SRR12047417.sra
+SRR12047417 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047417/SRR12047417.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047418 start at Mon Aug 22 20:33:37 CST 2022!
+Read 16833976 spots for ./sra/SRR12047418/SRR12047418.sra
+Written 16833976 spots for ./sra/SRR12047418/SRR12047418.sra
+SRR12047418 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047418/SRR12047418.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047419 start at Mon Aug 22 20:33:37 CST 2022!
+Read 12403854 spots for ./sra/SRR12047419/SRR12047419.sra
+Written 12403854 spots for ./sra/SRR12047419/SRR12047419.sra
+SRR12047419 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047419/SRR12047419.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047420 start at Mon Aug 22 20:33:37 CST 2022!
+Read 26861234 spots for ./sra/SRR12047420/SRR12047420.sra
+Written 26861234 spots for ./sra/SRR12047420/SRR12047420.sra
+SRR12047420 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047420/SRR12047420.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047421 start at Mon Aug 22 20:33:37 CST 2022!
+Read 12209553 spots for ./sra/SRR12047421/SRR12047421.sra
+Written 12209553 spots for ./sra/SRR12047421/SRR12047421.sra
+SRR12047421 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047421/SRR12047421.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047422 start at Mon Aug 22 20:33:37 CST 2022!
+Read 17689781 spots for ./sra/SRR12047422/SRR12047422.sra
+Written 17689781 spots for ./sra/SRR12047422/SRR12047422.sra
+SRR12047422 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047422/SRR12047422.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047423 start at Mon Aug 22 20:33:37 CST 2022!
+Read 14817482 spots for ./sra/SRR12047423/SRR12047423.sra
+Written 14817482 spots for ./sra/SRR12047423/SRR12047423.sra
+SRR12047423 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047423/SRR12047423.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047424 start at Mon Aug 22 20:33:37 CST 2022!
+Read 16447815 spots for ./sra/SRR12047424/SRR12047424.sra
+Written 16447815 spots for ./sra/SRR12047424/SRR12047424.sra
+SRR12047424 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047424/SRR12047424.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047425 start at Mon Aug 22 20:33:37 CST 2022!
+Read 13883004 spots for ./sra/SRR12047425/SRR12047425.sra
+Written 13883004 spots for ./sra/SRR12047425/SRR12047425.sra
+SRR12047425 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047425/SRR12047425.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047426 start at Mon Aug 22 20:33:37 CST 2022!
+Read 10291657 spots for ./sra/SRR12047426/SRR12047426.sra
+Written 10291657 spots for ./sra/SRR12047426/SRR12047426.sra
+SRR12047426 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047426/SRR12047426.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047427 start at Mon Aug 22 20:33:37 CST 2022!
+Read 16430057 spots for ./sra/SRR12047427/SRR12047427.sra
+Written 16430057 spots for ./sra/SRR12047427/SRR12047427.sra
+SRR12047427 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047427/SRR12047427.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047428 start at Mon Aug 22 20:33:37 CST 2022!
+Read 11306546 spots for ./sra/SRR12047428/SRR12047428.sra
+Written 11306546 spots for ./sra/SRR12047428/SRR12047428.sra
+SRR12047428 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047428/SRR12047428.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047429 start at Mon Aug 22 20:33:37 CST 2022!
+Read 22423957 spots for ./sra/SRR12047429/SRR12047429.sra
+Written 22423957 spots for ./sra/SRR12047429/SRR12047429.sra
+SRR12047429 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047429/SRR12047429.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047430 start at Mon Aug 22 20:33:37 CST 2022!
+Read 12958632 spots for ./sra/SRR12047430/SRR12047430.sra
+Written 12958632 spots for ./sra/SRR12047430/SRR12047430.sra
+SRR12047430 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047430/SRR12047430.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047431 start at Mon Aug 22 20:33:37 CST 2022!
+Read 17726774 spots for ./sra/SRR12047431/SRR12047431.sra
+Written 17726774 spots for ./sra/SRR12047431/SRR12047431.sra
+SRR12047431 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047431/SRR12047431.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047432 start at Mon Aug 22 20:33:37 CST 2022!
+Read 22734479 spots for ./sra/SRR12047432/SRR12047432.sra
+Written 22734479 spots for ./sra/SRR12047432/SRR12047432.sra
+SRR12047432 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047432/SRR12047432.sra is an SRA Normalized Format file with full base quality scores.
+SRR12047433 start at Mon Aug 22 20:33:37 CST 2022!
+Read 17454019 spots for ./sra/SRR12047433/SRR12047433.sra
+Written 17454019 spots for ./sra/SRR12047433/SRR12047433.sra
+SRR12047433 done at Mon Aug 22 20:33:37 CST 2022!
+Preference setting is: Prefer SRA Normalized Format files with full base quality scores if available.
+./sra/SRR12047433/SRR12047433.sra is an SRA Normalized Format file with full base quality scores.
+list: 35
+sra: 35
+fastq: 70

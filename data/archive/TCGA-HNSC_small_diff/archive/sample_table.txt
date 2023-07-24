@@ -1,0 +1,41 @@
+id	metastasis	anatomic_neoplasm_subdivision
+TCGA-CV-7568-01A-11R-2231-13_mirna_gdc_realn	N	Oral Cavity
+TCGA-D6-A6EO-01A-11R-A31R-13_mirna_gdc_realn	N	Floor of mouth
+TCGA-QK-A6VB-01A-12R-A34O-13_mirna_gdc_realn	N	Floor of mouth
+TCGA-CV-7416-01A-11R-2080-13_mirna_gdc_realn	N	Oral Cavity
+TCGA-CV-7255-01A-11R-2015-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-CR-6484-01A-11R-1872-13_mirna_gdc_realn	N	Oral Cavity
+TCGA-CN-4725-01A-01R-1435-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-DQ-5625-01A-01R-1872-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-CQ-7069-01A-11R-2401-13_mirna_gdc_realn	N	Alveolar Ridge
+TCGA-MT-A67A-01A-11R-A30I-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-CQ-A4C6-01A-11R-A25B-13_mirna_gdc_realn	N	Buccal Mucosa
+TCGA-CR-7368-01A-11R-2131-13_mirna_gdc_realn	N	Oral Cavity
+TCGA-CV-7407-01A-11R-2080-13_mirna_gdc_realn	N	Floor of mouth
+TCGA-CV-7183-01A-11R-2015-13_mirna_gdc_realn	N	Oral Cavity
+TCGA-CV-A6JU-01A-11R-A31R-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-CN-5370-01A-01R-2015-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-CV-7438-01A-21R-2131-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-MT-A67F-01A-11R-A30I-13_mirna_gdc_realn	N	Oral Cavity
+TCGA-BA-A6DE-01A-22R-A31R-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-CN-4737-01A-01R-1435-13_mirna_gdc_realn	N	Oral Tongue
+TCGA-CV-7409-01A-31R-2231-13_mirna_gdc_realn	Y	Oral Cavity
+TCGA-UF-A7JS-01A-11R-A34O-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-CN-6018-01A-11R-1685-13_mirna_gdc_realn	Y	Oral Cavity
+TCGA-P3-A5QF-01A-11R-A28Z-13_mirna_gdc_realn	Y	Alveolar Ridge
+TCGA-QK-A8Z7-01A-11R-A39B-13_mirna_gdc_realn	Y	Floor of mouth
+TCGA-MT-A51X-01A-11R-A25Z-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-CV-5970-01A-11R-1685-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-CN-6024-01A-11R-1685-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-UF-A71A-01A-22R-A34O-13_mirna_gdc_realn	Y	Floor of mouth
+TCGA-CR-7373-01A-11R-2015-13_mirna_gdc_realn	Y	Oral Cavity
+TCGA-CV-5971-01A-11R-1685-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-CV-7095-01A-21R-2015-13_mirna_gdc_realn	Y	Oral Cavity
+TCGA-CN-A642-01A-12R-A30I-13_mirna_gdc_realn	Y	Floor of mouth
+TCGA-BB-A6UO-01A-12R-A34O-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-CV-5436-01A-01R-1513-13_mirna_gdc_realn	Y	Floor of mouth
+TCGA-CN-4726-01A-01R-1435-13_mirna_gdc_realn	Y	Buccal Mucosa
+TCGA-CQ-A4CH-01A-11R-A25Z-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-CV-6934-01A-11R-1914-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-D6-A4Z9-01A-11R-A25B-13_mirna_gdc_realn	Y	Oral Tongue
+TCGA-MT-A7BN-01A-12R-A34O-13_mirna_gdc_realn	Y	Floor of mouth

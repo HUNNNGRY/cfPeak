@@ -1,0 +1,69 @@
+File Name	Project ID	Sample Type
+TCGA-A4-7288-01A-11R-2138-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-A4-7288-11A-01R-2138-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-A4-A4ZT-11A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-A4-A4ZT-01A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-A4-A57E-11A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-A4-A57E-01A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-A4-A5Y1-11A-11R-A28L-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-A4-A5Y1-01A-11R-A28L-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-B9-4115-11A-01R-1757-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-B9-4115-01A-01T-1192-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5875-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5875-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5877-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5877-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5878-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5878-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5879-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5879-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5882-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5882-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5884-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5884-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5887-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5887-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5888-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5888-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5890-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5890-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5891-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-5891-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5894-01A-11R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-5894-11A-01R-1591-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-7044-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-7044-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-7045-01A-31R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-7045-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-7046-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-7046-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-7051-11A-02R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-7051-01A-12R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-7055-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-7055-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-7059-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-BQ-7059-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-7061-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-BQ-7061-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-DZ-6131-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-DZ-6131-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-DZ-6132-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-DZ-6132-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-DZ-6133-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-DZ-6133-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-DZ-6134-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-DZ-6134-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-GL-6846-01A-11R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-GL-6846-11A-01R-1964-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-GL-7966-11A-01R-2203-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-GL-7966-01A-11R-2203-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-GL-A59R-01A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-GL-A59R-11A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-GL-A9DE-11A-11R-A37G-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-GL-A9DE-01A-11R-A37G-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-P4-A5E8-01A-11R-A28L-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-P4-A5E8-11A-12R-A28L-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-P4-A5ED-11A-11R-A28L-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-P4-A5ED-01A-11R-A28L-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor
+TCGA-Y8-A8RY-11A-11R-A37G-13_mirna_gdc_realn.bam	TCGA-KIRP	Solid Tissue Normal
+TCGA-Y8-A8RY-01A-11R-A37G-13_mirna_gdc_realn.bam	TCGA-KIRP	Primary Tumor

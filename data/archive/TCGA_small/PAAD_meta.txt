@@ -1,0 +1,9 @@
+File Name	Project ID	Sample Type
+TCGA-H6-8124-11A-01R-2401-13_mirna_gdc_realn.bam	TCGA-PAAD	Solid Tissue Normal
+TCGA-H6-8124-01A-11R-2401-13_mirna_gdc_realn.bam	TCGA-PAAD	Primary Tumor
+TCGA-H6-A45N-01A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-PAAD	Primary Tumor
+TCGA-H6-A45N-11A-12R-A26Y-13_mirna_gdc_realn.bam	TCGA-PAAD	Solid Tissue Normal
+TCGA-HV-A5A3-01A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-PAAD	Primary Tumor
+TCGA-HV-A5A3-11A-11R-A26Y-13_mirna_gdc_realn.bam	TCGA-PAAD	Solid Tissue Normal
+TCGA-YB-A89D-11A-11R-A36B-13_mirna_gdc_realn.bam	TCGA-PAAD	Solid Tissue Normal
+TCGA-YB-A89D-01A-12R-A36B-13_mirna_gdc_realn.bam	TCGA-PAAD	Primary Tumor

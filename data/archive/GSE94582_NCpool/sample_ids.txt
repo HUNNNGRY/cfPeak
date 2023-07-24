@@ -1,0 +1,4 @@
+NCpool_CleanTag
+NCpool_N4
+NCpool_NEBNext
+NCpool_TruSeq

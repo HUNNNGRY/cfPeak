@@ -1,0 +1,91 @@
+File Name	Project ID	Sample Type
+TCGA-22-4609-01A-21H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-22-4609-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-22-5472-01A-01T-1634-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-22-5472-11A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-22-5478-11A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-22-5478-01A-01T-1634-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-22-5483-01A-01T-1819-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-22-5483-11A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-33-4587-01A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-33-4587-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-33-6737-01A-11H-1819-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-33-6737-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-34-7107-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-34-7107-01A-11H-1948-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-34-8454-11A-01H-2325-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-34-8454-01A-11H-2325-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-34-8456-11A-01H-2325-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-34-8456-01A-21H-2325-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-39-5040-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-39-5040-01A-21H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-43-5670-01A-21H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-43-5670-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-43-6143-01A-11H-1819-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-43-6143-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-43-6771-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-43-6771-01A-11H-1819-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-43-6773-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-43-6773-01A-41H-1948-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-43-7657-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-43-7657-01A-31H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-43-7658-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-43-7658-01A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-7222-01A-11H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-7222-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-7579-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-7579-01A-11H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-7580-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-7580-01A-11H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-7582-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-7582-01A-11H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-7730-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-7730-01A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-7731-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-7731-01A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-7823-01B-11H-2246-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-7823-11A-01H-2246-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8082-11A-01H-2246-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8082-01A-11H-2246-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-8083-01A-11H-2246-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-8083-11A-01H-2246-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8201-01A-11H-2246-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-8201-11A-01H-2246-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8309-01A-11H-2295-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-8309-11A-01H-2295-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8504-11A-01H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8504-01A-11H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-8623-01A-11H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-8623-11A-01H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8624-01A-11H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-56-8624-11A-01H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8629-11A-01H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-56-8629-01A-11H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-58-8386-11A-01H-2295-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-58-8386-01A-11H-2295-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-58-8393-01A-11H-2325-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-58-8393-11A-01H-2325-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-77-7138-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-77-7138-01A-41H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-77-7142-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-77-7142-01A-11H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-77-7337-01A-21H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-77-7337-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-77-7338-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-77-7338-01A-11H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-77-8007-11A-01H-2186-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-77-8007-01A-11H-2186-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-77-8008-01A-21H-2186-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-77-8008-11A-01H-2186-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-77-8153-01A-11H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-77-8153-11A-01H-2402-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-85-7710-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-85-7710-01A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-90-6837-01A-11H-1948-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-90-6837-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-90-7767-11A-01H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-90-7767-01A-11H-2124-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-92-7340-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
+TCGA-92-7340-01A-21H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-92-7341-01A-31H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Primary Tumor
+TCGA-92-7341-11A-01H-2044-13_mirna_gdc_realn.bam	TCGA-LUSC	Solid Tissue Normal
