@@ -445,7 +445,7 @@ rule primary_tbam_to_bed:
 rule tbed_long_to_tbedgraph:
     input:
         bed=peak_dir+'/tbed_11RNA_primary/{sample_id}.bed.gz',
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/tbedgraph_11RNA_primary/{sample_id}.transcriptome.bedGraph'
     threads: max(4, config['threads_mapping'])
@@ -459,7 +459,7 @@ rule tbed_long_to_tbedgraph:
 rule tbedgraph_to_tbigwig:
     input:
         bedgraph=peak_dir+'/tbedgraph_11RNA_primary/{sample_id}.transcriptome.bedGraph',
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/tbigwig_11RNA_primary/{sample_id}.transcriptome.bigWig'
     threads: max(4, config['threads_mapping'])
@@ -495,7 +495,7 @@ rule EM_tbam_to_bed:
 rule tbed_long_to_tbedgraph2:
     input:
         bed=peak_dir+'/tbed_RNA_EM/{sample_id}.bed.gz',
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/tbedgraph_RNA_EM/{sample_id}.transcriptome.bedGraph'
     threads: max(4, config['threads_mapping'])
@@ -509,7 +509,7 @@ rule tbed_long_to_tbedgraph2:
 rule tbedgraph_to_tbigwig2:
     input:
         bedgraph=peak_dir+'/tbedgraph_RNA_EM/{sample_id}.transcriptome.bedGraph',
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/tbigwig_RNA_EM/{sample_id}.transcriptome.bigWig'
     threads: max(4, config['threads_mapping'])
@@ -556,7 +556,7 @@ rule bin_coverage:
     input:
         bed=peak_dir+'/tbed_11RNA_primary/{sample_id}.bed.gz',
         # bed=peak_dir+'/tbed_RNA_EM/{sample_id}.bed.gz',
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/tbincov/{bin_size}/{sample_id}.bed'
     threads: 2 #config['threads_mapping']
@@ -621,7 +621,7 @@ rule peak_recurrence_piranha:
             bin_size=bin_size,
             pvalue_piranha=pvalue_piranha,
             sample_id=sample_ids),
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/piranha_recurrence/b{bin_size}_p{pvalue_piranha}.bed' #.{strand}
     threads: 2 #config['threads_mapping']
@@ -692,7 +692,7 @@ rule peak_recurrence_clipper:
             bin_size=bin_size,
             pvalue_clipper=pvalue_clipper,
             sample_id=sample_ids),
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/clipper_recurrence/b{bin_size}_p{pvalue_clipper}.bed' # .{strand}
     threads: 2 #config['threads_mapping']
@@ -755,7 +755,7 @@ rule peak_recurrence_clam:
             bin_size=bin_size,
             pvalue_clam=pvalue_clam,
             sample_id=sample_ids),
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/clam_recurrence/b{bin_size}_p{pvalue_clam}.bed' # .{strand}
     threads: 2 #config['threads_mapping']
@@ -779,7 +779,7 @@ rule filter_peak_by_recurrence_clam:
 # rule tbed_to_tbedgraph:
 #     input:
 #         bed=peak_dir+'/tbed_11RNA_primary/{sample_id}.bed.gz',
-#         chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+#         chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
 #     output:
 #         peak_dir+'/tbedgraph_RNA_primary/{sample_id}.transcriptome.bedGraph'
 #     threads: min(4, config['threads_mapping'])
@@ -792,7 +792,7 @@ rule filter_peak_by_recurrence_clam:
 # rule tbedgraph_to_tbigwig:
 #     input:
 #         bedgraph=peak_dir+'/tbedgraph_RNA_primary/{sample_id}.transcriptome.bedGraph',
-#         chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+#         chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
 #     output:
 #         peak_dir+'/tbigwig_RNA_primary/{sample_id}.transcriptome.bigWig'
 #     threads: min(4, config['threads_mapping'])
@@ -805,7 +805,7 @@ rule filter_peak_by_recurrence_clam:
 # rule tbed_to_tbedgraph2:
 #     input:
 #         bed=peak_dir+'/tbed_RNA_EM/{sample_id}.bed.gz',
-#         chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+#         chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
 #     output:
 #         peak_dir+'/tbedgraph_RNA_EM/{sample_id}.transcriptome.bedGraph'
 #     threads: max(4, config['threads_mapping'])
@@ -819,7 +819,7 @@ rule filter_peak_by_recurrence_clam:
 # rule tbedgraph_to_tbigwig2:
 #     input:
 #         bedgraph=peak_dir+'/tbedgraph_RNA_EM/{sample_id}.transcriptome.bedGraph',
-#         chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+#         chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
 #     output:
 #         peak_dir+'/tbigwig_RNA_EM/{sample_id}.transcriptome.bigWig'
 #     threads: max(4, config['threads_mapping'])
@@ -873,7 +873,7 @@ rule call_peaks_cfpeak:
 #         #     sample_id=sample_ids), 
 #         bed=lambda wildcards: expand(peak_dir+"/"+"".join(["cfpeak_by_sample"+"/b{bin_size}_d{decay}_p{pvalue_cfpeak}"])+"/{sample_id}.bed", #  if config['filter_localmax_peak_qvalue'] else "peaks_localmax_by_sample_EM"+"b{bin_size}_d{decay}"
 #             sample_id=sample_ids, bin_size=bin_size, decay=decay, pvalue_cfpeak=pvalue_cfpeak), 
-#         chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+#         chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
 #     output:
 #         temp(peak_dir+'/cfpeak_recurrence/b{bin_size}_d{decay}_p{pvalue_cfpeak}.bed')
 #     threads:  min(2, config['threads_mapping'])
@@ -925,7 +925,7 @@ rule peak_recurrence_cfpeakCNN:
         #     sample_id=sample_ids), 
         bed=lambda wildcards: expand(peak_dir+"/"+"".join(["cfpeakCNN_by_sample"+"/b{bin_size}_d{decay}_p{pvalue_cfpeak}"])+"/{sample_id}.bed", #  if config['filter_localmax_peak_qvalue'] else "peaks_localmax_by_sample_EM"+"b{bin_size}_d{decay}"
             sample_id=sample_ids, bin_size=bin_size, decay=decay, pvalue_cfpeak=pvalue_cfpeak), 
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         temp(peak_dir+'/cfpeakCNN_recurrence/b{bin_size}_d{decay}_p{pvalue_cfpeak}.bed')
     threads:  min(2, config['threads_mapping'])
@@ -999,9 +999,9 @@ rule count_matrix_piranha:
     input:
         peaks=lambda wildcards: expand(peak_dir+'/piranha_counts/b{bin_size}_p{pvalue_piranha}/{sample_id}.bed',
             bin_size=bin_size, pvalue_piranha=pvalue_piranha, sample_id=sample_ids),
-        transcript_table=genome_dir + '/transcript_table/all_newTxID.txt',
+        transcript_table=genome_dir+'/transcript_table/all_newTxID.txt',
         reads=peak_dir+'/piranha/b{bin_size}_p{pvalue_piranha}.bed'.format(bin_size=bin_size, pvalue_piranha=pvalue_piranha),
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/count_matrix/piranha_b{bin_size}_p{pvalue_piranha}.txt'.format(
             bin_size=bin_size, pvalue_piranha=pvalue_piranha)
@@ -1087,9 +1087,9 @@ rule count_matrix_clipper:
     input:
         peaks=lambda wildcards: expand(peak_dir+'/clipper_counts/b{bin_size}_p{pvalue_clipper}/{sample_id}.bed',
             bin_size=bin_size, pvalue_clipper=pvalue_clipper, sample_id=sample_ids),
-        transcript_table=genome_dir + '/transcript_table/all_newTxID.txt',
+        transcript_table=genome_dir+'/transcript_table/all_newTxID.txt',
         reads=peak_dir+'/clipper/b{bin_size}_p{pvalue_clipper}.bed'.format(bin_size=bin_size, pvalue_clipper=pvalue_clipper),
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/count_matrix/clipper_b{bin_size}_p{pvalue_clipper}.txt'.format(
             bin_size=bin_size, pvalue_clipper=pvalue_clipper)
@@ -1175,9 +1175,9 @@ rule count_matrix_clam:
     input:
         peaks=lambda wildcards: expand(peak_dir+'/clam_counts/b{bin_size}_p{pvalue_clam}/{sample_id}.bed',
             bin_size=bin_size, pvalue_clam=pvalue_clam, sample_id=sample_ids),
-        transcript_table=genome_dir + '/transcript_table/all_newTxID.txt',
+        transcript_table=genome_dir+'/transcript_table/all_newTxID.txt',
         reads=peak_dir+'/clam/b{bin_size}_p{pvalue_clam}.bed'.format(bin_size=bin_size, pvalue_clam=pvalue_clam),
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/count_matrix/clam_b{bin_size}_p{pvalue_clam}.txt'.format(
             bin_size=bin_size, pvalue_clam=pvalue_clam)
@@ -1265,9 +1265,9 @@ rule count_matrix_cfpeakCNN:
     input:
         peaks=lambda wildcards: expand(peak_dir+'/cfpeakCNN_counts/b{bin_size}_d{decay}_p{pvalue_cfpeak}/{sample_id}.bed',
             bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay, sample_id=sample_ids),
-        transcript_table=genome_dir + '/transcript_table/all_newTxID.txt',
+        transcript_table=genome_dir+'/transcript_table/all_newTxID.txt',
         reads=peak_dir+'/cfpeakCNN/b{bin_size}_d{decay}_p{pvalue_cfpeak}.bed'.format(bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay),
-        chrom_sizes=genome_dir + '/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
     output:
         peak_dir+'/count_matrix/cfpeakCNN_b{bin_size}_d{decay}_p{pvalue_cfpeak}.txt'.format(
             bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay)
