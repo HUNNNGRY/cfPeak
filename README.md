@@ -127,14 +127,13 @@ Following steps below to get a local copy and run
        * mask 927-929 rows (or else it will add "chr" prefix in seqnames and cause error)
      * find main python script (e.g., ~/anaconda3/envs/clipper3/lib/python3.7/site-packages/clipper/src/main.py)
        * remove  comment of  203,204,209 rows (parameters: reverse_strand False  max_width  min_width )
-       * add comment 232-234 rows
+       * comment 232-234 rows
    * use hg38_tx reference provided in cfpeak (hg38txNoDNAnewTxID.gff in https://cloud.tsinghua.edu.cn/f/56a32fe1b3624326b4c8/?dl=1) or you can add your own reference according to https://github.com/YeoLab/clipper/wiki/Supporting-additional-species (and remember to change your ref id in rule:call_peaks_clipper)
   
    d. optional: if you need to run CLAM (v1.2.0) 
    * install CLIPper according to https://github.com/Xinglab/CLAM
    * modify to suit tx-mapping mode:
      * modify permutation_callpeak.py： row#439，(this fixed error for not considering left boundary less than 0 when defining flag: --extend)
-     * permutation_peakcaller: count_pileup_heights(tlen, reads) row 307: # seem forgot to decision, here seem not center as tag position (this lead to a shift from real peak region)
    * use hg38_tx reference provided in cfpeak (hg38txNoDNAnewTxID.gff in https://cloud.tsinghua.edu.cn/f/98fcbf2ad0ee4f088bee/?dl=1) or you can add your own reference 
 
 4. Prepare necessary genome/transcriptome reference file and annotation 
