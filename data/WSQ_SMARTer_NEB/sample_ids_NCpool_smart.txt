@@ -1,8 +1,0 @@
-NC_ChQ-13_smart_1
-NC_ChQ-15_smart_1
-NC_ChQ-41_smart_1
-NC_ChQ-42_smart_1
-NC_PKU-2392860_smart_1
-NC_PKU-2397512_smart_1
-NC_PKU-34_smart_1
-NC_PKU-50_smart_1
