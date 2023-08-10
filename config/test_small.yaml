@@ -47,17 +47,20 @@ seed: 1234
 # peak caller specific params
 
 ## piranha 
-run_piranha: false 
+run_piranha: true # false 
 call_peak_pvalue_piranha: "01" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (not filter)
 #distribution: ZeroTruncatedNegativeBinomial
 
 ## clipper
-run_clipper: false 
+run_clipper: true # false 
+clipper_dir: /BioII/lulab_b/baopengfei/anaconda3/envs/clipper3/bin
 call_peak_pvalue_clipper: "05" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (not filter)
 
 ## clam
-run_clam: false 
+run_clam: true # false 
+clam_dir: /BioII/lulab_b/baopengfei/anaconda3/envs/clam/bin
 call_peak_pvalue_clam: "005" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (not filter)
+clam_gtf: /BioII/lulab_b/baopengfei/gitsoft/clipper/clipper/data/hg38txNoDNAnewTxID.AS.STRUCTURE.COMPILED.gtf
 
 ## cfpeak
 run_cfpeak: True

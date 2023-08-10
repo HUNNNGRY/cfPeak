@@ -1,4 +1,4 @@
-#!/BioII/lulab_b/baopengfei/anaconda3/bin/python
+#!/usr/bin/env python 
 
 import argparse
 import collections
@@ -65,11 +65,11 @@ def df_to_1D_input_data(df):
 
     return X, y
 
-def model_predict(peak_bed_df, model = None):
+def model_predict(peak_bed_df, model): # model = None
     x_predict,_ = df_to_1D_input_data(peak_bed_df)
 
-    if model == None:
-        model = load_model("/BioII/lulab_b/wangtaiwei/peak_calling/deeplearning/exPeak/trained_model/cnn_model_7samples.h5")
+    # if model == None:
+    model = load_model(model)
     res = model.predict(x_predict)
 
     return res
@@ -102,13 +102,14 @@ def plot_scaled_peak(peak_df, save_path=None, index_number=True):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Anomaly detection of candidate peaks by CNN model')
-    parser.add_argument('--bed6', '-b', required=True, help = "Input candidate peak bed6 file")
-    parser.add_argument('--bigwig', '-bw', required=True, help = "Input sample bigwig file")
+    parser = argparse.ArgumentParser(description = 'Anomaly detection of candidate peaks by CNN model')
+    parser.add_argument('--bed6', '-b', required = True, help = "Input candidate peak bed6 file")
+    parser.add_argument('--bigwig', '-bw', required = True, help = "Input sample bigwig file")
+    parser.add_argument('--model', '-m', default = "./model/cnn_model.h5", help = "Trained CNN model file")
     parser.add_argument('--threshold', '-t', default = 0.5, help = "threshold of CNN model prediction probability, default = 0.5")
     parser.add_argument('--plot_type', '-p', default = "No", choices = ["No","All","Anomaly"], help = "plot the peaks(All is 900 pic at most), default = No")
     parser.add_argument('--plot_path', '-pp', default = "./peak.pdf", help = "path to save plots, default = ./peak.pdf")
-    parser.add_argument('--output', '-o', required=True, help = "output bed6 to save anomalous peaks")
+    parser.add_argument('--output', '-o', required = True, help = "output bed6 to save anomalous peaks")
     args = parser.parse_args()
 
     input_size = 50
@@ -119,7 +120,7 @@ def main():
     peak_bed6 = load_peak_bed(args.bed6)
     bw = load_bigwig(args.bigwig)
     peak_bed = process_peak_bed(peak_bed6, tx_gn, bw, input_size)
-    res = model_predict(peak_bed)
+    res = model_predict(peak_bed, model=args.model)
     anomaly_mask = res[:,1] > args.threshold
     # peak_bed6[,4] = res[:,1]  # todo: change score (5th col) to prob.
     

@@ -2,44 +2,44 @@ shell.prefix('set -x;')
 include: 'common.snakemake'
 
 ################################################################################
-## call peak
-# dataset = config['dataset']
-rna_types0 = list(filter(lambda x: x not in ( 'spikein', 'univec'), rna_types)) # 'rRNA', 
-# rna_types1 = list(filter(lambda x: x not in ('enhancer_rev'), rna_types))
-rna_types1 = list(filter(lambda x: x not in ('repeats_rev'), rna_types))
-rna_types2 = list(filter(lambda x: x not in ( 'spikein', 'univec', 'intron_for','intron_rev','promoter_for','promoter_rev','enhancer_for','enhancer_rev','repeats_for','repeats_rev'), rna_types)) # 'rRNA',
-# rna_types_all = config['rna_types_all']
-bin_size = config['bin_size']
-temp_dir = config['temp_dir']
-output_dir = config['output_dir']
-peak_dir = config['output_dir']+"/"+config['peak_subdir']
-genome_dir = config['genome_dir']
-pvalue_piranha=config['call_peak_pvalue_piranha']
-pvalue_clipper=config['call_peak_pvalue_clipper']
-pvalue_clam=config['call_peak_pvalue_clam']
-pvalue_cfpeak=config['call_peak_pvalue_cfpeak']
-decay=config['decay_ratio']
-priority = ",".join(list(rna_types))
-print("pvalue_piranha: ",pvalue_piranha) 
-print("pvalue_clipper: ",pvalue_clipper)
-print("pvalue_clam: ",pvalue_clam)
-print("pvalue_cfpeak: ",pvalue_cfpeak) 
-print("decay: ",decay) 
+# ## call peak
+# # dataset = config['dataset']
+# rna_types0 = list(filter(lambda x: x not in ( 'spikein', 'univec'), rna_types)) # 'rRNA', 
+# # rna_types1 = list(filter(lambda x: x not in ('enhancer_rev'), rna_types))
+# rna_types1 = list(filter(lambda x: x not in ('repeats_rev'), rna_types))
+# rna_types2 = list(filter(lambda x: x not in ( 'spikein', 'univec', 'intron_for','intron_rev','promoter_for','promoter_rev','enhancer_for','enhancer_rev','repeats_for','repeats_rev'), rna_types)) # 'rRNA',
+# # rna_types_all = config['rna_types_all']
+# bin_size = config['bin_size']
+# temp_dir = config['temp_dir']
+# output_dir = config['output_dir']
+# peak_dir = config['output_dir']+"/"+config['peak_subdir']
+# genome_dir = config['genome_dir']
+# pvalue_piranha=config['call_peak_pvalue_piranha']
+# pvalue_clipper=config['call_peak_pvalue_clipper']
+# pvalue_clam=config['call_peak_pvalue_clam']
+# pvalue_cfpeak=config['call_peak_pvalue_cfpeak']
+# decay=config['decay_ratio']
+# priority = ",".join(list(rna_types))
+# print("pvalue_piranha: ",pvalue_piranha) 
+# print("pvalue_clipper: ",pvalue_clipper)
+# print("pvalue_clam: ",pvalue_clam)
+# print("pvalue_cfpeak: ",pvalue_cfpeak) 
+# print("decay: ",decay) 
 
-strand = "+"
-strandness = config['strandness']
-if strandness == "reverse": strandness2 =  "True"
-else: strandness2 =  "False"
+# strand = "+"
+# strandness = config['strandness']
+# if strandness == "reverse": strandness2 =  "True"
+# else: strandness2 =  "False"
 
 
-if (config['remove_duplicates'] and config['UMI']):
-    bam_dedup_dir = "bam-deduped" # output_dir+'/tbam/{wildcards.sample_id}/bam-deduped/{wildcards.rna_type}.bam'  
-elif (config['remove_duplicates'] and (not config['UMI'])):
-    bam_dedup_dir = "bam-deduped-samtools" # output_dir+'/tbam/{wildcards.sample_id}/bam-deduped-samtools/{wildcards.rna_type}.bam'  
-else: bam_dedup_dir = "bam"
-# print("bam_dedup_dir: "+bam_dedup_dir) # cause dag/rulegraph error
+# if (config['remove_duplicates'] and config['UMI']):
+#     bam_dedup_dir = "bam-deduped" # output_dir+'/tbam/{wildcards.sample_id}/bam-deduped/{wildcards.rna_type}.bam'  
+# elif (config['remove_duplicates'] and (not config['UMI'])):
+#     bam_dedup_dir = "bam-deduped-samtools" # output_dir+'/tbam/{wildcards.sample_id}/bam-deduped-samtools/{wildcards.rna_type}.bam'  
+# else: bam_dedup_dir = "bam"
+# # print("bam_dedup_dir: "+bam_dedup_dir) # cause dag/rulegraph error
 
-# print("sampleID: ",sample_ids) 
+# # print("sampleID: ",sample_ids) 
 
 
 def get_all_inputs(wildcards):

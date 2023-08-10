@@ -74,8 +74,7 @@ we report cfPeak, a new computational method and data pipeline with multiple adv
 Following steps below to get a local copy and run
 
 ### Prerequisites
-* slurm or lsf cluster system
-* PC or server with >=8 cores and >=16 GB memory
+* slurm or lsf cluster system, PC or server with >=16 cores and >=64 GB memory
 * anaconda or miniconda installed (https://www.anaconda.com/download)
 
 ### Installation
@@ -87,50 +86,63 @@ Following steps below to get a local copy and run
    # or from github
    git clone https://github.com/hunnngry/cfPeak.git
    ```
+
 2. Create conda global environment
    ```sh
    cd cfPeak
    # The default conda solver is a bit slow and sometimes has issues with selecting the special version packages. We recommend to install mamba as a drop-in replacement
-   conda install -c conda-forge mamba
+   ## option 1: install mambaforge (mamba included)
+    curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
+    bash Mambaforge-$(uname)-$(uname -m).sh
+
+   ## option 2 (not recommended, many conflicts exist): use exist conda 
+   #conda install -n base --override-channels -c conda-forge mamba 'python_abi=*=*cp*'
+   export PATH=~/mambaforge/bin:$PATH # you can add this line to ~/.bashrc
    mamba env create -n cfpeak -f ./snakemake/envs/cfpeak.yml
    ```
-3. Create snakemake pipeline environment
 
+3. Create snakemake pipeline environment
    a. required for all
    ```sh
    # activate global environment
    source activate cfpeak
-   # if you need to run cell-free smRNA-seq:
+   # if you need to run cell-free smallRNA-seq:
    snakemake --use-conda --conda-create-envs-only -j 1 --configfile config/test_small.yaml -s snakemake/call_peaks.snakemake
    # if you need to run cell-free totalRNA-seq:
    snakemake --use-conda --conda-create-envs-only -j 1 --configfile config/test_long.yaml -s snakemake/call_peaks_long.snakemake
    # some other config and snakemake files are also provided to meet different input types 
    ```
+    > you may meet error like "ModuleNotFoundError: No module named _sysconfigdata_x86_64_conda_linux_gnu" when creating conda environment, this is conda bug may be solved by updateing python or copy file from elsewhere, details see https://stackoverflow.com/questions/68261254/conda-error-sysconfigdata-x86-64-conda-linux-gnu
 
    b. optional: if you need to run Piranha (v1.2.1)
-   * By default, basical env (snakemake/envs/piranha.yml) that needed to run Piranha has already installed in last step, but need install countreg package manually to make it run: this R package unfortunately is not yet on conda, so must be installed manually in a sort of hacky way. Locate your installed conda environments (by default in .snakemake/conda/[hash], as described in Snakemake documentation). Find out which [hash].yml file corresponds with the environment named piranha. Load that environment with conda activate .snakemake/conda/[hash]. Then run R to enter the R shell and install.packages("countreg", repos="http://R-Forge.R-project.org") to install countreg.
-   * We also provide two optional piranha version: in-house adapted cell-free Piranha software and simplified Piranha pkg in R (default). Users could switch to the former Piranha version in peak_common.snakemake by commenting rule call_peaks_piranha and uncommenting rule call_peaks_piranha2 if needed.
+   * By default, basical env (snakemake/envs/piranha.yml) that needed to run Piranha has already installed in last step, but need install countreg and bedtoolsr package manually to make it run (countreg pkg unfortunately is not yet on conda; and r-bedtoolsr in current conda repo requires R version >=4, in which cfPeak is not fully tested). First, locate your installed conda environments (by default in .snakemake/conda/[hash]); you can see the message when first create env, or else you can find out which [hash].yml file corresponds with the environment named piranha. Second, load that environment with conda activate .snakemake/conda/[hash]. Third, run R to enter the R shell 
+     * install.packages("countreg", repos="http://R-Forge.R-project.org", version="0.2-1")
+     * devtools::install_github("PhanstielLab/bedtoolsr", version="2.30.0-5") # you may update version
+   * We provide two optional piranha version: in-house adapted cell-free Piranha software and simplified Piranha pkg in R (default). Users could switch to the former Piranha version in peak_common.snakemake by commenting rule call_peaks_piranha and uncommenting rule call_peaks_piranha2 if needed.
 
    c. optional: if you need to run CLIPper (v2.1.2) 
    * install CLIPper according to https://github.com/YeoLab/clipper
-   * modify to suit tx mode:
+   * modify to suit tx-mapping mode:
      * find installed path of CLIPper call peak python script (e.g., ~/anaconda3/envs/clipper3/lib/python3.7/site-packages/clipper/src/call_peak.py)
-     * mask 927-929 rows (or else it will add "chr" prefix in seqnames and cause error)
+       * mask 927-929 rows (or else it will add "chr" prefix in seqnames and cause error)
      * find main python script (e.g., ~/anaconda3/envs/clipper3/lib/python3.7/site-packages/clipper/src/main.py)
-     * remove  comment of  203,204,209 rows (parameters: reverse_strand False  max_width  min_width )
-     * add comment 232-234 rows
-   * use hg38_tx reference provided in cfpeak (hg38txNoDNAnewTxID.gtf in https://cloud.tsinghua.edu.cn/f/9d8cee33da6e4aacbc40/?dl=1)
-   * or you can add your own reference according to https://github.com/YeoLab/clipper/wiki/Supporting-additional-species
+       * remove  comment of  203,204,209 rows (parameters: reverse_strand False  max_width  min_width )
+       * add comment 232-234 rows
+   * use hg38_tx reference provided in cfpeak (hg38txNoDNAnewTxID.gff in https://cloud.tsinghua.edu.cn/f/56a32fe1b3624326b4c8/?dl=1) or you can add your own reference according to https://github.com/YeoLab/clipper/wiki/Supporting-additional-species (and remember to change your ref id in rule:call_peaks_clipper)
   
    d. optional: if you need to run CLAM (v1.2.0) 
-   * install CLIPper according to https://github.com/YeoLab/clipper
-   * modify to suit tx mode:
+   * install CLIPper according to https://github.com/Xinglab/CLAM
+   * modify to suit tx-mapping mode:
      * modify permutation_callpeak.py： row#439，(this fixed error for not considering left boundary less than 0 when defining flag: --extend)
      * permutation_peakcaller: count_pileup_heights(tlen, reads) row 307: # seem forgot to decision, here seem not center as tag position (this lead to a shift from real peak region)
+   * use hg38_tx reference provided in cfpeak (hg38txNoDNAnewTxID.gff in https://cloud.tsinghua.edu.cn/f/98fcbf2ad0ee4f088bee/?dl=1) or you can add your own reference 
 
-4. Prepare/Download necessary genome/transcriptome reference file and annotation 
-   * human hg38 chrom_sizes and annotation track files used in the article can be downloaded from https://cloud.tsinghua.edu.cn/f/9d8cee33da6e4aacbc40/?dl=1
-   * or you can create your own reference of annotation file 
+4. Prepare necessary genome/transcriptome reference file and annotation 
+   * you can create your own reference of annotation file, create dirs bellow in root of snakemake: genome/hg38
+     * genome/hg38/fasta_newTxID stores fasta files of multi tx species
+     * genome/hg38/chrom_sizes stores txt files of chrom.sizes of full-length tx
+     * genome/hg38/transcript_table stores meta table of all tx for counting matrix
+   * we provided some example files of human hg38 fasta, chrom_sizes, and annotation track files used in the article can be downloaded from https://cloud.tsinghua.edu.cn/f/9d8cee33da6e4aacbc40/?dl=1 
 
 
 <!-- USAGE EXAMPLES -->
@@ -139,7 +151,7 @@ Following steps below to get a local copy and run
 
 1. Activate the created global environment
    ```sh
-   source activate cfpeak
+   conda activate cfpeak # or source activate cfpeak
    export PATH=~/anaconda3/envs/cfpeak/bin:$PATH 
    dst="test_small"
    ```
@@ -165,9 +177,12 @@ Following steps below to get a local copy and run
    ```
 4. Check output
    * cfPeak sample peak file: output/test_small/call_peak_all/cfpeak_by_sample/b5_d50_p1/s1.bed
+     * the columns represent “transcript, start, end, name, maximum depth, strand, maximum position, background depth, permutation FDR, Poisson P-value” from left to right
    * cfPeak sample peak file (filtered by CNN): output/test_small/call_peak_all/cfpeakCNN_by_sample/b5_d50_p1/s1.bed
+     * the columns represent “transcript, start, end, name, probability to be false peak (0-1), strand” from left to right
    * cfPeak consensus peak file: output/test_small/call_peak_all/cfpeak/b5_d50_p1.bed
    * cfPeak consensus peak count matrix: output/test_small/call_peak_all/count_matrix/cfpeakCNN_b5_d50_p1.txt
+     * value represent read count in each peak regions; first column represents peak name, other columns represent all sample IDs
 
 
 <!-- LICENSE -->
@@ -194,8 +209,6 @@ lulab (lulab1@tsinghua.edu.cn)
 
 <!-- ACKNOWLEDGEMENTS -->
 
-## Acknowledgements
-This work is supported by Tsinghua University Spring Breeze Fund (2021Z99CFY022), National Natural Science Foundation of China (81972798, 32170671, 81902384), National Key Research and Development Plan of China (2019YFC1315700), National Science and Technology Major Project of China (2018ZX10723204, 2018ZX10302205), Tsinghua University Guoqiang Institute Grant (2021GQG1020), Tsinghua University Initiative Scientific Research Program of Precision Medicine (2022ZLA003), Bioinformatics Platform of National Center for Protein Sciences (Beijing) (2021-NCPSB-005). This study was also supported by Beijing Advanced Innovation Center for Structural Biology, Bio-Computing Platform of Tsinghua University Branch of China National Center for Protein Sciences, Interdisciplinary Clinical Research Project of Peking University First Hospital and the Capital Health Research and Development of Special, Open Research Fund Program of Beijing National Research Center for Information Science and Technology.
 
 
 <!-- MARKDOWN LINKS & IMAGES -->

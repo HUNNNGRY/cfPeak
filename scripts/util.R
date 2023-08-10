@@ -678,11 +678,11 @@ my_theme_volcano <-   theme(aspect.ratio=1,
                             legend.title= element_text(size= 26,color = "black")
 )
 
-plotViolin <- function(logcpm.sum,sig.size=10){
+plotViolin <- function(logcpm.sum,sig.size=10,colors=c("grey50","firebrick")){
   p1 <- ggplot(logcpm.sum, aes(x=group,y=value,fill=group))+ # 
     geom_violin(alpha=0.7)+
     geom_boxplot(width=0.1)+
-    scale_fill_manual(name="Group",values = c("grey50","firebrick"))+#colorRampPalette(RColorBrewer::brewer.pal(8, "Dark2"))(length(unique(logcpm.sum$group))))+)
+    scale_fill_manual(name="Group",values = colors)+#colorRampPalette(RColorBrewer::brewer.pal(8, "Dark2"))(length(unique(logcpm.sum$group))))+)
     # facet_grid(.~name,scales = "free")+
     ylab("Scaled peak-index") +
     ggpubr::stat_compare_means(

@@ -54,8 +54,8 @@ rule mapping_tx:
     wildcard_constraints:
         rna_type='(?!merge).*'
         # sample_id='\w+'
-    # conda:
-    #     "./envs/cfpeak.yml"
+    conda:
+        "./envs/cfpeak.yml"
     shell:
         """
         (declare -i downsample_fq={params.downsample_fq}
@@ -67,7 +67,9 @@ rule mapping_tx:
         [ $num -gt $min_fq_num -a $sub_num -lt $min_fq_num ] && sub_num=$(($min_fq_num))
         [ $sub_num -gt $max_fq_num ] && sub_num=$(($max_fq_num))
         echo "use fq num: $sub_num"
-
+        
+        if [ $sub_num -eq 0 ]; then echo "zero num of fq"; exit 1; fi
+        
         seqtk sample -s {params.seed} \
             {input.fastq} $sub_num | pigz -c -p {threads} > {params.tmp_fq}
 

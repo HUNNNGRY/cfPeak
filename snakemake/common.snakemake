@@ -50,6 +50,10 @@ genome_dir = require_variable('genome_dir', 'input_dir')
 bin_dir = require_variable('bin_dir', 'input_dir')
 output_dir = require_variable('output_dir')
 peak_dir = config['output_dir']+"/"+config['peak_subdir']
+
+clipper_dir = config['clipper_dir']
+clam_dir = config['clam_dir']
+
 rna_types = require_variable('rna_types')
 rna_types0 = list(filter(lambda x: x not in ( 'spikein', 'univec'), rna_types)) # 'rRNA', 
 rna_types1 = list(filter(lambda x: x not in ('repeats_rev'), rna_types))

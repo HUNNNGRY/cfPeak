@@ -26,6 +26,10 @@ properties:
     type: string
   peak_subdir:
     type: string
+  clipper_subdir:
+    type: string
+  clam_subdir:
+    type: string
 
   threads:
     type: integer

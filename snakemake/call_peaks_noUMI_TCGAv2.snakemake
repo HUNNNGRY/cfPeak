@@ -134,7 +134,9 @@ rule bam2fq1:
     threads:
         config['threads_mapping']
     params:
-        inbam = "/lulab/baopengfei/shared_data/pub_tissueRNA/TCGA_small/*/*/{sample_id}.bam", # lulabdata
+        inbam = "/lulab/baopengfei/shared_data/ENCODE/smallRNA-seq/fastq/{sample_id}/released/GRCh38/alignments/bam/rep*/*.bam", # ENCODE small/miRNA
+        # inbam = "/data2/BioMedOmicsData/TCGA/processed/Bam/miRNA-Seq/*/*/{sample_id}.bam", # data2
+        # inbam = "/lulab/baopengfei/shared_data/pub_tissueRNA/TCGA_small/*/*/{sample_id}.bam", # lulabdata
         # inbam = "/lulab/baopengfei/shared_data/pub_tissueRNA/TCGA-HNSC_small/HNSC/*/{sample_id}.bam", # lulabdata
         # inbam = "/Share2/home/lulab1/TCGA/processed/Bam/miRNA-Seq/*/*/{sample_id}.bam",
         # inbai = "/Share2/home/lulab1/TCGA/processed/Bam/miRNA-Seq/*/*/{sample_id}.bai",
@@ -188,6 +190,9 @@ rule mapping_tx:
         [ $num -lt $min_fq_num ] && sub_num=$(($num))
         [ $num -gt $min_fq_num -a $sub_num -lt $min_fq_num ] && sub_num=$(($min_fq_num))
         [ $sub_num -gt $max_fq_num ] && sub_num=$(($max_fq_num))
+
+        if [ $sub_num -eq 0 ]; then echo "zero num of fq"; exit 1; fi
+
         echo "use fq num: $sub_num"
 
         seqtk sample -s {params.seed} \

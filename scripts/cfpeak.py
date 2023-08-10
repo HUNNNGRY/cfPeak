@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python 
 
 import argparse, sys, os, errno
 from distutils.spawn import spawn
@@ -11,23 +11,16 @@ from pandas import DataFrame, Series
 from scipy.fftpack import fft
 from scipy.signal import convolve
 from scipy import stats
-import numba
 import pyBigWig
 import pysam
 from collections import defaultdict, OrderedDict
 import math, random, re, time
 from multiprocessing import Pool
 from threading import Thread
-
+# import numba
 # import matplotlib
-# matplotlib.use('Agg')
-# import matplotlib.pyplot as plt
-# from matplotlib.backends.backend_pdf import PdfPages
-# import seaborn as sns
-# from statsmodels.sandbox.stats.multicomp import multipletests
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] %(name)s: %(message)s')
-# sys.path.append("/BioII/lulab_b/baopengfei/gitsoft/clipper")
-# sys.setrecursionlimit(10000000)
+
 
 command_handlers = {}
 def command_handler(f):
@@ -35,11 +28,7 @@ def command_handler(f):
     return f
 
 
-#accelrate for loop in func. : https://blog.csdn.net/qq_43657442/article/details/110000940
-# @numba.jit('int64(int32[:], int32[:], float64, float64, float64)')
 
-#  consider read overlapped with range
-# @numba.jit(nopython=True)
 def count_pileup_heights(tlen, reads, downsample=True):
     """
     Partially adapted from CLAM

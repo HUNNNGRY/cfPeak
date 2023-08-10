@@ -17,7 +17,7 @@ def get_all_inputs(wildcards):
         # bam_dedup_merge_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam",
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge19_sort','merge11RNA_sort']), # merge11RNA_sort_primary
         realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
-            output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge19_sort']), #  'merge11RNA_sort',
+            output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort','merge19_sort']), #  'merge11RNA_sort',
         # realigned_reverted_bam2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/{bam_type}",
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort'],bam_type=['unique.sorted.bam','unique.sorted.revertFullLengthReads.sorted.bam','allrealigned.sorted.bam'] ),
         # bam_dedup2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam",
@@ -113,8 +113,8 @@ rule dedup:
         # sample_id='\w+'
     log:
         output_dir+"/tbam/{sample_id}/log-dedup/{rna_type}.log"
-    # conda:
-    #     "./envs/cfpeak.yml"
+    conda:
+        "./envs/cfpeak.yml"
     shell:
         """
         umi_tools dedup --temp-dir {params.tmpdir}  -I {input.bam} -S {output.bam} > {log} 
@@ -142,8 +142,8 @@ rule dedup_samtools:
         # sample_id='\w+'
     log:
         output_dir+"/tbam/{sample_id}/log-dedup/{rna_type}.log"
-    # conda:
-    #     "./envs/cfpeak.yml"
+    conda:
+        "./envs/cfpeak.yml"
     shell:
         """
         samtools rmdup -s {input.bam} {output.bam} > {log} 2>&1
@@ -216,8 +216,8 @@ rule filter_11RNA_primary_tbam:
     threads: config['threads_mapping']
     # wildcard_constraints:
         # sample_id='\w+'
-    # conda:
-    #     "./envs/cfpeak.yml"
+    conda:
+        "./envs/cfpeak.yml"
     shell:
         '''
         samtools view -b -F 256 -@ {threads} -o {output.primary_bam} {input.merged_bam} 
@@ -242,14 +242,14 @@ rule filter_11RNA_primary_tbam:
 #todo: optimize re-flag bam process
 rescue="""
         (echo "Start preprocessor at `date`"; 
-        /BioII/lulab_b/baopengfei/anaconda3/envs/clipper3/bin/python \
-            /BioII/lulab_b/baopengfei/gitsoft/CLAM-1.2.0/run/preprocessor.py \
+        python \
+            scripts/clam/preprocessor.py \
             -i {input.bam} \
             -o {params.EM_dir} \
             --read-tagger-method {params.tagger} --max-multihits {params.multihits} ; 
         echo "Start realigner at `date`"; 
-        /BioII/lulab_b/baopengfei/anaconda3/envs/clipper3/bin/python \
-            /BioII/lulab_b/baopengfei/gitsoft/CLAM-1.2.0/run/realigner.py \
+        python \
+            scripts/clam/realigner.py \
             -i {params.multi} \
             -o {params.EM_dir} \
             --winsize {params.winsize} --max-tags -1 --read-tagger-method {params.tagger}; \
@@ -270,6 +270,7 @@ rescue="""
         > {log} 2>&1
         rm {params.multi}* {params.realigned}* 
         """
+#/BioII/lulab_b/baopengfei/anaconda3/envs/clipper3/bin/python
 
 # EM: merged bam (little reads each RNA type)
 rule bam_rescue_multi_11RNA:
@@ -465,8 +466,8 @@ rule tbedgraph_to_tbigwig:
     params: 
         temp_dir=config['temp_dir'],
         temp_file=temp_dir+'/{sample_id}.tbedgraph_to_bigwig.tmp3'
-    # conda:
-    #     "./envs/cfpeak.yml"
+    conda:
+        "./envs/cfpeak.yml"
     shell:
         '''cat {input.bedgraph} | bedtools sort > {params.temp_file}; {bin_dir}/bedGraphToBigWig {params.temp_file} {input.chrom_sizes} {output}; rm {params.temp_file}'''
 #/BioII/lulab_b/baopengfei/biosoft/bedGraphToBigWig
@@ -515,8 +516,8 @@ rule tbedgraph_to_tbigwig2:
     params: 
         temp_dir=config['temp_dir'],
         temp_file=temp_dir+'/{sample_id}.tbedgraph_to_bigwig.tmp2'
-    # conda:
-    #     "./envs/cfpeak.yml"
+    conda:
+        "./envs/cfpeak.yml"
     shell:
         '''cat {input.bedgraph} | bedtools sort > {params.temp_file}; {bin_dir}/bedGraphToBigWig {params.temp_file} {input.chrom_sizes} {output}; rm {params.temp_file}'''
 #/BioII/lulab_b/baopengfei/biosoft/bedGraphToBigWig
@@ -561,8 +562,8 @@ rule bin_coverage:
     threads: 2 #config['threads_mapping']
     params:
         bin_size=config['bin_size']
-    # conda:
-    #     "./envs/cfpeak.yml"
+    conda:
+        "./envs/piranha.yml"
     shell:
         '''pigz -d -c {input.bed} \
             | {bin_dir}/bin_coverage /dev/stdin {input.chrom_sizes} {output} {params.bin_size}
@@ -602,13 +603,14 @@ rule call_peaks_piranha:
         minPeakLength = config['min_peak_size'],
         maxPeakLength = config['max_peak_size'],
         background=0.99
-    # conda: 
-    #     "envs/piranha.yaml"
+    conda: 
+        "envs/piranha.yml"
     shell:
-        '''/BioII/lulab_b/baopengfei/anaconda3/envs/exvariance/bin/Rscript {bin_dir}/piranha_call_peaks.R -p {pvalue_piranha_param} -i {input} -b {params.background} -o {output} 
+        '''Rscript scripts/piranha_call_peaks.R -p {pvalue_piranha_param} -i {input} -b {params.background} -o {output} 
         awk '$3-$2>={params.minPeakLength} && $3-$2<={params.maxPeakLength}' {output} > {params.tmpbed}
         mv {params.tmpbed} {output}
         '''
+#/BioII/lulab_b/baopengfei/anaconda3/envs/exvariance/bin/Rscript
 #cal cov each all strand together
 #default: -p 0.01
 #-p 0.{pvalue_piranha} 
@@ -660,12 +662,12 @@ rule call_peaks_clipper:
         strandness2 = strandness2,
         bin_size = config['bin_size'],
     # conda:
-    #     "./envs/cfpeak.yml"
+    #     "./envs/clipper.yml"
     shell:
         '''
         (echo "start at `date`";
-        export PATH=/BioII/lulab_b/baopengfei/anaconda3/envs/clipper3/bin:$PATH;
-        /BioII/lulab_b/baopengfei/anaconda3/envs/clipper3/bin/clipper  \
+        export PATH={clipper_dir}:$PATH;
+        {clipper_dir}/clipper  \
             -s hg38txNoDNAnewTxID --binomial 0.05 -v \
             -b {input} \
             -o {output} \
@@ -674,6 +676,7 @@ rule call_peaks_clipper:
         mv {params.tmpbed} {output} ; 
         echo "end at `date`" ) > {log} 2>&1
         '''
+# export PATH=/BioII/lulab_b/baopengfei/anaconda3/envs/clipper3/bin:$PATH;
 #--timeout 36000  
 # --reverse_strand {params.strandness2} # def:F
 #too time-consuming for hg38txNoRepeatsnewTxID
@@ -727,7 +730,7 @@ rule call_peaks_clam:
         maxPeakLength = config['max_peak_size'],
         strandness2 = strandness2,
         bin_size = config['bin_size'],
-        gtf = '/BioII/lulab_b/baopengfei/gitsoft/clipper/clipper/data/hg38txNoDNAnewTxID.AS.STRUCTURE.COMPILED.gtf',
+        gtf = config['clam_gtf'],
         out_dir = peak_dir+'/clam_by_sample/b{bin_size}_p{pvalue_clam}/{sample_id}',
         out_file = peak_dir+'/clam_by_sample/b{bin_size}_p{pvalue_clam}/{sample_id}/narrow_peak.permutation.bed',
     # conda:
@@ -735,13 +738,14 @@ rule call_peaks_clam:
     shell:
         '''
         mkdir -p {params.out_dir}
-        /BioII/lulab_b/baopengfei/anaconda3/envs/clam/bin/CLAM permutation_callpeak \
+        {clam_dir}/CLAM permutation_callpeak \
             -i {input.uniq} {input.realign} \
             -o {params.out_dir} \
             -p {threads} --qval-cutoff {pvalue_clam_param} --gtf {params.gtf} --extend 5 \
             > {log} 2>&1 
         awk '$3-$2>={params.minPeakLength} && $3-$2<={params.maxPeakLength}' {params.out_file} > {output}
         '''
+# /BioII/lulab_b/baopengfei/anaconda3/envs/clam/bin/CLAM
 #default: --qval-cutoff 0.005 --merge-size 50 --extend 50
 #0.{pvalue}
 
@@ -852,10 +856,10 @@ rule call_peaks_cfpeak:
         boundary = "background",
         mode = "local",
     threads: max(2, config['threads_mapping'])
-    # conda:
-    #     "./envs/cfpeak.yml"
+    conda:
+        "./envs/cfpeak.yml"
     shell:
-        '''{bin_dir}/cfpeak.py call_peaks_localmax \
+        '''scripts/cfpeak.py call_peaks_localmax \
             --boundary {params.boundary} --mode {params.mode} --max-iter 50 \
             --permutate-pval 0.05 --poisson-pval {pvalue_cfpeak_param} \
             --bin-width {params.bin_size} --min-peak-length {params.minPeakLength} --max-peak-length {params.maxPeakLength} \
@@ -904,16 +908,16 @@ rule CNN:
     params:
         cutoff=0.5
     threads: max(2, config['threads_mapping'])
-    # conda:
-    #     "./envs/cfpeak_cnn.yml"
+    conda:
+        "./envs/cfpeak_cnn.yml"
     shell:
-        '''{bin_dir}/anomaly_detection.py \
+        '''scripts/anomaly_detection.py \
             --bed6 {input.bed} \
             --bigwig {input.tbigwig} \
             --output {output.bed} \
             > {log} 2>&1
         '''
-
+#--model model/cnn_model.h5
 
 rule peak_recurrence_cfpeakCNN:
     input:
