@@ -151,8 +151,7 @@ Following steps below to get a local copy and run
 
 1. Activate the created global environment
    ```sh
-   conda activate cfpeak # or source activate cfpeak
-   export PATH=~/anaconda3/envs/cfpeak/bin:$PATH 
+   source activate cfpeak 
    dst="test_small"
    ```
 2. Modify the config file based on your purpose
