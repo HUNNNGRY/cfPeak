@@ -859,7 +859,7 @@ rule call_peaks_cfpeak:
     conda:
         "./envs/cfpeak.yml"
     shell:
-        '''scripts/cfpeak.py call_peaks_localmax \
+        '''python scripts/cfpeak.py call_peaks_localmax \
             --boundary {params.boundary} --mode {params.mode} --max-iter 50 \
             --permutate-pval 0.05 --poisson-pval {pvalue_cfpeak_param} \
             --bin-width {params.bin_size} --min-peak-length {params.minPeakLength} --max-peak-length {params.maxPeakLength} \
@@ -911,7 +911,7 @@ rule CNN:
     conda:
         "./envs/cfpeak_cnn.yml"
     shell:
-        '''scripts/anomaly_detection.py \
+        '''python scripts/anomaly_detection.py \
             --bed6 {input.bed} \
             --bigwig {input.tbigwig} \
             --output {output.bed} \

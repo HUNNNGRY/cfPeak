@@ -151,7 +151,7 @@ Following steps below to get a local copy and run
 
 1. Activate the created global environment
    ```sh
-   source activate cfpeak 
+   source activate cfpeak # export PATH=~/mambaforge/envs/cfpeak/bin:$PATH  # anaconda3 or mambaforge
    dst="test_small"
    ```
 2. Modify the config file based on your purpose
