@@ -988,7 +988,6 @@ for(i in 1:length(c(rna,dna))){
 RNA_colors[['all']] <- "grey50" #"grey50"
 RNA_colors[['RNA']] <- "red2"
 RNA_colors[['DNA']] <- "purple" #"#117C8E": similar with repeats
-RNA_colors[['highROC']] <- "#997C8E"
 RNA_colors <- do.call("c",RNA_colors)
 
 
