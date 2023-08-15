@@ -6,7 +6,7 @@ singularity
 output
 archive
 deprecated
-bak
+**bak
 tmp
 temp
 test
