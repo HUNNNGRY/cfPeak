@@ -4,9 +4,9 @@ src
 tools
 singularity
 output
-archive
-deprecated
-**bak
+**archive*
+**deprecated*
+**bak*
 tmp
 temp
 test
