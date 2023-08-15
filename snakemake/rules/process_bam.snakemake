@@ -1,0 +1,142 @@
+rule dedup:
+    input:
+        bam = output_dir+"/tbam/{sample_id}/bam/{rna_type}.bam"
+    output:
+        bam = output_dir+"/tbam/{sample_id}/bam-deduped/{rna_type}.bam",
+        bai = output_dir+"/tbam/{sample_id}/bam-deduped/{rna_type}.bam.bai",
+        # bam = output_dir+"/tbam/{sample_id}/"+bam_dedup_dir+"/{rna_type}.bam",
+        # bai = output_dir+"/tbam/{sample_id}/"+bam_dedup_dir+"/{rna_type}.bam.bai",
+    params:
+        # stat = "{output_dir}/tbam/{sample_id}/bam-deduped/{rna_type}",
+        tmpdir = temp_dir
+    threads: max(4,int(0.5*config['threads_mapping']))
+    wildcard_constraints:
+        rna_type='(?!merge).*',
+        # sample_id='\w+'
+    log:
+        output_dir+"/tbam/{sample_id}/log-dedup/{rna_type}.log"
+    conda:
+        "./envs/cfpeak.yml"
+    shell:
+        """
+        umi_tools dedup --temp-dir {params.tmpdir}  -I {input.bam} -S {output.bam} > {log} 
+        samtools index -@ {threads} {output.bam}
+        """
+#consider add "|| cp {input.bam} {output.bam}" to avoid null bam (like long RNA-seq map to miRNA)
+#--output-stats={params.stat} seem consumes lots of mem
+#for long RNA-seq better not sort by pos and index dedup bam, tbam_to_bed below may need sort by name
+#samtools index -@ {threads} {output.bam}
+
+
+rule dedup_samtools:
+    input:
+        bam = output_dir+"/tbam/{sample_id}/bam/{rna_type}.bam"
+    output:
+        bam = output_dir+"/tbam/{sample_id}/bam-deduped-samtools/{rna_type}.bam",
+        # bam = output_dir+"/tbam/{sample_id}/"+bam_dedup_dir+"/{rna_type}.bam",
+        # metrics = "{output_dir}/tbam/{sample_id}/bam-deduped/log/{rna_types}.sorted.metrics.txt",
+    params:
+        # tmpdir = temp_dir,
+        # GATK_path = GATK_path
+    threads: max(4,int(0.5*config['threads_mapping']))
+    wildcard_constraints:
+        rna_type='(?!merge).*',
+        # sample_id='\w+'
+    log:
+        output_dir+"/tbam/{sample_id}/log-dedup/{rna_type}.log"
+    conda:
+        "./envs/cfpeak.yml"
+    shell:
+        """
+        samtools rmdup -s {input.bam} {output.bam} > {log} 2>&1
+        """
+#samtools rmdup -s (seem evaluate all primary and secondary)
+#change to use samtools markdup -r -m t -@4 (seem only evaluate primary, keep all secondary; also -m t seem to has same res with -m s for SE bam)
+#https://bioinformatics.stackexchange.com/questions/4615/difference-between-samtools-mark-duplicates-and-samtools-remove-duplicates#:~:text=rmdup%20removes%20duplicates%20from%20BAM%2C%20while%20markdup%2C%20like,more%20corner%20cases%20and%20gives%20more%20consistent%20results.
+
+
+merge_tbam='''
+        samtools merge -f -@ {threads} {params.tmp_bam} {input.bam}
+        (samtools view -H {params.tmp_bam}; samtools view -q {params.mapq} {params.tmp_bam} | awk -v min_size={params.min_insert_size} -v max_size={params.max_insert_size} '{{if(length($10)>0){{size=length($10)}};if(size>=min_size&&size<=max_size){{print $0}}}}') | \
+            samtools sort -@ {threads} | samtools view -b -s {params.downsample_ratio} > {output.bam}
+        samtools index -@ {threads} {output.bam}
+        rm {params.tmp_bam}
+        '''
+#note: some version of samtools merge has no options of "-o"
+
+rule merge_tbam_19:
+    input:
+        bam=lambda wildcards: expand('{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam', #  if config['remove_duplicates'] else output_dir+'/tbam/{sample_id}/bam/{rna_type}.bam'
+            output_dir=output_dir,sample_id=wildcards.sample_id,bam_dedup_dir=bam_dedup_dir, rna_type=rna_types0),
+    output:
+        bam=output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge19_sort.bam', 
+        bai=output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge19_sort.bam.bai' ,
+    threads: 4 #config['threads_mapping']
+    # wildcard_constraints:
+        #rna_type='(?!other).*'
+        # sample_id='\w+'
+    params: 
+        tmp_bam=output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge19.bam', # if config['remove_duplicates'] else output_dir+'/tbam/{sample_id}/bam/merge19.bam',
+        seed = config['seed'],
+        downsample = config['downsample'],
+        downsample_ratio = str(config['seed'])+"."+str(config['downsample']),
+        min_insert_size = config['min_insert_size'],
+        max_insert_size = config['max_insert_size'],
+        mapq = config['min_map_quality'],
+    run:
+        shell(merge_tbam)
+
+rule merge_tbam_11RNA:
+    input:
+        bam=lambda wildcards: expand('{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam', #  if config['remove_duplicates'] else output_dir+'/tbam/{sample_id}/bam/{rna_type}.bam'
+            output_dir=output_dir,sample_id=wildcards.sample_id,bam_dedup_dir=bam_dedup_dir, rna_type=rna_types2),
+    output:
+        bam=output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA_sort.bam', 
+        bai=output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA_sort.bam.bai' ,
+    threads: 4 #config['threads_mapping']
+    # wildcard_constraints:
+        #rna_type='(?!other).*'
+        # sample_id='\w+'
+    params: 
+        tmp_bam=output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA.bam', # if config['remove_duplicates'] else output_dir+'/tbam/{sample_id}/bam/merge19.bam',
+        seed = config['seed'],
+        downsample = config['downsample'],
+        downsample_ratio = str(config['seed'])+"."+str(config['downsample']),
+        min_insert_size = config['min_insert_size'],
+        max_insert_size = config['max_insert_size'],
+        mapq = config['min_map_quality'],
+    run:
+        shell(merge_tbam)
+
+
+rule filter_11RNA_primary_tbam:
+    input:
+        merged_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA_sort.bam', # if config['remove_duplicates'] else output_dir+'/tbam/{sample_id}/bam/merge11RNA_sort.bam',
+    output:
+        primary_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA_sort_primary.bam',     
+        primary_bai = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA_sort_primary.bam.bai',     
+    threads: config['threads_mapping']
+    # wildcard_constraints:
+        # sample_id='\w+'
+    conda:
+        "./envs/cfpeak.yml"
+    shell:
+        '''
+        samtools view -b -F 256 -@ {threads} -o {output.primary_bam} {input.merged_bam} 
+        samtools index -@ {threads} {output.primary_bam}
+        '''
+
+# rule filter_19_primary_tbam:
+#     input:
+#         merged_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge19_sort.bam', # if config['remove_duplicates'] else output_dir+'/tbam/{sample_id}/bam/merge11RNA_sort.bam',
+#     output:
+#         primary_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge19_sort_primary.bam',     
+#         primary_bai = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge19_sort_primary.bam.bai',     
+#     threads: config['threads_mapping']
+#     # wildcard_constraints:
+#         # sample_id='\w+'
+#     shell:
+#         '''
+#         samtools view -b -F 256 -@ {threads} -o {output.primary_bam} {input.merged_bam} 
+#         samtools index -@ {threads} {output.primary_bam}
+#         '''

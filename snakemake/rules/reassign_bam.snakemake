@@ -1,0 +1,278 @@
+#todo: optimize re-flag bam process
+rescue="""
+        (echo "Start preprocessor at `date`"; 
+        python \
+            scripts/clam/preprocessor.py \
+            -i {input.bam} \
+            -o {params.EM_dir} \
+            --read-tagger-method {params.tagger} --max-multihits {params.multihits} ; 
+        echo "Start realigner at `date`"; 
+        python \
+            scripts/clam/realigner.py \
+            -i {params.multi} \
+            -o {params.EM_dir} \
+            --winsize {params.winsize} --max-tags -1 --read-tagger-method {params.tagger}; \
+        echo "Start revert to orignal realigned bam at `date`"; 
+        (samtools view -H {params.realigned} ; \
+        samtools view {params.realigned} | \
+        awk 'BEGIN{{FS=OFS="\t"}} \
+        {{if ($(NF-6) ~ /^os:Z:/) gsub(/os:Z:/, "", $(NF-6)); if ($(NF-5) ~ /^or:i:/)  gsub(/or:i:/, "", $(NF-5)); if ($(NF-4) ~ /^og:Z:/) gsub(/og:Z:/, "", $(NF-4)); if ($(NF-3) ~ /^oq:Z:/) gsub(/oq:Z:/, "", $(NF-3)); if ($(NF-2) ~ /^oa:Z:/) gsub(/oa:Z:/, "", $(NF-2)); if ($(NF-1) ~ /^ob:i:/) gsub(/ob:i:/, "", $(NF-1)); if ($(NF) ~ /^AS:f:/) gsub(/AS:f:/, "", $(NF)); \
+        if ( ($2>=256 && $2<512) || ($2>=768 && $2<1024) || ($2>=1280 && $2<1536) || ($2>=1792 && $2<2048) || ($2>=2304 && $2<2560) || ($2>=2816 && $2<3072) || ($2>=3840) ) newFlag=$2-256; score=100*$(NF); score_field="AS:f:"score; {{ print $1,newFlag,$3,$(NF-5),$5,$(NF-4),$(NF-2),$(NF-1),$9,$(NF-6),$(NF-3),score_field }} }} ' ) | \
+        samtools view -b > {output.realigned_reverted_bam}; \
+        echo "Start revert to orignal uniq bam at `date`"; 
+        (samtools view -H {params.uniq} ; \
+        samtools view {params.uniq} | \
+        awk 'BEGIN{{FS=OFS="\t"}} \
+        {{if ($(NF-5) ~ /^os:Z:/) gsub(/os:Z:/, "", $(NF-5)); if ($(NF-4) ~ /^or:i:/)  gsub(/or:i:/, "", $(NF-4)); if ($(NF-3) ~ /^og:Z:/) gsub(/og:Z:/, "", $(NF-3)); if ($(NF-2) ~ /^oq:Z:/) gsub(/oq:Z:/, "", $(NF-2)); if ($(NF-1) ~ /^oa:Z:/) gsub(/oa:Z:/, "", $(NF-1)); if ($(NF) ~ /^ob:i:/) gsub(/ob:i:/, "", $(NF)); \
+        score_field="AS:f:100"; {{ print $1,$2,$3,$(NF-4),$5,$(NF-3),$(NF-1),$(NF),$9,$(NF-5),$(NF-2),score_field}} }} ' ) | \
+        samtools view -b > {output.uniq_reverted_bam} ) \
+        > {log} 2>&1
+        rm {params.multi}* {params.realigned}* 
+        """
+
+
+# EM: merged bam (little reads each RNA type)
+rule bam_rescue_multi_11RNA:
+    input:
+        bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA_sort.bam' 
+    output:
+        uniq_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.bam', 
+        allreassign_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/allrealigned.sorted.bam',
+        uniq_reverted_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.revertFullLengthReads.bam', 
+        realigned_reverted_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/realigned.sorted.revertFullLengthReads.bam', 
+    params:
+        uniq = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.bam', 
+        multi = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/multi.sorted.bam', 
+        realigned = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/realigned.sorted.bam', 
+        EM_dir = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort', 
+        multihits = 100,
+        tagger = "median",
+        winsize = 50,
+        # GATK_path = GATK_path
+    threads: max(4,int(config['threads_mapping'])) # 12 
+    log:
+        output_dir+"/tbam/{sample_id}/log-EM/{sample_id}/merge11RNA_sort.log"
+    run:
+        shell(rescue)
+        
+rule bam_rescue_multi_19:
+    input:
+        bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge19_sort.bam' 
+    output:
+        uniq_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/unique.sorted.bam', 
+        allreassign_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/allrealigned.sorted.bam',
+        uniq_reverted_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/unique.sorted.revertFullLengthReads.bam', 
+        realigned_reverted_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/realigned.sorted.revertFullLengthReads.bam', 
+    params:
+        uniq = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/unique.sorted.bam', 
+        multi = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/multi.sorted.bam', 
+        realigned = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/realigned.sorted.bam', 
+        EM_dir = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort', 
+        multihits = 100,
+        tagger = "median",
+        winsize = 50,
+        # GATK_path = GATK_path
+    threads: max(4,int(config['threads_mapping'])) # 12 
+    log:
+        output_dir+"/tbam/{sample_id}/log-EM/{sample_id}/merge19_sort.log"
+    run:
+        shell(rescue)
+
+sort_EM='''
+        samtools sort -@ {threads} -o {output.merged_bam} {input.uniq_bam}
+        samtools index -@ {threads} {output.merged_bam}
+        rm {input.uniq_bam} 
+        '''
+
+rule sort_tbam_uniq_19:
+    input:
+        uniq_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/unique.sorted.revertFullLengthReads.bam', 
+    output:
+        merged_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/unique.sorted.revertFullLengthReads.sorted.bam', 
+        merged_bai = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/unique.sorted.revertFullLengthReads.sorted.bam.bai', 
+    threads: config['threads_mapping']
+    run:
+        shell(sort_EM)
+
+rule sort_tbam_uniq_11RNA:
+    input:
+        uniq_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.revertFullLengthReads.bam', 
+    output:
+        merged_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.revertFullLengthReads.sorted.bam', 
+        merged_bai = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.revertFullLengthReads.sorted.bam.bai', 
+    threads: config['threads_mapping']
+    run:
+        shell(sort_EM)
+
+
+merge_EM='''
+        samtools merge -f -@ {threads} {params.tmp_bam} {input.uniq_bam} {input.realigned_reverted_bam}
+        samtools sort -@ {threads} -o {output.merged_bam} {params.tmp_bam}
+        samtools index -@ {threads} {output.merged_bam}
+        rm {params.tmp_bam} {input.realigned_reverted_bam} 
+        '''
+
+rule merge_tbam_EM_11RNA:
+    input:
+        uniq_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.revertFullLengthReads.sorted.bam', 
+        realigned_reverted_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/realigned.sorted.revertFullLengthReads.bam', 
+    output:
+        merged_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/merged.sorted.bam', 
+    threads: config['threads_mapping']
+    params: 
+        tmp_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/merged.bam', 
+    run: 
+        shell(merge_EM)
+
+rule merge_tbam_EM_19:
+    input:
+        uniq_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/unique.sorted.revertFullLengthReads.sorted.bam', 
+        realigned_reverted_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/realigned.sorted.revertFullLengthReads.bam', 
+    output:
+        merged_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/merged.sorted.bam', 
+    threads: config['threads_mapping']
+    params: 
+        tmp_bam = output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/merged.bam', 
+    run: 
+        shell(merge_EM)
+        
+
+
+# # bam to bigwig
+# rule primary_tbam_to_bw:
+#     input:
+#         output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA_sort_primary.bam' 
+#     output:
+#         peak_dir+'/tbigwig/{sample_id}_merge11RNA_sort_primary.bigwig'
+#     threads: 4 #config['threads_mapping']
+#     log: peak_dir+'/tbigwig/log/{sample_id}_merge11RNA_sort_primary.log'
+#     params: 
+#         mapq = config['min_map_quality'],
+#         binSize = 1
+#     # wildcard_constraints:
+#     #     # sample_id='\w+'
+#     shell:
+#         '''
+#         /BioII/lulab_b/baopengfei/anaconda3/envs/exvariance/bin/bamCoverage \
+#             --binSize {params.binSize} --numberOfProcessors {threads} --normalizeUsing CPM \
+#             -b {input} \
+#             -o {output} \
+#             > {log} 2>&1
+#         '''
+# rule EM_tbam_to_bw:
+#     input:
+#         output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/merged.sorted.bam' 
+#     output:
+#         peak_dir+'/tbigwig/{sample_id}_merge19_sort_EM.bigwig'
+#     threads: 4 #config['threads_mapping']
+#     log: peak_dir+'/tbigwig/log/{sample_id}_merge19_sort_EM.log'
+#     params: 
+#         mapq = config['min_map_quality'],
+#         binSize = 10
+#     # wildcard_constraints:
+#     #     # sample_id='\w+'
+#     shell:
+#         '''
+#         /BioII/lulab_b/baopengfei/anaconda3/envs/exvariance/bin/bamCoverage \
+#             --binSize {params.binSize} --numberOfProcessors {threads} --normalizeUsing CPM \
+#             -b {input} \
+#             -o {output} \
+#             > {log} 2>&1
+#         '''
+
+# bam to bed
+bamtobed='''samtools view -bh {input} | bedtools bamtobed -i stdin | pigz -c -p {threads} > {output}
+        '''
+#prepare raw read bed for piranha_call_peaks.R; localmax; clipper
+rule primary_tbam_to_bed:
+    input:
+        output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'/merge11RNA_sort_primary.bam' 
+        # output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/unique.sorted.revertFullLengthReads.sorted.bam',
+        # output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.revertFullLengthReads.sorted.bam',
+    output:
+        peak_dir+'/tbed_11RNA_primary/{sample_id}.bed.gz'
+    threads: config['threads_mapping']
+    params: 
+        # mapq = config['min_map_quality'],
+        # subsample = config['downsample'],# 0.1,
+    # wildcard_constraints:
+    #     # sample_id='\w+'
+    run:
+        shell(bamtobed)
+
+
+rule tbed_long_to_tbedgraph:
+    input:
+        bed=peak_dir+'/tbed_11RNA_primary/{sample_id}.bed.gz',
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+    output:
+        peak_dir+'/tbedgraph_11RNA_primary/{sample_id}.transcriptome.bedGraph'
+    threads: max(4, config['threads_mapping'])
+    params:
+        temp_dir=config['temp_dir']
+    run:
+        shell('''bedtools genomecov -i {input.bed} -g {input.chrom_sizes} -bg -split | LC_COLLATE=C sort -T {params.temp_dir} -k1,1 -k2,2n > {output}''')
+#all strand considered
+
+#count bw, not cpm bw
+rule tbedgraph_to_tbigwig:
+    input:
+        bedgraph=peak_dir+'/tbedgraph_11RNA_primary/{sample_id}.transcriptome.bedGraph',
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+    output:
+        peak_dir+'/tbigwig_11RNA_primary/{sample_id}.transcriptome.bigWig'
+    threads: max(4, config['threads_mapping'])
+    params: 
+        temp_dir=config['temp_dir'],
+        temp_file=temp_dir+'/{sample_id}.tbedgraph_to_bigwig.tmp3'
+    conda:
+        "./envs/cfpeak.yml"
+    shell:
+        '''cat {input.bedgraph} | bedtools sort > {params.temp_file}; {bin_dir}/bedGraphToBigWig {params.temp_file} {input.chrom_sizes} {output}; rm {params.temp_file}'''
+
+
+
+rule EM_tbam_to_bed:
+    input:
+        output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/merged.sorted.bam' 
+    output:
+        peak_dir+'/tbed_RNA_EM/{sample_id}.bed.gz'
+    threads: config['threads_mapping']
+    params: 
+        # mapq = config['min_map_quality'],
+        # subsample = config['downsample'],# 0.1,
+    # wildcard_constraints:
+    #     #rna_type='(?!other).*'
+    #     rna_type='(?!genome).*'
+    run:
+        shell(bamtobed)
+
+
+rule tbed_long_to_tbedgraph2:
+    input:
+        bed=peak_dir+'/tbed_RNA_EM/{sample_id}.bed.gz',
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+    output:
+        peak_dir+'/tbedgraph_RNA_EM/{sample_id}.transcriptome.bedGraph'
+    threads: max(4, config['threads_mapping'])
+    params:
+        temp_dir=config['temp_dir']
+    run:
+        shell('''bedtools genomecov -i {input.bed} -g {input.chrom_sizes} -bg -split | LC_COLLATE=C sort -T {params.temp_dir} -k1,1 -k2,2n > {output}''')
+#all strand considered
+
+#count bw, not cpm bw
+rule tbedgraph_to_tbigwig2:
+    input:
+        bedgraph=peak_dir+'/tbedgraph_RNA_EM/{sample_id}.transcriptome.bedGraph',
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+    output:
+        peak_dir+'/tbigwig_RNA_EM/{sample_id}.transcriptome.bigWig'
+    threads: max(4, config['threads_mapping'])
+    params: 
+        temp_dir=config['temp_dir'],
+        temp_file=temp_dir+'/{sample_id}.tbedgraph_to_bigwig.tmp2'
+    conda:
+        "./envs/cfpeak.yml"
+    shell:
+        '''cat {input.bedgraph} | bedtools sort > {params.temp_file}; {bin_dir}/bedGraphToBigWig {params.temp_file} {input.chrom_sizes} {output}; rm {params.temp_file}'''
