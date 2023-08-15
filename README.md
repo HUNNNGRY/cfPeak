@@ -153,9 +153,16 @@ Following steps below to get a local copy and run
    source activate cfpeak 
    dst="test_small"
    ```
-2. Modify the config file based on your purpose
-   detailed description are shown in config/test_small.yaml file
-3.1 Run in server
+2. Prepare/modify the config and metadata file based on your need
+   * detailed config and description are stored in **${dst}.yaml** file under **config_dir** directory your defined in the config file (default: config)
+   * metadata of sample ids is stored in **sample_ids.txt** file under **data_dir** directory your defined in the config file (default: data/$dst).
+
+3. Prepare clean fastq data 
+   * fq_trimming steps are currently included for this peak pipeline, inefficient cleaning might happen due to different library strategies.
+   * your may need **trim_galore** or **fastp** for auto adapter detection, or use **cutadapt** if you are fully aware of the adapter sequences.
+   * prepare clean fastq ({sample_id}.fastq.gz) into the **trimmed** directory under **output_dir** directory your defined in the config file (default: output/$dst).
+
+4.1 Run in server
    ```sh
     snakemake \
       --rerun-incomplete --keep-going --printshellcmds --reason --use-conda --nolock --latency-wait 20 --restart-times 1 --jobs 14 \
@@ -163,7 +170,7 @@ Following steps below to get a local copy and run
       --configfile config/${dst}.yaml \
       > logs/${dst}/run-${dst}.log 2>&1 &
    ```
-3.2 Run in cluster
+4.2 Run in cluster
    ```sh
     snakemake \
       --rerun-incomplete --keep-going --printshellcmds --reason --use-conda --nolock --latency-wait 20 --restart-times 1 --jobs 14 \
@@ -173,7 +180,7 @@ Following steps below to get a local copy and run
       --cluster "sbatch --cpus-per-task 1 -n {cluster.threads} -J {cluster.jobname} -p {cluster.partition}  {cluster.resources} -o {cluster.output} -e {cluster.error}" \
       > logs/${dst}/run-${dst}.log 2>&1 &
    ```
-4. Check output
+1. Check output
    * cfPeak sample peak file: output/test_small/call_peak_all/cfpeak_by_sample/b5_d50_p1/s1.bed
      * the columns represent “transcript, start, end, name, maximum depth, strand, maximum position, background depth, permutation FDR, Poisson P-value” from left to right
    * cfPeak sample peak file (filtered by CNN): output/test_small/call_peak_all/cfpeakCNN_by_sample/b5_d50_p1/s1.bed
