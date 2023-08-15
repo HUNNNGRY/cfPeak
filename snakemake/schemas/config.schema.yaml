@@ -1,0 +1,153 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+description: snakemake configuration file
+
+type: object
+
+# possible entries of the config file and which type they should be
+properties:
+  dataset:
+    type: string
+  root_dir:
+    type: string
+  input_dir:
+    type: string
+  config_dir:
+    type: string
+  annotation_dir:
+    type: string
+  genome_dir:
+    type: string
+  output_dir:
+    type: string
+  temp_dir:
+    type: string
+  data_dir:
+    type: string
+  peak_subdir:
+    type: string
+  clipper_subdir:
+    type: string
+  clam_subdir:
+    type: string
+
+  threads:
+    type: integer
+  threads_compress:
+    type: integer
+  threads_mapping:
+    type: integer
+
+  min_insert_size:
+    type: integer
+  max_insert_size:
+    type: integer
+
+  aligner:
+    type: string
+    enum: ["bowtie2"] # current not support STAR
+    description: Name of mapping tools
+  rna_types:
+    type: array 
+    default: [spikein, univec, rRNA, miRNA, lncRNA, mRNA, piRNA, snoRNA, snRNA, srpRNA, tRNA, tucpRNA, Y_RNA, intron_for, intron_rev, promoter_for, promoter_rev, enhancer_for, enhancer_rev, repeats_for, repeats_rev]
+  paired_end:
+    type: boolean
+  strandness:
+    type: string
+    enum: ["forward","reverse"] 
+    description: Strandness of read1 (relative to RNA template)
+  remove_duplicates:
+    type: boolean
+  min_map_quality:
+    type: integer
+  UMI:
+    type: boolean
+
+  downsample_fq:
+    type: string # 33 means 0.33
+  downsample:
+    type: string # 99 means 0.99
+  min_fq_num: 
+    type: integer
+  max_fq_num: 
+    type: integer
+  seed: 
+    type: integer
+
+  run_piranha:
+    type: boolean
+    default: false
+  call_peak_pvalue_piranha:
+    type: string # "01"
+  # distribution:
+  #   type: string 
+  #   enum: ["ZeroTruncatedNegativeBinomial"] #  
+  #   description: Model in original Piranha
+  run_clipper:
+    type: boolean
+    default: false
+  call_peak_pvalue_clipper:
+    type: string # "05"
+  run_clam:
+    type: boolean
+    default: false
+  call_peak_pvalue_clam:
+    type: string # "005"
+  run_cfpeak:
+    type: boolean
+  call_peak_pvalue_cfpeak:
+    type: string # "1"
+  decay_ratio:
+    type: string # "50"
+  minLocalmaxBinCov: 
+    type: integer # 2
+
+  bin_size: 
+    type: integer # 5 
+  cov_threshold:
+    type: number # 0.21 
+  min_peak_size: 
+    type: integer
+  max_peak_size: 
+    type: integer
+
+# entries that have to be in the config file for successful validation
+required:
+  - dataset
+  - root_dir
+  - input_dir
+  - config_dir
+  - annotation_dir
+  - genome_dir
+  - output_dir
+  - temp_dir
+  - data_dir
+  - peak_subdir
+
+  - rna_types
+  - paired_end
+  - strandness
+  - remove_duplicates
+  - min_map_quality
+  - UMI
+
+  - run_piranha
+  - call_peak_pvalue_piranha
+  - run_clipper
+  - call_peak_pvalue_clipper
+  - run_clam
+  - call_peak_pvalue_clam
+  - run_cfpeak
+  - call_peak_pvalue_cfpeak
+  - decay_ratio
+
+  - cov_threshold
+
+
+
+
+
+
+
+
+

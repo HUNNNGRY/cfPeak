@@ -1,0 +1,16 @@
+#Channels from which the packages are searched.
+channels:
+- anaconda
+- bioconda
+- conda-forge
+
+#Required packages.
+# - python==3.9.2
+# - pip==22.1.2
+dependencies:
+ - bedtools==2.30.0
+ - pigz==2.6
+ - r-base=3.6.3
+ - r-devtools==2.3.2
+ - r-argparse=2.0.3
+ - r-mass=7.3_53.1

@@ -1,0 +1,20 @@
+# Channels from which the packages are searched.
+channels:
+  - anaconda
+  - bioconda
+  - conda-forge
+
+# Required packages.
+dependencies:
+ - python==3.9.2
+ - snakemake==7.32.0
+ - pip==22.3.1
+ - pyBigWig==0.3.22
+ - pysam==0.21.0
+ - seqkit==2.5.0
+ - seqtk==1.4
+ - bowtie2==2.5.1
+ - umi_tools==1.1.4
+ - pigz==2.6
+ - samtools==1.17
+ - bedtools==2.31.0

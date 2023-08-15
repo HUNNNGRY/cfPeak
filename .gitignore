@@ -1,0 +1,15 @@
+genome
+templates
+src
+tools
+singularity
+output
+**archive*
+**deprecated*
+**bak*
+tmp
+temp
+test
+fig
+logs
+
