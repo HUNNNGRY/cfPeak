@@ -169,7 +169,7 @@ Following steps below to get a local copy and run
       --rerun-incomplete --keep-going --printshellcmds --reason --use-conda --nolock --latency-wait 20 --restart-times 1 --jobs 14 \
       --snakefile snakemake/call_peaks.snakemake \
       --configfile config/${dst}.yaml \
-      --cluster-config snakemake/cluster_slurm.json \
+      --cluster-config snakemake/cluster/cluster_slurm.json \
       --cluster "sbatch --cpus-per-task 1 -n {cluster.threads} -J {cluster.jobname} -p {cluster.partition}  {cluster.resources} -o {cluster.output} -e {cluster.error}" \
       > logs/${dst}/run-${dst}.log 2>&1 &
    ```
