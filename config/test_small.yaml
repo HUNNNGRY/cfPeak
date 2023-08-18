@@ -63,7 +63,7 @@ call_peak_pvalue_clam: "005" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (
 clam_gtf: /BioII/lulab_b/baopengfei/gitsoft/clipper/clipper/data/hg38txNoDNAnewTxID.AS.STRUCTURE.COMPILED.gtf
 
 ## cfpeak
-run_cfpeak: True
+run_cfpeak: true
 #cfpeak_EM: True # use EM-rescued multi-mapped reads for cfPeak peak calling
 call_peak_pvalue_cfpeak: "1" # 01 means 0.01, 10 means 0.10, 00 or 1 means 1.0 (not filter)
 decay_ratio: "50" # 50 means 0.50

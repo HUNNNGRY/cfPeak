@@ -1,7 +1,7 @@
 shell.prefix('set -x;')
 include: 'common.snakemake'
-include: "rules/process_bam.snakemake"
-include: "rules/reassign_bam.snakemake"
+include: 'process_bam.snakemake'
+include: 'reassign_bam.snakemake'
 
 def get_all_inputs(wildcards):
     available_inputs = dict(

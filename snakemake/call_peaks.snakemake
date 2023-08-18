@@ -1,34 +1,16 @@
 shell.prefix('set -x;')
 include: 'peak_common.snakemake'
+include: 'prepare_genome.snakemake'
 # if(1>0):
 #     include: 'peak_common.snakemake'
 # else:
 #     include: 
 
 
-
 rule all:
     input:
         get_all_inputs
 
-#/BioII/lulab_b/jinyunfan/anaconda3/envs/bioinfo_py36/bin/bowtie2 (version 2.3.5)
-rule transcript_index:
-    input:
-        genome_dir+'/fasta_newTxID/{rna_type}.fa'
-    output:
-        bt2_1=genome_dir+'/index/bowtie2/{rna_type}.1.bt2',
-        bt2rev_1=genome_dir+'/index/bowtie2/{rna_type}.rev.1.bt2'
-    params:
-        output_prefix=genome_dir+'/index/bowtie2/{rna_type}'
-    threads:
-        config['threads_mapping']
-    conda:
-        "./envs/cfpeak.yml"
-    shell:
-        '''bowtie2-build --threads {threads} {input} {params.output_prefix}
-        '''
-
-#sample reads into similar scale, sequentially map to + strand of tx (by JYF)
 rule mapping_tx:
     input:
         # fastq = "output/{dataset}/trimmed/{sample_id}.fastq.gz"
@@ -88,5 +70,3 @@ rule mapping_tx:
             )> {log} 2>&1
         rm {params.tmp_fq}
         """
-#/BioII/lulab_b/liyu/software/anaconda3/bin/seqkit
-#/BioII/lulab_b/baopengfei/anaconda3/bin/seqtk
