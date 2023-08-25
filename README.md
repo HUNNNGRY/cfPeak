@@ -81,9 +81,6 @@ Following steps below to get a local copy and run
 
 1. Clone the repo
    ```sh
-   # from gitee
-   git clone https://gitee.com/hunnngry/cfPeak.git
-   # or from github
    git clone https://github.com/hunnngry/cfPeak.git
    ```
 
