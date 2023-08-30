@@ -1,5 +1,31 @@
 
 # def func. ---------------------------------------------------------------
+old2newTxID <- function(x){
+  x <- gsub("(-)","_neg",x,fixed = T)
+  x <- gsub("(+)","_pos",x,fixed = T)
+  x <- gsub("::","__",x,fixed = T)
+  x <- gsub(":","___",x,fixed = T)
+  x <- gsub("-","____",x,fixed = T)
+  x <- gsub(".","_____",x,fixed = T)
+  return(x)
+}
+new2oldTxID <- function(x){
+  # x <- txID
+  x <- gsub("_neg","(-)",x,fixed = T)
+  x <- gsub("_pos","(+)",x,fixed = T)
+  x <- gsub("_____",".",x,fixed = T)
+  x <- gsub("____","-",x,fixed = T)
+  x <- gsub("___",":",x,fixed = T)
+  x <- gsub("__","::",x,fixed = T)
+  return(x)
+}
+
+GRange2bed <- function(gr){
+  # gr <- hg38[[1]] # 1-base to 0-base
+  bed <- data.frame("chr"=gr@seqnames,"start"=gr@ranges@start-1,"end"=gr@ranges@start,"name"=gr$name,"score"=gr$score,"strand"=gr@strand)
+  return(bed)
+}
+
 get.mat <- function(signal,region,signal.label,region.label,up=50,down=50,bin=10,ratio=0.3,mean_mode = "coverage"){
   # signal <- "output/GSE71008_NCpool/call_peak_all/tbed_RNA_EM/NCpool.bed.gz"
   # region <- "output/GSE71008_NCpool/call_peak_all/domains_clipper_by_sample/b5_p05/NCpool.bed"
