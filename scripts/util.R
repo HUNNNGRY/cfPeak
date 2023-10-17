@@ -1,3 +1,6 @@
+# func. for cfPeak
+# last 2305 by bpf 
+# b.p.f@qq.com
 
 # def func. ---------------------------------------------------------------
 old2newTxID <- function(x){
@@ -107,21 +110,6 @@ seq_compl <- function(seq) {
   return(paste(cmplvec, collapse = ""))
 }
 
-## theme 
-bar_theme <- theme_minimal() +  # base_size=12
-  theme(#axis.ticks.x=element_blank(),
-    #strip.text.y = element_blank(),
-    aspect.ratio = 1,
-    strip.text = element_text(size=20),
-    axis.title.x = element_text(size=20),
-    axis.title.y = element_text(size=20),
-    axis.text.x = element_text(size = 20,hjust = 1,vjust = 0.5,angle = 90), #
-    axis.text.y = element_text(size = 20),
-    plot.title = element_text(size=20),
-    # strip.text = element_blank(),
-    legend.position = "none", #c(0.9,0.8),#,#
-    legend.text = element_text(size= 16),
-    legend.title= element_text(size= 16))
 
 ## tpm
 tpm <- function(count,gene.len){
@@ -387,7 +375,7 @@ diff.v2 <- function(mat,samples,group,method,norm_method, filterType="small",fea
 
 
 #not paired (optional with batch)
-diff.v2.dcb <- function(mat,samples,group, batch="NULL", method,norm_method, filterType="NULL",featureType){
+diff.v2.dcb <- function(mat,samples,group, batch="NULL", method,norm_method, filterType="NULL",featureType, getCountGt1SmpFrac="Y", getPercExpByGrp="Y"){
   filterType <- "NULL"
   suppressPackageStartupMessages(library(edgeR))
   mat <- mat[,samples]
@@ -399,13 +387,15 @@ diff.v2.dcb <- function(mat,samples,group, batch="NULL", method,norm_method, fil
   message(filterType)
   counts <- edgeR::getCounts(y)
   
-  ## get count>1 sample freq
-  counts.neg <- counts[,group=="negative"]
-  gt1.neg <- rowSums(counts.neg>=1)/length(samples[group=="negative"])
-  counts.neg <- NULL
-  counts.pos <- counts[,group=="positive"]
-  gt1.pos <- rowSums(counts.pos>=1)/length(samples[group=="positive"])
-  counts.pos <- NULL
+  if(getCountGt1SmpFrac!="NULL"){
+    ## get count>1 sample freq
+    counts.neg <- counts[,group=="negative"]
+    gt1.neg <- rowSums(counts.neg>=1)/length(samples[group=="negative"])
+    counts.neg <- NULL
+    counts.pos <- counts[,group=="positive"]
+    gt1.pos <- rowSums(counts.pos>=1)/length(samples[group=="positive"])
+    counts.pos <- NULL
+  }
   
   if (filterType=="small"){
     keep <- rowSums(counts>=1) >= 0.5*length(samples)
@@ -447,22 +437,23 @@ diff.v2.dcb <- function(mat,samples,group, batch="NULL", method,norm_method, fil
   cpm <- edgeR::cpm(y, log=F, normalized.lib.sizes = T,prior.count = 0)
   logcpm <- log2(cpm+1)
   
-  ## get percentile level by group
-  cpm.neg <- cpm[,group=="negative"]
-  #dim(cpm)
-  p90.neg <- apply(cpm.neg,1, function(x) quantile(x, probs = max(2/ncol(cpm.neg),0.9) )) # 0.9; min 2 samples
-  p50.neg <- apply(cpm.neg,1, function(x) quantile(x, probs = max(1/ncol(cpm.neg),0.5) )) # 0.5; min 1 sample
-  p10.neg <- apply(cpm.neg,1, function(x) quantile(x, probs = max(1/ncol(cpm.neg),0.1) )) # 0.1; min 1 sample
-  mean.neg <- apply(cpm.neg,1, mean ) 
-  cpm.neg <- NULL
-  cpm.pos <- cpm[,group=="positive"]
-  #dim(cpm)
-  p90.pos <- apply(cpm.pos,1, function(x) quantile(x, probs = max(2/ncol(cpm.pos),0.9) )) # 0.9; min 2 samples
-  p50.pos <- apply(cpm.pos,1, function(x) quantile(x, probs = max(1/ncol(cpm.pos),0.5) )) # 0.5; min 1 sample
-  p10.pos <- apply(cpm.pos,1, function(x) quantile(x, probs = max(1/ncol(cpm.pos),0.1) )) # 0.1; min 1 sample
-  mean.pos <- apply(cpm.pos,1, mean ) 
-  cpm.pos <- NULL
-  
+  if(getPercExpByGrp!="NULL"){
+    ## get percentile level by group
+    cpm.neg <- cpm[,group=="negative"]
+    #dim(cpm)
+    p90.neg <- apply(cpm.neg,1, function(x) quantile(x, probs = max(2/ncol(cpm.neg),0.9) )) # 0.9; min 2 samples
+    p50.neg <- apply(cpm.neg,1, function(x) quantile(x, probs = max(1/ncol(cpm.neg),0.5) )) # 0.5; min 1 sample
+    p10.neg <- apply(cpm.neg,1, function(x) quantile(x, probs = max(1/ncol(cpm.neg),0.1) )) # 0.1; min 1 sample
+    mean.neg <- apply(cpm.neg,1, mean ) 
+    cpm.neg <- NULL
+    cpm.pos <- cpm[,group=="positive"]
+    #dim(cpm)
+    p90.pos <- apply(cpm.pos,1, function(x) quantile(x, probs = max(2/ncol(cpm.pos),0.9) )) # 0.9; min 2 samples
+    p50.pos <- apply(cpm.pos,1, function(x) quantile(x, probs = max(1/ncol(cpm.pos),0.5) )) # 0.5; min 1 sample
+    p10.pos <- apply(cpm.pos,1, function(x) quantile(x, probs = max(1/ncol(cpm.pos),0.1) )) # 0.1; min 1 sample
+    mean.pos <- apply(cpm.pos,1, mean ) 
+    cpm.pos <- NULL
+  }
   
   #design <- model.matrix(~ patient + group)  # partial paired mode
   #design <- model.matrix(~  group + patient)  # partial paired mode, design order has great impact
@@ -486,7 +477,16 @@ diff.v2.dcb <- function(mat,samples,group, batch="NULL", method,norm_method, fil
     test <- exactTest(y) # no design !
     res <- topTags(test, n=nrow(mat), sort.by='none')
   }
-  res <- cbind(res$table, baseMean=2^(res$table$logCPM),negGT1RatioCount=gt1.neg,posGT1RatioCount=gt1.pos,negMeanCPM=mean.neg,negCent90CPM=p90.neg,negCent50CPM=p50.neg,negCent10CPM=p10.neg, posMeanCPM=mean.pos, posCent90CPM=p90.pos,posCent50CPM=p50.pos,posCent10CPM=p10.pos)
+  
+  res <- cbind(res$table, baseMean=2^(res$table$logCPM))
+  if(getCountGt1SmpFrac!="NULL" & getPercExpByGrp!="NULL"){
+    res <- cbind(res,negGT1RatioCount=gt1.neg,posGT1RatioCount=gt1.pos,negMeanCPM=mean.neg,negCent90CPM=p90.neg,negCent50CPM=p50.neg,negCent10CPM=p10.neg, posMeanCPM=mean.pos, posCent90CPM=p90.pos,posCent50CPM=p50.pos,posCent10CPM=p10.pos)
+  }else if(getCountGt1SmpFrac=="NULL" & getPercExpByGrp!="NULL"){
+    res <- cbind(res,negMeanCPM=mean.neg,negCent90CPM=p90.neg,negCent50CPM=p50.neg,negCent10CPM=p10.neg, posMeanCPM=mean.pos, posCent90CPM=p90.pos,posCent50CPM=p50.pos,posCent10CPM=p10.pos)
+  }else if(getCountGt1SmpFrac!="NULL" & getPercExpByGrp=="NULL"){
+    res <- cbind(res,negGT1RatioCount=gt1.neg,posGT1RatioCount=gt1.pos)
+  }
+    
   # rename columns
   mapped_names <- colnames(res)
   for(i in 1:ncol(res)){
@@ -637,6 +637,34 @@ getPeakIndex <- function(feature.lab,logcpm,sample.table,prescale=F,mean.list,sd
 }
 
 
+library(ggplot2)
+
+## theme 
+bar_theme <- theme_minimal() +  # base_size=12
+  theme(#axis.ticks.x=element_blank(),
+    #strip.text.y = element_blank(),
+    aspect.ratio = 1,
+    strip.text = element_text(size=20),
+    axis.title.x = element_text(size=20),
+    axis.title.y = element_text(size=20),
+    axis.text.x = element_text(size = 20,hjust = 1,vjust = 0.5,angle = 90), #
+    axis.text.y = element_text(size = 20),
+    plot.title = element_text(size=20),
+    # strip.text = element_blank(),
+    legend.position = "none", #c(0.9,0.8),#,#
+    legend.text = element_text(size= 16),
+    legend.title= element_text(size= 16))
+my_theme_point <-   theme(plot.title = element_text(size = 28,color="black",hjust = 0.5),
+                    axis.title = element_text(size = 28,color ="black"),
+                    axis.text = element_text(size= 24,color = "black"), #,face="bold
+                    panel.grid.minor.y = element_blank(),
+                    panel.grid.minor.x = element_blank(),
+                    axis.text.x = element_text( hjust = 0.5 ), # angle = 45,
+                    axis.text.y = element_text( hjust = 0 ), # angle = 45,
+                    panel.grid=element_blank(),
+                    legend.position = "right",#c(0.5,0.3),
+                    legend.text = element_text(size= 26,color = "black"),
+                    legend.title= element_text(size= 26,color = "black"))
 my_theme_box <- theme(aspect.ratio = 1.5,
                       plot.title = element_text(size = 24,color="black",hjust = 0.5),
                       axis.title = element_text(size = 24,color ="black"), 
@@ -1015,5 +1043,4 @@ RNA_colors[['all']] <- "grey50" #"grey50"
 RNA_colors[['RNA']] <- "red2"
 RNA_colors[['DNA']] <- "purple" #"#117C8E": similar with repeats
 RNA_colors <- do.call("c",RNA_colors)
-
 

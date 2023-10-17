@@ -3,6 +3,12 @@ include: 'common.snakemake'
 include: 'process_bam.snakemake'
 include: 'reassign_bam.snakemake'
 
+if config['call_peak_pvalue_piranha']:
+    merge_types = ['merge11RNA_sort']
+else:
+    merge_types = ['merge11RNA_sort','merge19_sort']
+
+
 def get_all_inputs(wildcards):
     available_inputs = dict(
         ## star index
@@ -18,8 +24,8 @@ def get_all_inputs(wildcards):
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=rna_types),
         # bam_dedup_merge_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam",
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge19_sort','merge11RNA_sort']), # merge11RNA_sort_primary
-        realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
-            output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort','merge19_sort']), #  'merge11RNA_sort',
+        # realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
+        #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort','merge19_sort']), #  'merge11RNA_sort',
         # realigned_reverted_bam2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/{bam_type}",
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort'],bam_type=['unique.sorted.bam','unique.sorted.revertFullLengthReads.sorted.bam','allrealigned.sorted.bam'] ),
         # bam_dedup2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam",
@@ -34,18 +40,24 @@ def get_all_inputs(wildcards):
     )
     available_inputs_piranha = dict(
         # piranha
+        realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
+            output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort']),
         piranha_out=expand(peak_dir+'/piranha_by_sample/b{bin_size}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha'], sample_id=sample_ids),
         peak_piranha=expand(peak_dir+'/piranha/b{bin_size}_p{pvalue}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha']),
         peak_count_matrix_piranha=expand(peak_dir+'/count_matrix/piranha_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha'])
     )
     available_inputs_clipper = dict(
         # clipper
+        realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
+            output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort']),
         clipper_out=expand(peak_dir+'/clipper_by_sample/b{bin_size}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper'], sample_id=sample_ids),
         peak_clipper=expand(peak_dir+'/clipper/b{bin_size}_p{pvalue}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper']),
         peak_count_matrix_clipper=expand(peak_dir+'/count_matrix/clipper_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper'])
     )
     available_inputs_clam = dict(
         # clam
+        realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
+            output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort']),
         clam_out=expand(peak_dir+'/clam_by_sample/b{bin_size}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clam'], sample_id=sample_ids),
         peak_clam=expand(peak_dir+'/clam/b{bin_size}_p{pvalue}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clam']),
         peak_count_matrix_clam=expand(peak_dir+'/count_matrix/clam_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clam'])
@@ -57,6 +69,8 @@ def get_all_inputs(wildcards):
         # peak_count_matrix3=expand(peak_dir+'/count_matrix/cfpeak_b{bin_size}_d{decay}_p{pvalue}.txt',peak_dir=peak_dir, bin_size=config['bin_size'], decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak']),
 
         ## cfPeakCNN
+        realigned_reverted_bam2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
+            output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge19_sort']),
         localmax_out4=expand(peak_dir+'/cfpeakCNN_by_sample/b{bin_size}_d{decay}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'],decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak'], sample_id=sample_ids),
         peak_localmax4=expand(peak_dir+'/cfpeakCNN/b{bin_size}_d{decay}_p{pvalue}.bed', bin_size=config['bin_size'], decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak']),
         peak_count_matrix4=expand(peak_dir+'/count_matrix/cfpeakCNN_b{bin_size}_d{decay}_p{pvalue}.txt',peak_dir=peak_dir, bin_size=config['bin_size'], decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak'])

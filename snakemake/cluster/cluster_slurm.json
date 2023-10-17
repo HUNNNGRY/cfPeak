@@ -5,8 +5,8 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "{threads}",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17"
+        "nodesNum": "1",
+        "excludeNodesName": "node15,node16,node17"
     },
     "transcript_index": {
         "partition": "Acluster",
@@ -14,7 +14,7 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.output",
         "threads": "{threads}",
-        "resources": "--exclude=node16,node17"
+        "excludeNodesName": "node16,node17"
     },
     "transcript_index_long": {
         "partition": "Acluster",
@@ -22,7 +22,7 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.output",
         "threads": "{threads}",
-        "resources": "--exclude=node16,node17"
+        "excludeNodesName": "node15,node16,node17"
     },
     "transcript_index_star": {
         "partition": "Acluster",
@@ -30,34 +30,34 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards.rna_type}.output",
         "threads": "{threads}",
-        "resources": "--exclude=node16,node17"
+        "excludeNodesName": "node15,node16,node17"
     },
     "mapping_tx": {
-        "partition": "Acluster",
+        "partition": "Acluster,AMcluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "8",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "nodesNum": "1",
+        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
     },
     "mapping_tx_long": {
-        "partition": "Acluster",
+        "partition": "Acluster,AMcluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "8",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "nodesNum": "1",
+        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
     },
     "mapping_tx_star": {
-        "partition": "Acluster",
+        "partition": "Acluster,AMcluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "{threads}",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "nodesNum": "1",
+        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
     },
     "dedup": {
         "partition": "Acluster",
@@ -65,52 +65,52 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "{threads}",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "excludeNodesName": "node10,node11,node12,node13,node14"
     },
     "bam_rescue_multi_19": {
-        "partition": "Acluster",
+        "partition": "Acluster,AMcluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "nodesNum": "1",
+        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
     },
     "bam_rescue_multi_11RNA": {
-        "partition": "Acluster",
+        "partition": "Acluster,AMcluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "nodesNum": "1",
+        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
     },
     "call_peaks_cfpeak": {
-        "partition": "Acluster",
+        "partition": "Acluster,AMcluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "nodesNum": "1",
+        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
     },
     "call_peaks_clipper": {
-        "partition": "Acluster",
+        "partition": "Acluster,AMcluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "nodesNum": "1",
+        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
     },
     "call_peaks_clam": {
-        "partition": "Acluster",
+        "partition": "Acluster,AMcluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
-        "cpupertask": "1",
-        "resources": "--exclude=node16,node17,node18,node19,node20"
+        "nodesNum": "1",
+        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
     },
 
     "tbedgraph_to_tbigwig": {
@@ -119,7 +119,7 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.output",
         "threads": "{threads}",
-        "resources": "--exclude=node16,node17"
+        "excludeNodesName": "node15,node16,node17"
     },
     "domain_read_counts": {
         "partition": "Acluster",
@@ -127,7 +127,7 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards.sample_id}.output",
         "threads": "{threads}",
-        "resources": "--exclude=node16,node17"
+        "excludeNodesName": "node15,node16,node17"
     },
     "domain_count_matrix_localmax": {
         "partition": "Acluster",
@@ -135,7 +135,7 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "6",
-        "resources": "--exclude=node16,node17"
+        "excludeNodesName": "node15,node16,node17"
     },
     "rand1_domain_count_matrix_localmax":
     {
@@ -144,7 +144,7 @@
         "error": "logs/cluster/{dataset}/{rule}.error",
         "output": "logs/cluster/{dataset}/{rule}.output",
         "threads": "{threads}",
-        "resources": "--exclude=node16,node17"
+        "excludeNodesName": "node15,node16,node17"
     },
     "fullLength_domain_count_matrix_localmax":
     {
@@ -153,6 +153,6 @@
         "error": "logs/cluster/{dataset}/{rule}.error",
         "output": "logs/cluster/{dataset}/{rule}.output",
         "threads": "{threads}",
-        "resources": "--exclude=node16,node17"
+        "excludeNodesName": "node15,node16,node17"
     }
 }
