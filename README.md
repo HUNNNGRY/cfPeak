@@ -218,7 +218,7 @@ Distributed under the GPL-2.0 License License. See `LICENSE` for more informatio
 
 
 ## Appendix
-other supplementary scripts and table related to this paper can be found at https://cloud.tsinghua.edu.cn/d/bc54116786fa4cd9bbf0/
+other supplementary figure scripts and tables related to this paper can be found at https://cloud.tsinghua.edu.cn/d/bc54116786fa4cd9bbf0/
 
 <!-- ACKNOWLEDGEMENTS -->
 
