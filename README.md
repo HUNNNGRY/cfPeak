@@ -102,7 +102,7 @@ mamba env create -n cfpeak -f ./snakemake/envs/cfpeak.yml
 
 
 3.Create snakemake pipeline environment
-a. required for all
+**a.**required for all
 ```sh
 # activate global environment
 source activate cfpeak
@@ -114,13 +114,13 @@ snakemake --use-conda --conda-create-envs-only -j 1 --configfile config/test_lon
 ```
 > you may meet error like "ModuleNotFoundError: No module named _sysconfigdata_x86_64_conda_linux_gnu" when creating conda environment, this is conda bug may be solved by updateing python or copy file from elsewhere, details see https://stackoverflow.com/questions/68261254/conda-error-sysconfigdata-x86-64-conda-linux-gnu
 
-b. optional: if you need to run Piranha (v1.2.1)
+**b.**optional: if you need to run Piranha (v1.2.1)
 * By default, basical env (snakemake/envs/piranha.yml) that needed to run Piranha has already installed in last step, but need install countreg and bedtoolsr package manually to make it run (countreg pkg unfortunately is not yet on conda; and r-bedtoolsr in current conda repo requires R version >=4, in which cfPeak is not fully tested). First, locate your installed conda environments (by default in .snakemake/conda/[hash]); you can see the message when first create env, or else you can find out which [hash].yml file corresponds with the environment named piranha. Second, load that environment with conda activate .snakemake/conda/[hash]. Third, run R to enter the R shell 
   * install.packages("countreg", repos="http://R-Forge.R-project.org", version="0.2-1")
   * devtools::install_github("PhanstielLab/bedtoolsr", version="2.30.0-5") # you may update version
 * We provide two optional piranha version: in-house adapted cell-free Piranha software and simplified Piranha pkg in R (default). Users could switch to the former Piranha version in peak_common.snakemake by commenting rule call_peaks_piranha and uncommenting rule call_peaks_piranha2 if needed.
 
-c. optional: if you need to run CLIPper (v2.1.2) 
+**c.**optional: if you need to run CLIPper (v2.1.2) 
 * install CLIPper according to https://github.com/YeoLab/clipper
 * modify to suit tx-mapping mode:
   * find installed path of CLIPper call peak python script (e.g., ~/anaconda3/envs/clipper3/lib/python3.7/site-packages/clipper/src/call_peak.py)
@@ -130,7 +130,7 @@ c. optional: if you need to run CLIPper (v2.1.2)
     * comment 232-234 rows
 * use hg38_tx reference provided in cfpeak (hg38txNoDNAnewTxID.gff in https://cloud.tsinghua.edu.cn/f/56a32fe1b3624326b4c8/?dl=1) or you can add your own reference according to https://github.com/YeoLab/clipper/wiki/Supporting-additional-species (and remember to change your ref id in rule:call_peaks_clipper)
 
-d. optional: if you need to run CLAM (v1.2.0) 
+**d.**optional: if you need to run CLAM (v1.2.0) 
 * install CLIPper according to https://github.com/Xinglab/CLAM
 * modify to suit tx-mapping mode:
   * modify permutation_callpeak.py： row#439，(this fixed error for not considering left boundary less than 0 when defining flag: --extend)
@@ -218,7 +218,7 @@ Distributed under the GPL-2.0 License License. See `LICENSE` for more informatio
 
 
 ## Appendix
-other supplementary figure scripts and tables related to this paper can be found at https://cloud.tsinghua.edu.cn/d/bc54116786fa4cd9bbf0/
+other additional figure scripts, matrices, and tables related to this paper can be found at https://cloud.tsinghua.edu.cn/d/bc54116786fa4cd9bbf0/
 
 <!-- ACKNOWLEDGEMENTS -->
 
