@@ -17,14 +17,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://gitee.com/hunnngry/cfPeak">
+  <a href="https://github.com/hunnngry/cfPeak">
     <img src="_plots/cfPeak.png" alt="Logo" width="160" height="80">
   </a>
 
 <h2 align="center">cfPeak</h2>
 
   <p align="center">
-    cfPeak, peak analysis finds recurrently protected narrow regions with clinical potential
+    cfPeak, peak analysis of cell-free RNA finds recurrently protected narrow regions with clinical potential
   </p>
 </p>
 
@@ -63,10 +63,16 @@ We have discovered vast number of narrow regions protected from degradation from
 <!-- PROJECT pipeline -->
 <br />
 <p align="center">
-  <a href="https://gitee.com/hunnngry/cfPeak">
-    <img src="_plots/pipeline.png" alt="Pipeline" width="480" height="400">
+  <a href="https://github.com/hunnngry/cfPeak">
+    <img src="_plots/pipeline.png" alt="Pipeline" width="600" height="480">
   </a>
 
+<!-- PROJECT modules -->
+<br />
+<p align="center">
+  <a href="https://github.com/hunnngry/cfPeak">
+    <img src="_plots/modules.png" alt="Modules" width="600" height="600">
+  </a>
 
 <!-- GETTING STARTED -->
 
