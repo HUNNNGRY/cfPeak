@@ -41,7 +41,7 @@ def process_peak_bed(peak_bed, tx_info, bw, input_size):
     peak_bed["mid_point"] = peak_bed.apply(lambda x : int((x[1] + x[2])/2), axis = 1)
     peak_bed_filtered = peak_bed[ (peak_bed["mid_point"] >= input_size) & (peak_bed["tx.length"]>= peak_bed["mid_point"] + input_size)]
     #get peak coverage
-    peak_bed_final = pd.DataFrame(peak_bed_filtered[[0,1,2,"transcript_type","tx.length","mid_point"]].values,index=peak_bed_filtered[3].values, columns=["tx_id", "peak_start", "peak_end", "type","tx_length","mid_point"])
+    peak_bed_final = pd.DataFrame(peak_bed_filtered[[0,1,2,"transcript_type","tx.length","mid_point"]].values,index=peak_bed_filtered[3].values, columns=["tx_id", "peak_start", "peak_end", "type", "tx_length", "mid_point"])
     peak_bed_final["peak_coverage"] = peak_bed_final.apply( lambda x : bw.values(x["tx_id"], x["peak_start"], x["peak_end"]), axis=1)
     peak_bed_final["input_coverage"] = peak_bed_final.apply( lambda x : list(np.nan_to_num(bw.values(x["tx_id"], x["mid_point"] - input_size, x["mid_point"] + input_size), 0)), axis=1)
 
@@ -107,21 +107,24 @@ def main():
     parser.add_argument('--bigwig', '-bw', required = True, help = "Input sample bigwig file")
     parser.add_argument('--model', '-m', default = "./model/cnn_model.h5", help = "Trained CNN model file")
     parser.add_argument('--threshold', '-t', default = 0.5, help = "threshold of CNN model prediction probability, default = 0.5")
+    parser.add_argument('--half_bin_size', default = 50, help = "half of bin size: frame length of image for CNN training, default = 50")
+    parser.add_argument('--tx_tab', default = "/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/genome/hg38/chrom_sizes/tx_gn_length_newTxID.txt", 
+                        help = "path to tx metadat table information, should included a header named transcript_id,transcript_type,tx.length, denotes tx_id,tx_type,tx_length, respectively. default = /BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/genome/hg38/chrom_sizes/tx_gn_length_newTxID.txt")
     parser.add_argument('--plot_type', '-p', default = "No", choices = ["No","All","Anomaly"], help = "plot the peaks(All is 900 pic at most), default = No")
     parser.add_argument('--plot_path', '-pp', default = "./peak.pdf", help = "path to save plots, default = ./peak.pdf")
     parser.add_argument('--output', '-o', required = True, help = "output bed6 to save anomalous peaks")
     args = parser.parse_args()
 
-    input_size = 50
+    input_size = int(args.half_bin_size)
 
-    tx_gn_path = "/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/genome/hg38/chrom_sizes/tx_gn_length_newTxID.txt"
+    tx_gn_path = args.tx_tab # "/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/genome/hg38/chrom_sizes/tx_gn_length_newTxID.txt"
     tx_gn = load_tx_gn(tx_gn_path)
 
     peak_bed6 = load_peak_bed(args.bed6)
     bw = load_bigwig(args.bigwig)
     peak_bed = process_peak_bed(peak_bed6, tx_gn, bw, input_size)
     res = model_predict(peak_bed, model=args.model)
-    anomaly_mask = res[:,1] > args.threshold
+    anomaly_mask = res[:,1] > float(args.threshold)
     # peak_bed6[,4] = res[:,1]  # todo: change score (5th col) to prob.
     
     #change score to prob by wtw

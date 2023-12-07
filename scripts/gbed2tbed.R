@@ -67,7 +67,8 @@ suppressPackageStartupMessages(library(bedtoolsr))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(BiocGenerics))
 suppressPackageStartupMessages(library(parallel))
-
+suppressPackageStartupMessages(library(rtracklayer))
+suppressPackageStartupMessages(library(data.table))
 
 ## def func. 
 GRanges2bed <- function(gr=ds){
@@ -83,6 +84,7 @@ GRanges2bed <- function(gr=ds){
 
 
 # convert gbed to tbed ----------------------------------------------------
+message("start conversion at ",date())
 ## read peak bed
 #peak <- rtracklayer::import.bed(inputFile)
 #peak.df <- GRanges2bed(peak)
@@ -237,6 +239,8 @@ ts$orignal.id <- paste(ts$V4,ts$V1,ts$V2,ts$V3,ts$V6,sep = "|")
 table((ts$tx.end-ts$tx.start)==(ts$V3-ts$V2))             # should be all TRUE if filter with (ts <- ts[ts$a.ratio==1,])
 ts <- ts[,c("V10","tx.start","tx.end","orignal.id","V5","tx.strand")]
 
+ts$tx.start <- as.character(as.integer(ts$tx.start))
+ts$tx.end <- as.character(as.integer(ts$tx.end))
 
 ## write outfile
 message('successfully mapped intervals: ', nrow(ts))
@@ -245,6 +249,6 @@ if(outputFile == '-'){
 } else {
   data.table::fwrite(ts, outputFile, row.names=FALSE, col.names=FALSE, sep='\t', quote = F)
 }
-
+message("end conversion at ",date())
 #peak.df[peak.df$name=="AGO2-chr1:100007036-100007072",]
 

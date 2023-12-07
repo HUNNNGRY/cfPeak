@@ -1,8 +1,10 @@
 shell.prefix('set -x;')
-# include: 'common.snakemake'
 include: 'peak_common.snakemake'
 include: 'prepare_genome.snakemake'
-
+# if(1>0):
+#     include: 'peak_common.snakemake'
+# else:
+#     include: 
 
 rule all:
     input:

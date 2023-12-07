@@ -6,7 +6,7 @@
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "{threads}",
         "nodesNum": "1",
-        "excludeNodesName": "node15,node16,node17"
+        "excludeNodesName": "node15,node16"
     },
     "transcript_index": {
         "partition": "Acluster",
@@ -33,31 +33,31 @@
         "excludeNodesName": "node15,node16,node17"
     },
     "mapping_tx": {
-        "partition": "Acluster,AMcluster",
+        "partition": "Acluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "8",
         "nodesNum": "1",
-        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
+        "excludeNodesName": "node10,node11,node12"
     },
     "mapping_tx_long": {
-        "partition": "Acluster,AMcluster",
+        "partition": "Acluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "8",
         "nodesNum": "1",
-        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
+        "excludeNodesName": "node10,node11,node12"
     },
     "mapping_tx_star": {
-        "partition": "Acluster,AMcluster",
+        "partition": "Acluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "{threads}",
         "nodesNum": "1",
-        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
+        "excludeNodesName": "node10,node11,node12"
     },
     "dedup": {
         "partition": "Acluster",
@@ -65,52 +65,52 @@
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "{threads}",
-        "excludeNodesName": "node10,node11,node12,node13,node14"
+        "excludeNodesName": "node10,node11,node12"
     },
     "bam_rescue_multi_19": {
-        "partition": "Acluster,AMcluster",
+        "partition": "Acluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
         "nodesNum": "1",
-        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
+        "excludeNodesName": "node10,node11,node12"
     },
     "bam_rescue_multi_11RNA": {
-        "partition": "Acluster,AMcluster",
+        "partition": "Acluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
         "nodesNum": "1",
-        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
+        "excludeNodesName": "node10,node11,node12"
     },
     "call_peaks_cfpeak": {
-        "partition": "Acluster,AMcluster",
+        "partition": "Acluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
         "nodesNum": "1",
-        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
+        "excludeNodesName": "node10,node11,node12"
     },
     "call_peaks_clipper": {
-        "partition": "Acluster,AMcluster",
+        "partition": "Acluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
         "nodesNum": "1",
-        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
+        "excludeNodesName": "node10,node11,node12"
     },
     "call_peaks_clam": {
-        "partition": "Acluster,AMcluster",
+        "partition": "Acluster",
         "jobname": "{rule}.{wildcards}",
         "error": "logs/cluster/{dataset}/{rule}.{wildcards}.error",
         "output": "logs/cluster/{dataset}/{rule}.{wildcards}.output",
         "threads": "16",
         "nodesNum": "1",
-        "excludeNodesName": "node10,node11,node12,node13,node14,knl05,knl06,knl07"
+        "excludeNodesName": "node10,node11,node12"
     },
 
     "tbedgraph_to_tbigwig": {

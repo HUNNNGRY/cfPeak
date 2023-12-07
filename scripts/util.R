@@ -2,7 +2,7 @@
 # last 2305 by bpf 
 # b.p.f@qq.com
 
-# def func. ---------------------------------------------------------------
+# Id conversion func. ---------------------------------------------------------------
 old2newTxID <- function(x){
   x <- gsub("(-)","_neg",x,fixed = T)
   x <- gsub("(+)","_pos",x,fixed = T)
@@ -23,12 +23,25 @@ new2oldTxID <- function(x){
   return(x)
 }
 
-GRange2bed <- function(gr){
-  # gr <- hg38[[1]] # 1-base to 0-base
-  bed <- data.frame("chr"=gr@seqnames,"start"=gr@ranges@start-1,"end"=gr@ranges@start,"name"=gr$name,"score"=gr$score,"strand"=gr@strand)
-  return(bed)
+enst2entrezDF <- function(enst){
+  library(mygene)
+  tmp <- as.data.frame(mygene::queryMany(enst, scopes="ensembl.transcript",fields=c("entrezgene"),species="human")) #$entrezgene
+  return(tmp)
+}
+enst2ensgDF <- function(enst){
+  library(mygene)
+  tmp <- as.data.frame(mygene::queryMany(enst, scopes="ensembl.transcript",fields=c("ensembl.gene"),species="human")) #$entrezgene
+  return(tmp)
 }
 
+symbol2ensgEntrezDF <- function(hgnc_symbol){
+  library(mygene)
+  tmp <- as.data.frame(mygene::queryMany(hgnc_symbol, scopes="symbol",fields=c("ensembl.gene","entrezgene"),species="human")) #$entrezgene
+  return(tmp)
+}
+
+
+# Coverage plot --------------------------------
 get.mat <- function(signal,region,signal.label,region.label,up=50,down=50,bin=10,ratio=0.3,mean_mode = "coverage"){
   # signal <- "output/GSE71008_NCpool/call_peak_all/tbed_RNA_EM/NCpool.bed.gz"
   # region <- "output/GSE71008_NCpool/call_peak_all/domains_clipper_by_sample/b5_p05/NCpool.bed"
@@ -74,21 +87,21 @@ get.mat <- function(signal,region,signal.label,region.label,up=50,down=50,bin=10
   return(res.tmp)
 }
 
-maxmin.normalize <- function(x) {  
-  #x <- sweep(x, 2, apply(x, 2, min)) 
-  #x <- sweep(x, 2, apply(x, 2, max), "/")  # cannot handle zero sd
-  x <- apply(x, 2, function(y) (y - min(y))/(max(y)-min(y))^as.logical(sd(y)) ) # can handle zero sd, changed as 230130
-  x  # (0,1)
-  #2*x - 1  # (-1,1)
-}
-maxmin.normalize.vec <- function(y) {  
-  #x <- sweep(x, 2, apply(x, 2, min)) 
-  #x <- sweep(x, 2, apply(x, 2, max), "/")  # cannot handle zero sd
-  x <- (y - min(y))/(max(y)-min(y))^as.logical(sd(y)) # can handle zero sd, changed as 230130
-  x  # (0,1)
-  #2*x - 1  # (-1,1)
+
+
+
+# Genomic interval func. ------------------------
+GRange2bed <- function(gr){
+  # gr <- hg38[[1]] # 1-base to 0-base
+  bed <- data.frame("chr"=gr@seqnames,"start"=gr@ranges@start-1,"end"=gr@ranges@start,"name"=gr$name,"score"=gr$score,"strand"=gr@strand)
+  return(bed)
 }
 
+
+
+
+
+# Biol sequence func. -----------------------
 ## get rev complement seq
 seq_rev <- function(char) {
   alphabets <- strsplit(char, split = "")[[1]]
@@ -111,6 +124,29 @@ seq_compl <- function(seq) {
 }
 
 
+
+# Matrix process func. -----------------------
+stderror <- function(x) sd(x)/sqrt(length(x))
+
+maxmin.normalize <- function(x) {  
+  #x <- sweep(x, 2, apply(x, 2, min)) 
+  #x <- sweep(x, 2, apply(x, 2, max), "/")  # cannot handle zero sd
+  x <- apply(x, 2, function(y) (y - min(y))/(max(y)-min(y))^as.logical(sd(y)) ) # can handle zero sd, changed as 230130
+  x  # (0,1)
+  #2*x - 1  # (-1,1)
+}
+maxmin.normalize.vec <- function(y) {  
+  #x <- sweep(x, 2, apply(x, 2, min)) 
+  #x <- sweep(x, 2, apply(x, 2, max), "/")  # cannot handle zero sd
+  x <- (y - min(y))/(max(y)-min(y))^as.logical(sd(y)) # can handle zero sd, changed as 230130
+  x  # (0,1)
+  #2*x - 1  # (-1,1)
+}
+
+
+
+
+# DiffTable func. --------------------
 ## tpm
 tpm <- function(count,gene.len){
   mat <- as.matrix(count)
@@ -545,7 +581,7 @@ wilcox.paired <- function(matrix_cpm,group,paired=TRUE){
 
 
 
-## def cancer Peak index score func.
+# cfPeak cancer Peak index score func. ------------------
 #tail gene not correct outlier gene number, just sum up all |zsocre|>3, thus not suited for multi-cancer classify
 getRawPeakIndex <- function(feature.lab,logcpm,sample.table,prescale=F,mean.list,sd.list,zscore.cutoff=100,onlyCountZscoreOutlier=F){
   #x <- paste0("/BioII/lulab_b/baopengfei/projects/motif-RBP-EDA/output/",dst,"/cfPeakCNN_GSE110381_smallDomain_diff_COADvsLAML.cpm")
@@ -637,6 +673,10 @@ getPeakIndex <- function(feature.lab,logcpm,sample.table,prescale=F,mean.list,sd
 }
 
 
+
+
+
+# ggplot2 func. --------------------
 library(ggplot2)
 
 ## theme 
@@ -1044,3 +1084,116 @@ RNA_colors[['RNA']] <- "red2"
 RNA_colors[['DNA']] <- "purple" #"#117C8E": similar with repeats
 RNA_colors <- do.call("c",RNA_colors)
 
+
+
+
+
+# Pathway func. --------------------
+suppressPackageStartupMessages(library(argparse))
+#remotes::install_github('YuLab-SMU/ggtree')
+#BiocManager::install("enrichplot")
+#BiocManager::install("clusterProfiler")
+suppressPackageStartupMessages(library(enrichplot))
+suppressPackageStartupMessages(library(clusterProfiler))
+suppressPackageStartupMessages(library(DOSE))
+#BiocManager::install("org.Hs.eg.db")
+suppressPackageStartupMessages(library(org.Hs.eg.db))
+
+
+shortPathDescription <- function(x){
+  #KEGG
+  x <- sub(" pathway","",x) 
+  x <- sub(", "," ",x) 
+  x <- sub(" and "," ",x) 
+  x <- sub(" - "," ",x) 
+  x <- sub(" / "," ",x) 
+  x <- gsub("\\s*\\([^\\)]+\\)","",x)  # remove bracket
+  #Reactome
+  x <- sub("_PATHWAY","",x) 
+  return(x)
+}
+
+
+
+convertGmt <- function(x){
+  #install.packages("GSA")
+  library(GSA)
+  gmt_file <-GSA.read.gmt(x)
+  
+  gmt_file$geneset.names.short <- shortPathDescription(gmt_file$geneset.names)
+  
+  df.list <- list()
+  for(i in 1:length(gmt_file[[1]])){
+    # i <- 1
+    gmt_file_df <- data.frame(n=1:length(gmt_file[[1]][[i]]), ensembl_gene_id="", ENTREZID="", KEGGID=gmt_file$geneset.descriptions[i], DESCRPTION=gmt_file$geneset.names[i], hgnc_symbol=gmt_file[[1]][[i]], short_DESCRPTION=gmt_file$geneset.names.short[i], source="Reactome")
+    df.list[[i]] <- gmt_file_df
+  }
+  df <- as.data.frame(do.call(rbind,df.list))
+  return(df)
+}
+
+
+ora.kegg.offline <- function(gene.top.up,gene.top.down,gene.list,
+                             m_t,
+                             qValue=0.2, pValue=0.1, adjustPval="BH"){
+  
+  # 1.Over-Representation Analysis (ncbiid or otherId in TERM2GENE)
+  # qValue <- 0.2
+  # pValue <- 0.1
+  # adjustPval <- "BH"
+  # 1.1 ORA all gene
+  # enrich.KEGG <- enricher(gene.top.ncbiid,
+  #                         #universe = names(ccle.gene.spearman$g.l), 
+  #                         TERM2GENE=m_t2e,
+  #                         pvalueCutoff = pValue,
+  #                         pAdjustMethod = adjustPval,
+  #                         qvalueCutoff = qValue
+  #                         #, maxGSSize = 350
+  # )
+  # 1.2 ORA up gene
+  if(length(gene.top.up)>0){
+    enrich.KEGG.up <- enricher(gene.top.up,
+                               universe = gene.list, #names(ccle.gene.spearman$g.l),
+                               TERM2GENE=m_t,
+                               pvalueCutoff = pValue,
+                               pAdjustMethod = adjustPval,
+                               qvalueCutoff = qValue
+                               #, maxGSSize = 350
+    )
+    enrich.KEGG.up@result$trend <- "up"
+    enrich.KEGG.up@result$minus.log10.pvalue <- -log10(enrich.KEGG.up@result$pvalue)
+    enrich.KEGG.up@result$minus.log10.padj <- -log10(enrich.KEGG.up@result$p.adjust)
+    enrich.KEGG.up@result$minus.log10.qvalue <- -log10(enrich.KEGG.up@result$qvalue)
+  }else{
+    message("not enough valid up.reg gene !")
+  }
+  
+  
+  # 1.3 ORA down gene
+  if(length(gene.top.down)>0){
+    enrich.KEGG.down <- enricher(gene.top.down,
+                               universe = gene.list, #names(ccle.gene.spearman$g.l),
+                               TERM2GENE=m_t,
+                               pvalueCutoff = pValue,
+                               pAdjustMethod = adjustPval,
+                               qvalueCutoff = qValue
+                               #, maxGSSize = 350
+    )
+    enrich.KEGG.down@result$trend <- "dw"
+    enrich.KEGG.down@result$minus.log10.pvalue <- -log10(enrich.KEGG.down@result$pvalue)
+    enrich.KEGG.down@result$minus.log10.padj <- -log10(enrich.KEGG.down@result$p.adjust)
+    enrich.KEGG.down@result$minus.log10.qvalue <- -log10(enrich.KEGG.down@result$qvalue)
+  }else{
+    message("not enough valid down.reg gene !")
+  }
+  
+  if(length(gene.top.up)>0 & length(gene.top.down)>0){
+    return(as.data.frame(rbind(enrich.KEGG.up@result,enrich.KEGG.down@result)))
+  }else if(length(gene.top.up)>0){
+    return(as.data.frame(enrich.KEGG.up@result))
+  }else if(length(gene.top.down)>0){
+    return(as.data.frame(enrich.KEGG.down@result))
+  }else{
+    return(data.frame(ID="",Description="",GeneRatio="",BgRatio="",pvalue="",p.adjust="",qvalue="",geneID="",Count="",trend="",minus.log10.pvalue="",minus.log10.padj="",minus.log10.qvalue=""))
+  }
+}

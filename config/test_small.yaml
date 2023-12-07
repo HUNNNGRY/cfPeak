@@ -76,7 +76,7 @@ minLocalmaxBinCov: 2
 bin_size: 5 
 
 ## Define consensus/recurrent peak
-cov_threshold: 0.21 # minimum recurrent sample num/total sample number: 3/14=0.21
+cov_threshold: 0.07 # minimum recurrent sample num/total sample number: 3/14=0.21 1/14=0.0714
 
 ## peak size range (nt)
 min_peak_size: 10

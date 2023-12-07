@@ -3,10 +3,10 @@ include: 'common.snakemake'
 include: 'process_bam.snakemake'
 include: 'reassign_bam.snakemake'
 
-if config['call_peak_pvalue_piranha']:
-    merge_types = ['merge11RNA_sort']
-else:
+if (config['run_piranha'] or config['run_clipper'] or config['run_clam']):
     merge_types = ['merge11RNA_sort','merge19_sort']
+elif (config['run_cfpeak']):
+    merge_types = ['merge19_sort']
 
 
 def get_all_inputs(wildcards):
@@ -24,19 +24,19 @@ def get_all_inputs(wildcards):
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=rna_types),
         # bam_dedup_merge_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam",
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge19_sort','merge11RNA_sort']), # merge11RNA_sort_primary
-        # realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
-        #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort','merge19_sort']), #  'merge11RNA_sort',
+        realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
+            output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=merge_types), #  'merge11RNA_sort',
         # realigned_reverted_bam2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/{bam_type}",
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort'],bam_type=['unique.sorted.bam','unique.sorted.revertFullLengthReads.sorted.bam','allrealigned.sorted.bam'] ),
         # bam_dedup2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam",
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['repeats_for','repeats_rev']),
-        # # #bw
+        # #bw
         # tbw_EM= expand(peak_dir+'/tbigwig_RNA_EM/{sample_id}.transcriptome.bigWig',sample_id=sample_ids),
         # tbw_primary= expand(peak_dir+'/tbigwig_11RNA_primary/{sample_id}.transcriptome.bigWig',sample_id=sample_ids),
-        # ## merge_reads_by_rnatype=expand(peak_dir+'/tbed_long_RNA/{sample_id}.bed.gz',
-        # ##     sample_id=sample_ids),
-        # ## bed=expand(peak_dir+'/tbed/{sample_id}/{rna_type}.bed.gz',peak_dir=peak_dir,sample_id=sample_ids, rna_type=rna_types),
-        # ## bg=expand(peak_dir+'/tbedgraph_long_RNA/{sample_id}.transcriptome.bedGraph',peak_dir=peak_dir,sample_id=sample_ids),
+        ## merge_reads_by_rnatype=expand(peak_dir+'/tbed_long_RNA/{sample_id}.bed.gz',
+        ##     sample_id=sample_ids),
+        ## bed=expand(peak_dir+'/tbed/{sample_id}/{rna_type}.bed.gz',peak_dir=peak_dir,sample_id=sample_ids, rna_type=rna_types),
+        ## bg=expand(peak_dir+'/tbedgraph_long_RNA/{sample_id}.transcriptome.bedGraph',peak_dir=peak_dir,sample_id=sample_ids),
     )
     available_inputs_piranha = dict(
         # piranha
@@ -223,7 +223,7 @@ rule filter_peak_by_recurrence_piranha:
         peak_dir+'/piranha/b{bin_size}_p{pvalue_piranha}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_threshold=cov_threshold
+        cov_threshold=len(sample_ids)*config['cov_threshold']
     run:
         shell(filter_peak_recurrence)
 
@@ -293,7 +293,7 @@ rule filter_peak_by_recurrence_clipper:
         peak_dir+'/clipper/b{bin_size}_p{pvalue_clipper}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_threshold=cov_threshold
+        cov_threshold=len(sample_ids)*config['cov_threshold']
     run:
         shell(filter_peak_recurrence)
 
@@ -355,7 +355,7 @@ rule filter_peak_by_recurrence_clam:
         peak_dir+'/clam/b{bin_size}_p{pvalue_clam}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_threshold=cov_threshold
+        cov_threshold=len(sample_ids)*config['cov_threshold']
     run:
         shell(filter_peak_recurrence)
         
@@ -419,7 +419,7 @@ rule call_peaks_cfpeak:
 #         peak_dir+'/cfpeak/b{bin_size}_d{decay}_p{pvalue_cfpeak}.bed'
 #     threads: min(2, config['threads_mapping'])
 #     params:
-#         cov_threshold=cov_threshold,
+#         cov_threshold=len(sample_ids)*config['cov_threshold'],
 #         min_peak_length=10
 #     run:
 #         shell(filter_peak_recurrence)
@@ -432,12 +432,14 @@ rule call_peaks_cfpeak:
 rule CNN:
     input:
         bed=peak_dir+'/cfpeak_by_sample/b{bin_size}_d{decay}_p{pvalue_cfpeak}/{sample_id}.bed',
-        tbigwig=peak_dir+'/tbigwig_RNA_EM/{sample_id}.transcriptome.bigWig'
+        tbigwig=peak_dir+'/tbigwig_RNA_EM/{sample_id}.transcriptome.bigWig',
+        tx_table="/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/genome/hg38/chrom_sizes/tx_gn_length_newTxID.txt"
     output:
         bed=peak_dir+'/cfpeakCNN_by_sample/b{bin_size}_d{decay}_p{pvalue_cfpeak}/{sample_id}.bed'
     log: peak_dir+'/cfpeakCNN_by_sample/b{bin_size}_d{decay}_p{pvalue_cfpeak}/log/{sample_id}.log'
     params:
-        cutoff=0.5
+        cutoff=0.5,
+        half_bin_size=50
     threads: max(2, config['threads_mapping'])
     conda:
         "./envs/cfpeak_cnn.yml"
@@ -445,6 +447,9 @@ rule CNN:
         '''python scripts/anomaly_detection.py \
             --bed6 {input.bed} \
             --bigwig {input.tbigwig} \
+            --half_bin_size {params.half_bin_size} \
+            --tx_tab {input.tx_table} \
+            --threshold {params.cutoff} \
             --output {output.bed} \
             > {log} 2>&1
         '''
@@ -472,10 +477,46 @@ rule filter_peak_by_recurrence_cfpeakCNN:
         peak_dir+'/cfpeakCNN/b{bin_size}_d{decay}_p{pvalue_cfpeak}.bed'
     threads: min(2, config['threads_mapping'])
     params:
-        cov_threshold=cov_threshold,
+        cov_threshold=len(sample_ids)*config['cov_threshold'],
         min_peak_length=10
     run:
         shell(filter_peak_recurrence)
+
+
+
+########################################
+# run IDR for cfPeak
+########################################
+# rule IDR_cfpeak:
+#     input:
+#         peaks=lambda wildcards: expand(peak_dir+'/cfpeak_by_sample/b{bin_size}_d{decay}_p{pvalue_cfpeak}/{sample_id}.bed',
+#             bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay, sample_id=sample_ids),
+#         # transcript_table=genome_dir+'/transcript_table/all_newTxID.txt',
+#         # chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+#     output:
+#         o1=peak_dir+'/cfpeak_by_group/b{bin_size}_d{decay}_p{pvalue_cfpeak}_all.bed'.format(bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay),
+#         o2=peak_dir+'/cfpeak_by_group/b{bin_size}_d{decay}_p{pvalue_cfpeak}_optimal.bed'.format(bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay),
+#     params:
+#         prefix=peak_dir+'/cfpeak_by_group/b{bin_size}_d{decay}_p{pvalue_cfpeak}'.format(bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay),
+#         half_bin_size=50,
+#         alpha=0.05,
+#         size=10,
+#         rankmethod="pvalue",
+#         minentries=1
+#     conda:
+#         "./envs/py3.yml"
+#     log:
+#         peak_dir+'/cfpeak_by_group/log/b{bin_size}_d{decay}_p{pvalue_cfpeak}.log'.format(
+#             bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay)
+#     # threads: config['threads_mapping']
+#     shell: 
+#         '''
+#         chipr --size {params.size} --alpha {params.alpha} --rankmethod {params.rankmethod} --minentries {params.minentries} --fragment \
+#             -i {input.peaks} \
+#             -o {params.prefix} \
+#             > {log} 2>&1
+#         '''
+
 
 
 
