@@ -120,7 +120,7 @@ peak_recurrence='''cat {input.bed} \
             > {output}
         '''
 
-filter_peak_recurrence='''awk -v c={params.cov_threshold} '$5 >= c' {input} \
+filter_peak_recurrence='''awk -v c={params.cov_num} '$5 >= c' {input} \
             | bedtools merge -s -c 2,3,5,6 -o collapse,collapse,collapse,collapse \
             | awk 'BEGIN{{OFS="\t";FS="\t"}} 
             {{split($4,a,/,/); split($5,b,/,/); split($6,c,/,/); split($7,d,/,/);
@@ -223,7 +223,7 @@ rule filter_peak_by_recurrence_piranha:
         peak_dir+'/piranha/b{bin_size}_p{pvalue_piranha}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_threshold=len(sample_ids)*config['cov_threshold']
+        cov_num=config['cov_num']
     run:
         shell(filter_peak_recurrence)
 
@@ -293,7 +293,7 @@ rule filter_peak_by_recurrence_clipper:
         peak_dir+'/clipper/b{bin_size}_p{pvalue_clipper}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_threshold=len(sample_ids)*config['cov_threshold']
+        cov_num=config['cov_num']
     run:
         shell(filter_peak_recurrence)
 
@@ -355,7 +355,7 @@ rule filter_peak_by_recurrence_clam:
         peak_dir+'/clam/b{bin_size}_p{pvalue_clam}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_threshold=len(sample_ids)*config['cov_threshold']
+        cov_num=config['cov_num']
     run:
         shell(filter_peak_recurrence)
         
@@ -477,7 +477,7 @@ rule filter_peak_by_recurrence_cfpeakCNN:
         peak_dir+'/cfpeakCNN/b{bin_size}_d{decay}_p{pvalue_cfpeak}.bed'
     threads: min(2, config['threads_mapping'])
     params:
-        cov_threshold=len(sample_ids)*config['cov_threshold'],
+        cov_num=config['cov_num'],
         min_peak_length=10
     run:
         shell(filter_peak_recurrence)
