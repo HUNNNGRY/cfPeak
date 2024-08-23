@@ -50,8 +50,8 @@ def main():
     parser.add_argument('--mode','-m',default="very-fast",help="map stringent mode, very-fast (default) , fast, sensitive, OR very-sensitive")
     parser.add_argument('--clip-mode',default="end-to-end",help="end clip mode, end-to-end (default) , OR local")
     parser.add_argument('--multimap-max',type=int,default=100,help="max number of multimap align record each read threads for mapping, for bowtie(2) -k. (default:100)")
-    parser.add_argument('--maxIns',type=int,default=500,help="max insert size. (this default: 500, bowtie2 default: 500")
-    parser.add_argument('--minIns',type=int,default=10,help="min insert size. (this default: 10, bowtie2 default: 0")
+    parser.add_argument('--maxIns',type=int,default=500,help="valid for PE, max insert size. (this default: 500, bowtie2 default: 500")
+    parser.add_argument('--minIns',type=int,default=10,help="valid for PE, min insert size. (this default: 10, bowtie2 default: 0")
     args = parser.parse_args()
     fastq1 = args.fastq1
     fastq2 = args.fastq2

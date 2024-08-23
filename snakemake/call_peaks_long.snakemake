@@ -4,6 +4,10 @@ include: 'peak_common.snakemake'
 include: 'prepare_genome.snakemake'
 
 
+rule all:
+    input:
+        get_all_inputs
+
 rule mapping_tx_long:
     input:
         # fastq = "output/{dataset}/trimmed/{sample_id}.fastq.gz"

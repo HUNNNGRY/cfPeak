@@ -106,8 +106,16 @@ export PATH=~/mambaforge/bin:$PATH # you can add this line to ~/.bashrc
 mamba env create -n cfpeak -f ./snakemake/envs/cfpeak.yml
 ```
 
+3.Prepare necessary genome/transcriptome reference file and annotation
+* you can create your own reference of annotation file, create dirs bellow in root of snakemake: genome/hg38
+  * genome/hg38/fasta_newTxID stores fasta files of multi tx species
+  * genome/hg38/chrom_sizes stores txt files of chrom.sizes of full-length tx
+  * genome/hg38/transcript_table stores meta table of all tx for counting matrix
+* we provided some example files of human hg38 fasta, chrom_sizes, and annotation track files used in the article can be downloaded from https://clo
+ud.tsinghua.edu.cn/f/9d8cee33da6e4aacbc40/?dl=1
 
-3.Create snakemake pipeline environment
+
+4.Create snakemake pipeline environment
 
 __a.__required for all
 ```sh
@@ -143,13 +151,6 @@ __d.__optional: if you need to run CLAM (v1.2.0)
   * modify permutation_callpeak.py： row#439，(this fixed error for not considering left boundary less than 0 when defining flag: --extend)
 * use hg38_tx reference provided in cfpeak (hg38txNoDNAnewTxID.gtf in https://cloud.tsinghua.edu.cn/f/98fcbf2ad0ee4f088bee/?dl=1) or you can add your own reference 
 
-
-4.Prepare necessary genome/transcriptome reference file and annotation 
-* you can create your own reference of annotation file, create dirs bellow in root of snakemake: genome/hg38
-  * genome/hg38/fasta_newTxID stores fasta files of multi tx species
-  * genome/hg38/chrom_sizes stores txt files of chrom.sizes of full-length tx
-  * genome/hg38/transcript_table stores meta table of all tx for counting matrix
-* we provided some example files of human hg38 fasta, chrom_sizes, and annotation track files used in the article can be downloaded from https://cloud.tsinghua.edu.cn/f/9d8cee33da6e4aacbc40/?dl=1 
 
 
 <!-- USAGE EXAMPLES -->

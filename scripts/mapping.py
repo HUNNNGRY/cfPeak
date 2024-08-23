@@ -41,9 +41,9 @@ def main():
     parser.add_argument('--multimap-max',type=int,default=100,
                         help="max number of multimap align record each read threads for mapping by bowtie(2) -k. (this default: 100, bowtie2 default: search for multi-align but only report best single align)")
     parser.add_argument('--maxIns',type=int,default=500,
-                        help="max insert size. (this default: 500, bowtie2 default: 500")
+                        help="max insert size. (valid for PE, this default: 500, bowtie2 default: 500")
     parser.add_argument('--minIns',type=int,default=10,
-                        help="min insert size. (this default: 10, bowtie2 default: 0")
+                        help="min insert size. (valid for PE, this default: 10, bowtie2 default: 0")
     # better not filter insert length in bam, you can filter after this step
     
     args = parser.parse_args()

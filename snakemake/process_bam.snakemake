@@ -9,7 +9,7 @@ rule dedup:
     params:
         # stat = "{output_dir}/tbam/{sample_id}/bam-deduped/{rna_type}",
         tmpdir = temp_dir
-    threads: max(4,int(0.5*config['threads_mapping']))
+    threads: max(12,int(0.5*config['threads_mapping']))
     wildcard_constraints:
         rna_type='(?!merge).*',
         # sample_id='\w+'
@@ -20,8 +20,9 @@ rule dedup:
     shell:
         """
         umi_tools dedup --temp-dir {params.tmpdir}  -I {input.bam} -S {output.bam} > {log} 
-        samtools index -@ {threads} {output.bam}
+        samtools index -@ 4 {output.bam}
         """
+#sometimes meet mem error, fail/killed without warning, try add downsampling: --subset=0.2
 #consider add "|| cp {input.bam} {output.bam}" to avoid null bam (like long RNA-seq map to miRNA)
 #--output-stats={params.stat} seem consumes lots of mem
 #for long RNA-seq better not sort by pos and index dedup bam, tbam_to_bed below may need sort by name
@@ -140,3 +141,5 @@ rule filter_11RNA_primary_tbam:
 #         samtools view -b -F 256 -@ {threads} -o {output.primary_bam} {input.merged_bam} 
 #         samtools index -@ {threads} {output.primary_bam}
 #         '''
+
+

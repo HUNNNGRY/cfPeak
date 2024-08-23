@@ -3,11 +3,6 @@ include: 'common.snakemake'
 include: 'process_bam.snakemake'
 include: 'reassign_bam.snakemake'
 
-if (config['run_piranha'] or config['run_clipper'] or config['run_clam']):
-    merge_types = ['merge11RNA_sort','merge19_sort']
-elif (config['run_cfpeak']):
-    merge_types = ['merge19_sort']
-
 
 def get_all_inputs(wildcards):
     available_inputs = dict(
@@ -27,16 +22,18 @@ def get_all_inputs(wildcards):
         realigned_reverted_bam=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/merged.sorted.bam",
             output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=merge_types), #  'merge11RNA_sort',
         # realigned_reverted_bam2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}-EM/{rna_type}/{bam_type}",
-        #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort'],bam_type=['unique.sorted.bam','unique.sorted.revertFullLengthReads.sorted.bam','allrealigned.sorted.bam'] ),
+        #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=merge_types,bam_type=['unique.sorted.bam','unique.sorted.revertFullLengthReads.sorted.bam','allrealigned.sorted.bam'] ),
         # bam_dedup2=expand("{output_dir}/tbam/{sample_id}/{bam_dedup_dir}/{rna_type}.bam",
         #     output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['repeats_for','repeats_rev']),
         # #bw
         # tbw_EM= expand(peak_dir+'/tbigwig_RNA_EM/{sample_id}.transcriptome.bigWig',sample_id=sample_ids),
+        tbw_EM_norm= expand(peak_dir+'/tbigwig_RNA_EM_normalized/{sample_id}.transcriptome.bigWig',sample_id=sample_ids),
         # tbw_primary= expand(peak_dir+'/tbigwig_11RNA_primary/{sample_id}.transcriptome.bigWig',sample_id=sample_ids),
-        ## merge_reads_by_rnatype=expand(peak_dir+'/tbed_long_RNA/{sample_id}.bed.gz',
-        ##     sample_id=sample_ids),
-        ## bed=expand(peak_dir+'/tbed/{sample_id}/{rna_type}.bed.gz',peak_dir=peak_dir,sample_id=sample_ids, rna_type=rna_types),
-        ## bg=expand(peak_dir+'/tbedgraph_long_RNA/{sample_id}.transcriptome.bedGraph',peak_dir=peak_dir,sample_id=sample_ids),
+        # merge_reads_by_rnatype=expand(peak_dir+'/tbed_long_RNA/{sample_id}.bed.gz',
+        #     sample_id=sample_ids),
+        # bed=expand(peak_dir+'/tbed/{sample_id}/{rna_type}.bed.gz',peak_dir=peak_dir,sample_id=sample_ids, rna_type=rna_types),
+        # bg=expand(peak_dir+'/tbedgraph_long_RNA/{sample_id}.transcriptome.bedGraph',peak_dir=peak_dir,sample_id=sample_ids),
+        summarize_read_counts=expand('{output_dir}/tx_summary/read_counts.txt',output_dir=output_dir)
     )
     available_inputs_piranha = dict(
         # piranha
@@ -44,7 +41,7 @@ def get_all_inputs(wildcards):
             output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort']),
         piranha_out=expand(peak_dir+'/piranha_by_sample/b{bin_size}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha'], sample_id=sample_ids),
         peak_piranha=expand(peak_dir+'/piranha/b{bin_size}_p{pvalue}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha']),
-        peak_count_matrix_piranha=expand(peak_dir+'/count_matrix/piranha_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha'])
+        # peak_count_matrix_piranha=expand(peak_dir+'/count_matrix/piranha_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha'])
     )
     available_inputs_clipper = dict(
         # clipper
@@ -52,7 +49,7 @@ def get_all_inputs(wildcards):
             output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort']),
         clipper_out=expand(peak_dir+'/clipper_by_sample/b{bin_size}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper'], sample_id=sample_ids),
         peak_clipper=expand(peak_dir+'/clipper/b{bin_size}_p{pvalue}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper']),
-        peak_count_matrix_clipper=expand(peak_dir+'/count_matrix/clipper_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper'])
+        # peak_count_matrix_clipper=expand(peak_dir+'/count_matrix/clipper_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper'])
     )
     available_inputs_clam = dict(
         # clam
@@ -60,7 +57,7 @@ def get_all_inputs(wildcards):
             output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge11RNA_sort']),
         clam_out=expand(peak_dir+'/clam_by_sample/b{bin_size}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clam'], sample_id=sample_ids),
         peak_clam=expand(peak_dir+'/clam/b{bin_size}_p{pvalue}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clam']),
-        peak_count_matrix_clam=expand(peak_dir+'/count_matrix/clam_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clam'])
+        # peak_count_matrix_clam=expand(peak_dir+'/count_matrix/clam_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clam'])
     )
     available_inputs_cfpeak = dict(
         # ## cfPeak
@@ -73,6 +70,8 @@ def get_all_inputs(wildcards):
             output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['merge19_sort']),
         localmax_out4=expand(peak_dir+'/cfpeakCNN_by_sample/b{bin_size}_d{decay}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'],decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak'], sample_id=sample_ids),
         peak_localmax4=expand(peak_dir+'/cfpeakCNN/b{bin_size}_d{decay}_p{pvalue}.bed', bin_size=config['bin_size'], decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak']),
+        # # peak_idr1=expand(peak_dir+'/cfpeak_by_group/b{bin_size}_d{decay}_p{pvalue}_all.bed', bin_size=config['bin_size'], decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak']),
+        # # peak_idr2=expand(peak_dir+'/cfpeak_by_group/b{bin_size}_d{decay}_p{pvalue}_optimal.bed', bin_size=config['bin_size'], decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak']),
         peak_count_matrix4=expand(peak_dir+'/count_matrix/cfpeakCNN_b{bin_size}_d{decay}_p{pvalue}.txt',peak_dir=peak_dir, bin_size=config['bin_size'], decay=config['decay_ratio'], pvalue=config['call_peak_pvalue_cfpeak'])
     )
 
@@ -223,7 +222,7 @@ rule filter_peak_by_recurrence_piranha:
         peak_dir+'/piranha/b{bin_size}_p{pvalue_piranha}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_num=config['cov_num']
+        cov_num=cov_num
     run:
         shell(filter_peak_recurrence)
 
@@ -293,7 +292,7 @@ rule filter_peak_by_recurrence_clipper:
         peak_dir+'/clipper/b{bin_size}_p{pvalue_clipper}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_num=config['cov_num']
+        cov_num=cov_num
     run:
         shell(filter_peak_recurrence)
 
@@ -355,7 +354,7 @@ rule filter_peak_by_recurrence_clam:
         peak_dir+'/clam/b{bin_size}_p{pvalue_clam}.bed'
     threads: 2 #config['threads_mapping']
     params:
-        cov_num=config['cov_num']
+        cov_num=cov_num
     run:
         shell(filter_peak_recurrence)
         
@@ -477,16 +476,16 @@ rule filter_peak_by_recurrence_cfpeakCNN:
         peak_dir+'/cfpeakCNN/b{bin_size}_d{decay}_p{pvalue_cfpeak}.bed'
     threads: min(2, config['threads_mapping'])
     params:
-        cov_num=config['cov_num'],
+        cov_num=cov_num,
         min_peak_length=10
     run:
         shell(filter_peak_recurrence)
 
 
 
-########################################
-# run IDR for cfPeak
-########################################
+# #######################################
+# # run IDR for cfPeak
+# #######################################
 # rule IDR_cfpeak:
 #     input:
 #         peaks=lambda wildcards: expand(peak_dir+'/cfpeak_by_sample/b{bin_size}_d{decay}_p{pvalue_cfpeak}/{sample_id}.bed',
@@ -498,13 +497,12 @@ rule filter_peak_by_recurrence_cfpeakCNN:
 #         o2=peak_dir+'/cfpeak_by_group/b{bin_size}_d{decay}_p{pvalue_cfpeak}_optimal.bed'.format(bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay),
 #     params:
 #         prefix=peak_dir+'/cfpeak_by_group/b{bin_size}_d{decay}_p{pvalue_cfpeak}'.format(bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay),
-#         half_bin_size=50,
 #         alpha=0.05,
 #         size=10,
 #         rankmethod="pvalue",
 #         minentries=1
 #     conda:
-#         "./envs/py3.yml"
+#         "./envs/py37.yml"
 #     log:
 #         peak_dir+'/cfpeak_by_group/log/b{bin_size}_d{decay}_p{pvalue_cfpeak}.log'.format(
 #             bin_size=bin_size, pvalue_cfpeak=pvalue_cfpeak, decay=decay)
@@ -516,7 +514,7 @@ rule filter_peak_by_recurrence_cfpeakCNN:
 #             -o {params.prefix} \
 #             > {log} 2>&1
 #         '''
-
+# #TODO: IDR_cfpeak by group, then merge all group to build matrix
 
 
 

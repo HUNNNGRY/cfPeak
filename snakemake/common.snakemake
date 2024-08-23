@@ -32,6 +32,27 @@ def get_ratio(variable):
         value2 = str("0."+value)
     return [value,value2]
 
+def get_library_size_small(summary_file, sample_id, merge_type):
+    '''Get library size for a sample from summary file
+    '''
+    columns = {}
+    data = {}
+    with open(summary_file, 'r') as f:
+        for lineno, line in enumerate(f):
+            c = line.strip().split('\t')
+            if lineno == 0:
+                columns = {c[i]:i for i in range(1, len(c))}
+                column = columns[sample_id]
+            else:
+                data[c[0]] = int(c[column])
+    # library_size = data['clean.unmapped'] - data['other.unmapped']
+    library_size = data[merge_type+'.mapped']
+    # # remove these types from library size calculation
+    # for key in ['spikein.mapped', 'univec.mapped', 'rRNA.mapped']:
+    #     if key in data:
+    #         library_size -= data[key]
+    return library_size
+    
 # setup global variables
 root_dir = require_variable('root_dir', 'input_dir')
 config_dir = require_variable('config_dir', 'input_dir')
@@ -86,6 +107,13 @@ elif (config['remove_duplicates'] and (not config['UMI'])):
     bam_dedup_dir = "bam-deduped-samtools" # output_dir+'/tbam/{wildcards.sample_id}/bam-deduped-samtools/{wildcards.rna_type}.bam'  
 else: bam_dedup_dir = "bam"
 
+if (config['run_piranha'] or config['run_clipper'] or config['run_clam']):
+    merge_types = ['merge11RNA_sort','merge19_sort']
+elif (config['run_cfpeak']):
+    merge_types = ['merge19_sort']
+else:
+    merge_types = ['merge19_sort']
+    
 pvalue_piranha=get_ratio(config['call_peak_pvalue_piranha'])[0]
 pvalue_piranha_param=get_ratio(config['call_peak_pvalue_piranha'])[1]
 pvalue_clipper=get_ratio(config['call_peak_pvalue_clipper'])[0]
@@ -96,8 +124,8 @@ pvalue_cfpeak=get_ratio(config['call_peak_pvalue_cfpeak'])[0]
 pvalue_cfpeak_param=get_ratio(config['call_peak_pvalue_cfpeak'])[1]
 decay=config['decay_ratio']
 bin_size = config['bin_size']
-cov_threshold=max(1,len(sample_ids)*config['cov_threshold']) if len(sample_ids)>1 else 1
-
+cov_threshold=max(1,round(len(sample_ids)*config['cov_threshold'])) if len(sample_ids)>1 else 1
+cov_num=max(round(config['cov_num']),cov_threshold)
 # print("pvalue_piranha: ",pvalue_piranha) 
 # print("pvalue_clipper: ",pvalue_clipper)
 # print("pvalue_clam: ",pvalue_clam)
@@ -106,7 +134,8 @@ cov_threshold=max(1,len(sample_ids)*config['cov_threshold']) if len(sample_ids)>
 # print("bam_dedup_dir: "+bam_dedup_dir) # print func. cause dag/rulegraph error
 # print("sampleID: ",sample_ids) 
 
-# print("cov_threshold: ",config['cov_threshold']) 
+# print("cov_threshold: ",cov_threshold) 
+# print("cov_num: ",cov_num) 
 
 
 

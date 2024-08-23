@@ -56,10 +56,10 @@ options(bedtools.path = args$bedtoolsPath) # /BioII/lulab_b/baopengfei/anaconda3
 suppressPackageStartupMessages(library(bedtoolsr))
 #in case null record exist
 if(nrow(bed_sig)>0){
-bed_sig_merge <- bedtoolsr::bt.merge(i=bed_sig,s=T,c=c("5,7"),o=c("max,min"))
+bed_sig_merge <- bedtoolsr::bt.merge(i=bed_sig,s=T,c=c("5,6,7"),o=c("max,distinct,min"))
 bed_sig_merge$name <- "X"
-bed_sig_merge$strand <- "+"
-bed_sig_merge <- bed_sig_merge[,c(1,2,3,6,4,7,5)]
+#bed_sig_merge$strand <- "+"
+bed_sig_merge <- bed_sig_merge[,c(1,2,3,7,4,5,6)]
 bed_sig_merge$name <- paste0("peak_",1:nrow(bed_sig_merge))
 }else{
 bed_sig_merge <- bed_sig

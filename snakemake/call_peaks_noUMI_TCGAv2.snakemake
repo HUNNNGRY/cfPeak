@@ -15,7 +15,7 @@ rule bam2fq1:
         config['threads_mapping']
     params:
         # inbam = "/lulab/baopengfei/shared_data/ENCODE/smallRNA-seq/fastq/{sample_id}/released/GRCh38/alignments/bam/rep*/*.bam", # ENCODE small/miRNA
-        inbam = "/data2/BioMedOmicsData/TCGA/processed/Bam/miRNA-Seq/*/*/{sample_id}.bam", # data2
+        inbam = "/data2/TCGA/lulab/processed/Bam/miRNA-Seq/*/*/{sample_id}.bam", # data2
         # inbam = "/lulab/baopengfei/shared_data/pub_tissueRNA/TCGA_small/*/*/{sample_id}.bam", # lulabdata
         # inbam = "/lulab/baopengfei/shared_data/pub_tissueRNA/TCGA-HNSC_small/HNSC/*/{sample_id}.bam", # lulabdata
         # inbam = "/Share2/home/lulab1/TCGA/processed/Bam/miRNA-Seq/*/*/{sample_id}.bam",

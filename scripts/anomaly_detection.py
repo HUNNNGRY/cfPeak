@@ -42,7 +42,27 @@ def process_peak_bed(peak_bed, tx_info, bw, input_size):
     peak_bed_filtered = peak_bed[ (peak_bed["mid_point"] >= input_size) & (peak_bed["tx.length"]>= peak_bed["mid_point"] + input_size)]
     #get peak coverage
     peak_bed_final = pd.DataFrame(peak_bed_filtered[[0,1,2,"transcript_type","tx.length","mid_point"]].values,index=peak_bed_filtered[3].values, columns=["tx_id", "peak_start", "peak_end", "type", "tx_length", "mid_point"])
-    peak_bed_final["peak_coverage"] = peak_bed_final.apply( lambda x : bw.values(x["tx_id"], x["peak_start"], x["peak_end"]), axis=1)
+    
+    def get_coverage(row):
+        try:
+            tx_length = bw.chroms(row["tx_id"])
+            coverage = bw.values(row["tx_id"], row["peak_start"], row["peak_end"])
+        except:
+            print("Error: transcript ID {0} not in the bigwig file!".format(row["tx_id"]))
+            return np.nan
+
+        try:
+            coverage = bw.values(row["tx_id"], row["peak_start"], row["peak_end"])
+        except:
+            print("Error: interval {0} to {1} not in transcript {2}!".format(row["peak_start"], row["peak_end"], row["tx_id"]))
+            return np.nan
+
+        return bw.values(row["tx_id"], row["peak_start"], row["peak_end"])
+
+    peak_bed_final["peak_coverage"] = peak_bed_final.apply(get_coverage, axis=1)
+    # Filter Rows with NaN values in peak_coverage
+    peak_bed_final = peak_bed_final.dropna(subset=["peak_coverage"])
+    
     peak_bed_final["input_coverage"] = peak_bed_final.apply( lambda x : list(np.nan_to_num(bw.values(x["tx_id"], x["mid_point"] - input_size, x["mid_point"] + input_size), 0)), axis=1)
 
     scaler = MinMaxScaler()

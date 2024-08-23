@@ -276,3 +276,95 @@ rule tbedgraph_to_tbigwig2:
         "./envs/cfpeak.yml"
     shell:
         '''cat {input.bedgraph} | bedtools sort > {params.temp_file}; {bin_dir}/bedGraphToBigWig {params.temp_file} {input.chrom_sizes} {output}; rm {params.temp_file}'''
+
+
+
+
+
+
+rule read_counts_mapped:
+    input:
+        # lambda wildcards: '{output_dir}/{bam_type}/{sample_id}/{bam_dedup_dir}/{rna_type}.bam'.format(
+        #     output_dir=output_dir, bam_dedup_dir=bam_dedup_dir,
+        #     bam_type='tbam',
+        #     # bam_type='gbam' if wildcards.rna_type == 'other' else 'tbam',
+        #     sample_id=wildcards.sample_id, rna_type=wildcards.rna_type
+        # )
+        output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/{merge_type}/merged.sorted.bam' 
+    output:
+        output_dir+'/tx_stats/read_counts_mapped/{sample_id}/{merge_type}' #merge19_sort merge11RNA_sort
+    # log: 
+    #     output_dir+'/stats/read_counts_mapped/{sample_id}/merge19_sort.log'
+    conda:
+        "./envs/cfpeak.yml"
+    # wildcard_constraints:
+    #     rna_type='(?!promoter$)(?!enhancer$)(?!intron$)(?!repeats$)(?!genome).*'
+    shell:
+        '''bamtools count -in {input} > {output}
+        '''
+
+rule summarize_read_counts:
+    input:
+        # output_dir+'/stats/read_counts_mapped/{sample_id}/{merge_type}' #merge19_sort merge11RNA_sort
+        mapped=lambda wildcards: expand('{output_dir}/tx_stats/read_counts_mapped/{sample_id}/{merge_type}',
+            output_dir=output_dir, sample_id=sample_ids, merge_type=merge_types), # + ['other', 'promoter', 'enhancer', 'intron', 'repeats']),
+        # # unmapped=lambda wildcards: expand('{output_dir}/stats/read_counts_unmapped/{sample_id}/{rna_type}',
+        # #     output_dir=wildcards.output_dir, sample_id=sample_ids, rna_type=['clean', 'other'])
+    output:
+        output_dir+'/tx_summary/read_counts.txt'
+    run:
+        import pandas as pd
+        import os
+        from collections import OrderedDict
+    
+        records = OrderedDict()
+        for sample_id in sample_ids:
+            records[sample_id] = {}
+        for filename in input.mapped:
+            sample_id, rna_type = filename.split(os.path.sep)[-2:]
+            with open(filename, 'r') as f:
+                records[sample_id][rna_type + '.mapped'] = int(f.read().strip())
+        # for filename in input.unmapped:
+        #     sample_id, rna_type = filename.split(os.path.sep)[-2:]
+        #     with open(filename, 'r') as f:
+        #         records[sample_id][rna_type + '.unmapped'] = int(f.read().strip())
+        records = pd.DataFrame.from_records(records)
+        records.columns.name = 'sample_id'
+        records.columns.name = 'item'
+        records.index.name = 'reads_type'
+        records.to_csv(output[0], sep='\t', header=True, index=True)
+
+rule normalize_bigwig:
+    input:
+        summary=output_dir+'/tx_summary/read_counts.txt',
+        bam=output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge19_sort/merged.sorted.bam', #'{output_dir}/tbam/{sample_id}/{rna_type}.bam',
+        # bigwig='{output_dir}/tbigwig_RNA_EM/{sample_id}.{rna_type}.{strand}.bigWig',
+        bigwig=peak_dir+'/tbigwig_RNA_EM/{sample_id}.transcriptome.bigWig',
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+    output:
+        bigwig=peak_dir+'/tbigwig_RNA_EM_normalized/{sample_id}.transcriptome.bigWig',
+        bedgraph=temp(peak_dir+'/tbigwig_RNA_EM_normalized/{sample_id}.transcriptome.bedGraph')
+    # wildcard_constraints:
+    #     strand='[+-]'
+    run:
+        library_size = get_library_size_small(input.summary, wildcards.sample_id, "merge19_sort")
+        shell(r'''{bin_dir}/bigWigToBedGraph {input.bigwig} stdout \
+            | awk -v d="{library_size}" 'BEGIN{{OFS="\t";FS="\t"}}{{print $1,$2,$3,1000000.0*$4/d}}' > {output.bedgraph}''')
+        shell(r'''{bin_dir}/bedGraphToBigWig {output.bedgraph} {input.chrom_sizes} {output.bigwig}''')
+
+
+# rule summarize_read_counts_jupyter:
+#     input:
+#         read_counts='{output_dir}/summary/read_counts.txt',
+#         jupyter='templates/summarize_read_counts_small.ipynb'
+#     output:
+#         jupyter='{output_dir}/summary/read_counts.ipynb',
+#         html='{output_dir}/summary/read_counts.html'
+#     shell:
+#         '''cp {input.jupyter} {output.jupyter}
+#         jupyter nbconvert --execute --to html \
+#             --HTMLExporter.exclude_code_cell=False \
+#             --HTMLExporter.exclude_input_prompt=True \
+#             --HTMLExporter.exclude_output_prompt=True \
+#             {output.jupyter}
+#         '''

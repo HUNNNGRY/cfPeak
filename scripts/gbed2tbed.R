@@ -10,7 +10,7 @@
 suppressPackageStartupMessages(library("argparse"))
 parser <- ArgumentParser(description='convert/map gbed to tbed')
 parser$add_argument('-i', '--inputFile', type='character', default='-',
-                    help='input BED file with covearge in the 5th column, default: -')
+                    help='input BED6 file with covearge in the 5th column, default: -')
 # parser$add_argument('-b','--rawReadBed', type='character', 
 #                     help='rawread bed file for calculating count, canbe output from bedtools bamtobed, required')
 parser$add_argument('-o', '--outputFile', type='character', default='-',
@@ -49,7 +49,7 @@ for(i in 1:length(args)){
 # blockRef <- "/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/genome/hg38/bed/11RNA_map_block_newTxID.txt"
 
 # # test DNA
-# inputFile <- "/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/genome/hg38/gtf_from_bed12/testGn.bed"
+# inputFile <- "/BioII/lulab_b/baopengfei/shared_reference/RBP/splitByRBP/all_merge.bed"
 # outputFile <- "./test.bed"
 # bedtoolsPath <- "/BioII/lulab_b/baopengfei/biosoft"
 # mode <- "1toN" # "1toN"
@@ -97,6 +97,9 @@ peak.df$name <- as.character(peak.df$name)
 peak.df$strand <- as.character(peak.df$strand)
 
 peak.df <- peak.df[peak.df$strand == "+" | peak.df$strand == "-" ,] # need contain strand info
+#summary(nchar(peak.df$name))
+peak.df$name[nchar(peak.df$name)>200] <- substr((peak.df$name[nchar(peak.df$name)>200]),1,200) # shorten too long name
+
 #peak.df[1:3,]
 #peak.df$chr <- paste0("chr",peak.df$chr)
 #peak.df$chr <- gsub("chrMT","chrM",peak.df$chr)
@@ -162,8 +165,6 @@ if(type=="DNA"){
   colnames(tx.ref.block) <- c("seqnames","start","end","enst","score","strand","total","nth")
   tx.ref.block <- tx.ref.block[!grepl("alt|random|chrUn",tx.ref.block$seqnames,perl=T),] # filter non-canonical chr
 }
-
-
 
 
 

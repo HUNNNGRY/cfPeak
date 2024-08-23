@@ -5,7 +5,7 @@
 # b.p.f@qq.com
 
 suppressPackageStartupMessages(library("argparse"))
-parser <- ArgumentParser(description='intersect domain bed with G4-iM, RBPs, AGO2, RBPhotspot')
+parser <- ArgumentParser(description='shuf domain bed randomly')
 parser$add_argument('-i', '--inputFile', type='character', default='-',
                     help='input domain BED file') #, default: -
 # parser$add_argument('-o', '--outputFile', type='character', default='-',
@@ -25,6 +25,12 @@ parser$add_argument('--shufSameRNATxInPriority', type='logical', default=FALSE,
                     help='random shuffle region in the same RNA species (may get err if one species has little tx), default: FALSE; op: TRUE')
 # parser$add_argument('--cores', type="integer", #default=4,
 #                     help='multi-cores processing, default: half of auto detect')
+parser$add_argument('--region', type='character', default="flank,shuffle",
+                    help='output region type, default: flank,shuffle (means output both flank & shuffle), opt: flank or shuffle')
+parser$add_argument('--shuffleSurfix', type='character', default="shuffle",
+                    help='output shuffle surfix of appended to input path')
+parser$add_argument('--flankSurfix', type='character', default="flank",
+                    help='output flank surfix of appended to input path')
 args <- parser$parse_args()
 
 for(i in 1:length(args)){
@@ -32,6 +38,7 @@ for(i in 1:length(args)){
   assign(v.name,args[[i]])
   message(paste0(v.name,": ",get(v.name)))
 }
+regions <- strsplit(region,",")[[1]]
 
 # eg. running code -----
 # # run
@@ -112,53 +119,57 @@ if(coord=="tx"){
 }
 
 
-## shuf/rand domain/peak
-if (!shufSameRNATxInPriority){ # mainly for 11RNA
-  #domain2 <- bedtoolsr::bt.shuffle(seed = seed, chrom = T, i = domain, g = chrSize) # noOverlapping=F, excl=NULL, 
-  domain2 <- bedtoolsr::bt.shuffle(seed = seed, noOverlapping=T, i = domain, g = chrSize) # chrom = F, noOverlapping=F, excl=NULL, 
-  write.table(domain2,paste0(inputFile,".shuffle"),sep = '\t',row.names = F,col.names = F,quote = F)
-}else{
-  message("shufSameRNATxInPriority !")
-  rnaType <- ref$transcript_type[match(domain$chr,ref$transcript_id)]
-  chrType <- ref$transcript_type[match(chrSize$V1,ref$transcript_id)]
-  tmpList <- list()
-  for (rna in unique(rnaType)){
-    # message(rna)
-    #rna <- "piRNA"
-    domain.tmp <- domain[rnaType==rna,]
-    chrSize.tmp <- chrSize[chrType==rna,]
-    domain2.tmp <- bedtoolsr::bt.shuffle(seed = seed, chromFirst=T, noOverlapping=F, i = domain.tmp, g = chrSize.tmp) # noOverlapping=T: error for longest full-tx length peak (also need chromFirst ?)
-    tmpList[[rna]] <- domain2.tmp
+if("shuffle" %in% regions){
+  ## shuf/rand domain/peak
+  if (!shufSameRNATxInPriority){ # mainly for 11RNA
+    #domain2 <- bedtoolsr::bt.shuffle(seed = seed, chrom = T, i = domain, g = chrSize) # noOverlapping=F, excl=NULL, 
+    domain2 <- bedtoolsr::bt.shuffle(seed = seed, noOverlapping=T, i = domain, g = chrSize) # chrom = F, noOverlapping=F, excl=NULL, 
+    write.table(domain2,paste0(inputFile,".",shuffleSurfix),sep = '\t',row.names = F,col.names = F,quote = F)
+  }else{
+    message("shufSameRNATxInPriority !")
+    rnaType <- ref$transcript_type[match(domain$chr,ref$transcript_id)]
+    chrType <- ref$transcript_type[match(chrSize$V1,ref$transcript_id)]
+    tmpList <- list()
+    for (rna in unique(rnaType)){
+      # message(rna)
+      #rna <- "piRNA"
+      domain.tmp <- domain[rnaType==rna,]
+      chrSize.tmp <- chrSize[chrType==rna,]
+      domain2.tmp <- bedtoolsr::bt.shuffle(seed = seed, chromFirst=T, noOverlapping=F, i = domain.tmp, g = chrSize.tmp) # noOverlapping=T: error for longest full-tx length peak (also need chromFirst ?)
+      tmpList[[rna]] <- domain2.tmp
+    }
+    domain2 <- as.data.frame(do.call(rbind,tmpList))
+    domain2 <- domain2[match(domain$name,domain2$V4),] #arrange order
+    write.table(domain2,paste0(inputFile,".",shuffleSurfix,".pri"),sep = '\t',row.names = F,col.names = F,quote = F)
   }
-  domain2 <- as.data.frame(do.call(rbind,tmpList))
-  domain2 <- domain2[match(domain$name,domain2$V4),] #arrange order
-  write.table(domain2,paste0(inputFile,".shuffle2"),sep = '\t',row.names = F,col.names = F,quote = F)
 }
 
-
-## flank domain
-### 1st: use left flank 
-domain3 <- bedtoolsr::bt.shift(p=-1, m=0, pct=T, i = domain, g = chrSize)
-idx <- which((domain3$V3-domain3$V2)<(domain$end-domain$start))
-
-### 2nd: use right flank if left flank shorter than peak
-domain3.right <- bedtoolsr::bt.shift(p=+1, m=0, pct=T, i = domain[idx,], g = chrSize)
-idx2 <- which((domain3$V3[idx]-domain3$V2[idx])<(domain3.right$V3-domain3.right$V2))
-domain3[idx,][idx2,] <- domain3.right[idx2,]
-
-### 3rd: use 11RNA random shuffle if both flank shorter than peak
-idx3 <- which((domain3$V3-domain3$V2)<(domain$end-domain$start))
-idx4 <- which((domain3$V3[idx3]-domain3$V2[idx3])<(domain2$V3[idx3]-domain2$V2[idx3])) # actually not needed
-domain3[idx3,][idx4,] <- domain2[idx3,][idx4,]
-
-# table((domain3.right$V3-domain3.right$V2)<=1) 
-table((domain3$V3-domain3$V2)<(domain$end-domain$start)) # should be all FALSE !!!!!!!!!!!!!!!!!!!!
-# table((domain3.right$V3-domain3.right$V2)<(domain$end[idx]-domain$start[idx]))
-# domain3$V3[domain3$V2<0] <- 1
-# domain3$V2[domain3$V2<0] <- 0
-#table(domain3$V2<0)
-write.table(domain3,paste0(inputFile,".flank"),sep = '\t',row.names = F,col.names = F,quote = F)
-
+if("flank" %in% regions){
+  ## flank domain
+  ### 1st: use left flank 
+  domain3 <- bedtoolsr::bt.shift(p=-1, m=0, pct=T, i = domain, g = chrSize)
+  idx <- which((domain3$V3-domain3$V2)<(domain$end-domain$start))
+  
+  ### 2nd: use right flank if left flank shorter than peak
+  domain3.right <- bedtoolsr::bt.shift(p=+1, m=0, pct=T, i = domain[idx,], g = chrSize)
+  idx2 <- which((domain3$V3[idx]-domain3$V2[idx])<(domain3.right$V3-domain3.right$V2))
+  domain3[idx,][idx2,] <- domain3.right[idx2,]
+  
+  ### 3rd: use 11RNA random shuffle if both flank shorter than peak
+  if("shuffle" %in% regions){
+  idx3 <- which((domain3$V3-domain3$V2)<(domain$end-domain$start))
+  idx4 <- which((domain3$V3[idx3]-domain3$V2[idx3])<(domain2$V3[idx3]-domain2$V2[idx3])) # actually not needed
+  domain3[idx3,][idx4,] <- domain2[idx3,][idx4,]
+  }
+  
+  # table((domain3.right$V3-domain3.right$V2)<=1) 
+  table((domain3$V3-domain3$V2)<(domain$end-domain$start)) # should be all FALSE !!!!!!!!!!!!!!!!!!!!
+  # table((domain3.right$V3-domain3.right$V2)<(domain$end[idx]-domain$start[idx]))
+  # domain3$V3[domain3$V2<0] <- 1
+  # domain3$V2[domain3$V2<0] <- 0
+  #table(domain3$V2<0)
+  write.table(domain3,paste0(inputFile,".",flankSurfix),sep = '\t',row.names = F,col.names = F,quote = F)
+}
 
 
 

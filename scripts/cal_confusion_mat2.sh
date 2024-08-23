@@ -1,16 +1,19 @@
 
 #!/bin/bash
 
-while getopts "i:s:t:f:" op
+while getopts "i:s:t:m:r:" op
 do
 	case "$op" in
 		i)  sample="$OPTARG";;
 		s)  standard="$OPTARG";;
 		t)  threads="$OPTARG";;
-        f)  standardNum="$OPTARG";;
+		m)  method="$OPTARG";;
+		r)  replicate="$OPTARG";;
 		\?) exit 1;;
 	esac
 done
+# f)  standardNum="$OPTARG";;
+
 # echo $sample
 # echo $standard
 # echo $threads
@@ -55,11 +58,13 @@ threshold() {
 # identify method,condition,replicate,mark
 #/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/output/$dst/call_domain_withRepeats_all/domains_${method}/intersect/${id}.bed.count
 
-method=$(echo $sample | cut -d "/" -f10) # usual
+method=$method
+# method=$(echo $sample | cut -d "/" -f10) # usual
 # method=$(basename $sample | sed s/".bed"/""/g) # test params
 
 #condition=$(basename $sample | cut -d_ -f2)
-replicate=$(basename $sample | cut -d "." -f1)
+# replicate=$(basename $sample | cut -d "." -f1)
+replicate=$replicate
 #mark=$(basename $sample | cut -d_ -f4 | sed 's/.bed//')
 
 echo -e "method\treplicate\tcounts\tTP\tFP\tFN\tTN\tprecision\trecall\tfpr\tf1" # header, rm \tf1 
@@ -78,6 +83,9 @@ export -f calculate_rate
 export -f calculate_f1_score
 export -f threshold
 # echo $standardNum
+
+declare -i standardNum=$((`wc -l ${standard} | cut -d " " -f1`))
+# echo "truth num: $standardNum"
 
 declare -i RealTrueNum=$standardNum # export standardNum=1000 before run this script to treat it as global var
 export RealTrueNum
