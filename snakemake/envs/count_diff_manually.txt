@@ -1,0 +1,2 @@
+mamba install r-parallelly r-data.table bioconductor-clusterprofiler r-dplyr r-tidyr r-tidyverse
+#r-data.table==1.14.2 bioconductor-clusterProfiler=3.14.0 r-dplyr=1.0.10 r-tidyr=1.2.0 r-tidyverse=1.3.0

@@ -1,0 +1,14 @@
+name: blockbuster
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.8.6
+  - blockbuster=0.0.1.1
+  - bedtools=2.28.0
+  - samtools=1.9
+  - pip=24.0
+  - pandas==0.24.2
+  - numpy==1.19
+  - pybedtools==0.10.0
+#mamba create -n blockbuster bedtools=2.28.0 blockbuster=0.0.1.1 pandas==0.24.2 numpy==1.19 samtools=1.9  -y

@@ -1,0 +1,5 @@
+to be added: mamba install r-argparse bioconductor-iranges bioconductor-biocgenerics bioconductor-rtracklayer r-data.table 
+manually: bioconda has r-bedtoolsr, but require R>=4, in which cfPeak is not fully tested, we recommend install following https://github.com/HUNNNGRY/cfPeak/tree/master
+#seems r-base upgrade to 4.0.2 automatically after install
+#mamba install ipykernel
+#mamba install bamtools=2.5.1

@@ -1,0 +1,9 @@
+name: py37
+dependencies:
+  - python=3.7.12
+  - chip-r
+  - pip=23.2.1
+  - pip:
+    - numpy
+    - pandas
+    - scipy 
