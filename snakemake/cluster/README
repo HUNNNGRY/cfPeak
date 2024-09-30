@@ -1,0 +1,3 @@
+cluster.json is old file for other cluster system job submission (qsub)
+cluster_slurm.json is newest file for slurm cluster system job submission (sbatch)
+cluster_useall.json is temp config file
