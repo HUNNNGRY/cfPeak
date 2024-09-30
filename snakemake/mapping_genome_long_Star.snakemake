@@ -1,0 +1,231 @@
+include: 'common.snakemake'
+#include: 'peak_common.snakemake'
+
+#Notes:
+#* not finished yet !!!!
+#* TCGA_long mostly unstranded (no need for stranded Bigwig), but TCGA_small is forward
+
+from collections import OrderedDict
+
+#data_dir = config['data_dir']
+output_dir = config['output_dir']
+#rna_types = config['rna_types']
+#adaptor = config['adaptor']
+#min_read_length = config['min_read_length']
+genome_dir = config['genome_dir']
+#max_read_length = config['max_read_length']
+#min_base_quality = config['min_base_quality']
+#temp_dir = config['temp_dir']
+
+def get_all_inputs(wildcards):
+    available_inputs = dict(
+        #unmapped_other=expand('{output_dir}/unmapped/{sample_id}/other.fa.gz',
+        #    output_dir=output_dir, sample_id=sample_ids),
+        # map_genome=expand('{output_dir}/gbamStar/{sample_id}/{rna_type}.bam', output_dir=output_dir, sample_id=sample_ids, rna_type=['genome']),
+        map_genome=expand('{output_dir}/gbamStar_sorted/{sample_id}/{rna_type}.bam', output_dir=output_dir, sample_id=sample_ids, rna_type=['genome']),
+
+        gbigwig=expand('{output_dir}/gbamStar_bigwig/{sample_id}.{rna_type}.{strand}.bigWig',
+            output_dir=output_dir, sample_id=sample_ids, rna_type=['genome'], strand=['both']),
+        gbigwig_normalized=expand('{output_dir}/gbamStar_bigwig_normalized/{sample_id}.{rna_type}.{strand}.bigWig',
+            output_dir=output_dir, sample_id=sample_ids, rna_type=['genome'], strand=['both']),
+        # gbigwig_normalized_log2=expand('{output_dir}/bigwig_normalized_log2/{sample_id}.{rna_type}.{strand}.bigWig',
+        #     output_dir=output_dir, sample_id=sample_ids, rna_type=['other', 'transcriptome'], strand=['+', '-'])
+    )
+    enabled_inputs = list(available_inputs.keys())
+    inputs = []
+    for key, l in available_inputs.items():
+        if key in enabled_inputs:
+            inputs += l
+    return inputs
+
+rule all:
+    input:
+        get_all_inputs
+
+# rule mapping_gn_Star:
+#     input:
+#         #reads='{output_dir}/unmapped/{sample_id}/clean.fa.gz',
+#         reads=output_dir + '/trimmed/{sample_id}.fastq.gz',
+#         index=genome_dir + '/genome_index/star/Genome'
+#     output:
+#         # unmapped=output_dir + '/unmapped/{sample_id}/genome.fa.gz',
+#         bam=output_dir + '/gbamStar/{sample_id}/bam/genome.bam'
+# 	#bai=output_dir + '/gbamStar/{sample_id}/genome.bam.bai'
+#     log:
+#         output_dir + '/gbamStar/{sample_id}/log/rule.log'
+#     threads: config['threads_mapping']
+#     params:
+#         STAR="/BioII/lulab_b/baopengfei/gitsoft/STAR-2.5.4a/bin/Linux_x86_64",
+#         index=genome_dir + '/genome_index/star',
+#         n=50, # hsa_gn: 50; other shorter: 20
+#         # k=100, # multi-mapped:100; default:10
+#         output_prefix=output_dir + '/gbamStar/{sample_id}/bam/',
+#         output_star=output_dir + '/gbamStar/{sample_id}/bam/Aligned.out.bam'
+#     shell:
+#         '''
+#         {params.STAR}/STAR \
+#             --genomeDir {params.index} \
+#             --readFilesIn {input.reads} \
+#             --alignEndsType EndToEnd \
+#             --runThreadN {threads} \
+#             --outFileNamePrefix {params.output_prefix} \
+#             --outSAMtype BAM Unsorted \
+#             --outReadsUnmapped Fastx \
+#             --readFilesCommand pigz -d -c \
+#             --seedPerWindowNmax {params.n} > {log} 2>&1
+#         ln -s {params.output_star} {output.bam}
+#         '''
+
+## seem bam from TCGA sorted
+# rule sort_gbam:
+#     '''Sort genomic BAM file by coordinate
+#     '''
+#     input:
+#         # output_dir+'/gbamStar/{sample_id}/{rna_type}.bam'
+#         output_dir + '/gbamStar/{sample_id}/bam/{rna_type}.bam'
+#     output:
+#         bam=output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam',
+#         bai=output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam.bai'
+#     params:
+#         temp_dir=config['temp_dir']
+#     shell:
+#         '''samtools sort -T {params.temp_dir} -o {output.bam} {input}
+#         samtools index {output.bam}
+#         '''
+
+
+#need add symlink in gbamStar_sorted to TCGA bam (PE, seem sorted, no need to de-dup)
+# for dst in LIHC STAD COAD HNSC BRCA LUAD
+# DST=TCGA-${dst}_long
+# for SMP in `cat data/$DST/sample_ids_all.txt`; 
+# do 
+# mkdir -p ../output/$DST/gbamStar_sorted/$SMP; 
+# ln -s /data2/BioMedOmicsData/TCGA/processed/Bam/RNA-Seq/*/*/${SMP}*.bam ../output/$DST/gbamStar_sorted/$SMP/genome.bam ;
+# ln -s /data2/BioMedOmicsData/TCGA/processed/Bam/RNA-Seq/*/*/${SMP}*.bai ../output/$DST/gbamStar_sorted/$SMP/genome.bam.bai ;
+# done
+# done
+rule gbam_to_bedgraph:
+    input:
+        output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam'
+    output:
+        output_dir+'/gbamStar_bedgraph/{sample_id}.{rna_type}.{strand}.bedGraph'
+    params:
+        temp_dir=config['temp_dir']
+    shell:
+        '''bedtools genomecov -ibam {input} -bg -split \
+            | LC_COLLATE=C sort -T {params.temp_dir} -k1,1 -k2,2n > {output}
+        '''
+#-strand {wildcards.strand} 
+
+rule gbedgraph_to_bigwig:
+    input:
+        bedgraph=output_dir+'/gbamStar_bedgraph/{sample_id}.{rna_type}.{strand}.bedGraph',
+        chrom_sizes=genome_dir + '/chrom_sizes/genome'
+    output:
+        output_dir+'/gbamStar_bigwig/{sample_id}.{rna_type}.{strand}.bigWig'
+    params:
+        bedgraph=output_dir+'/gbamStar_bedgraph/{sample_id}.{rna_type}.{strand}.bedGraph.tmp',
+    # log:
+    #     log1=output_dir+"/gbamStar_bigwig/log/{sample_id}.{rna_type}.{strand}.log",
+    shell:
+        '''grep -E "^chr(1[0-9]|2[0-2]|[1-9]|X|Y|M)" {input.bedgraph} | grep -vE "EBV|HBV|HCV|HPV|CMV|HIV|HTLV|KSHV"  > {params.bedgraph}
+        {bin_dir}/bedGraphToBigWig {params.bedgraph} {input.chrom_sizes} {output}
+        rm {params.bedgraph} 
+        '''
+#chrEBV et al. virus gn exist in TCGA_long
+
+rule read_counts_mapped_gn:
+    input: 
+        output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam'
+    output:
+        output_dir+'/stats/read_counts_mapped/{sample_id}/{rna_type}'
+    # conda:
+    #     "./envs/cfpeak.yml"
+    # wildcard_constraints:
+    #     rna_type='(?!promoter$)(?!enhancer$)(?!intron$)(?!repeats$)(?!genome).*'
+    shell:
+        '''bamtools count -in {input} > {output}
+        '''
+
+rule summarize_read_counts_gn:
+    input:
+        # output_dir+'/stats/read_counts_mapped/{sample_id}/{merge_type}' #merge19_sort merge11RNA_sort
+        mapped=lambda wildcards: expand(output_dir+'/stats/read_counts_mapped/{sample_id}/{rna_type}',
+            sample_id=sample_ids, rna_type='genome'), # + ['other', 'promoter', 'enhancer', 'intron', 'repeats']),
+    output:
+        output_dir+'/gbamstar_summary/read_counts.txt'
+    run:
+        import pandas as pd
+        import os
+        from collections import OrderedDict
+    
+        records = OrderedDict()
+        for sample_id in sample_ids:
+            records[sample_id] = {}
+        for filename in input.mapped:
+            sample_id, rna_type = filename.split(os.path.sep)[-2:]
+            with open(filename, 'r') as f:
+                records[sample_id][rna_type + '.mapped'] = int(f.read().strip())
+        # for filename in input.unmapped:
+        #     sample_id, rna_type = filename.split(os.path.sep)[-2:]
+        #     with open(filename, 'r') as f:
+        #         records[sample_id][rna_type + '.unmapped'] = int(f.read().strip())
+        records = pd.DataFrame.from_records(records)
+        records.columns.name = 'sample_id'
+        records.columns.name = 'item'
+        records.index.name = 'reads_type'
+        records.to_csv(output[0], sep='\t', header=True, index=True)
+
+rule normalize_gbigwig:
+    input:
+        summary=output_dir+'/gbamstar_summary/read_counts.txt',
+        # bam='{output_dir}/gbamStar/{sample_id}/{rna_type}.bam',
+        bam=output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam',
+        bigwig=output_dir+'/gbamStar_bigwig/{sample_id}.{rna_type}.{strand}.bigWig',
+        chrom_sizes=genome_dir + '/chrom_sizes/genome'
+    output:
+        bigwig=output_dir+'/gbamStar_bigwig_normalized/{sample_id}.{rna_type}.{strand}.bigWig',
+        bedgraph=temp(output_dir+'/gbamStar_bigwig_normalized/{sample_id}.{rna_type}.{strand}.bedGraph')
+    wildcard_constraints:
+        strand='both'
+    run:
+        library_size = get_library_size_small(input.summary, wildcards.sample_id, 'genome')
+        shell(r'''{bin_dir}/bigWigToBedGraph {input.bigwig} stdout \
+            | awk -v d="{library_size}" 'BEGIN{{OFS="\t";FS="\t"}}{{print $1,$2,$3,1000000.0*$4/d}}' > {output.bedgraph}''')
+        shell(r'''{bin_dir}/bedGraphToBigWig {output.bedgraph} {input.chrom_sizes} {output.bigwig}''')
+
+
+
+# for STAR with splicing, better use featurecount for read count ? (bed to gtf)
+# get count matrix
+rule count_matrix_peak:
+    input:
+        gtf1='/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/genome/hg38/bed/enhancer.stranded.newTxID.reduced4.resize2kb.gtf',
+        bam=lambda wildcards: expand(output_dir+'/gbamStar_sorted/{sample_id}/genome.bam',sample_id=sample_ids) # ,rna_type='genome'
+    output:
+        gene_matrix1=output_dir+'/count_matrix/enhancer.txt', # region
+        gene_sum1=output_dir+"/count_matrix/enhancer.txt.summary",
+    log:
+        log1=output_dir+"/count_matrix/log/count_matrix_enhancer.log",
+        # CPM_TMM=output_dir+"/count_matrix/log/CPM-TMM_matrix_{region}.log",
+    conda:
+        # "envs/DNA.yml"
+        "envs/count_diff.yml"
+    threads: config['threads_mapping'] #16
+    params:
+        bam=output_dir+"/gbamStar_sorted/{"+",".join(sample_ids)+"}/genome.bam",
+        tmp=output_dir+"/count_matrix/tmp_enhancer",
+        # region="{region}",
+        # -s: strandness # 1: forward, 2: reverse, 0:unstrand (default)
+    shell:
+        """
+        featureCounts -T {threads} -O -s 0 -t exon -g gene_id -M -p \
+            -a {input.gtf1} \
+            -o {output.gene_matrix1} {params.bam} \
+            > {log.log1} 2>&1
+        Rscript scripts/multiFeatureCounts2countMat.R \
+            -i {output.gene_matrix1}  \
+            -o {params.tmp} ;
+        mv {params.tmp} {output.gene_matrix1}
+        """
+#--fracOverlap 0.5

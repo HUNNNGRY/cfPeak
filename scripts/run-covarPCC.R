@@ -97,7 +97,7 @@ getCorVec <- function(x0,y0, pcc_type="original", covar="Null",  method="pearson
     p.value<- as.numeric(2*pnorm(-abs(statistic)))
     # padj <- p.adjust(p.value, method = 'BH') # vec-wise not feasiable
     RS<- -log10(p.value+0.001)*sign(pcor) # use this as rank: 
-    res <- data.frame(RS=RS,pvalue=p.value,p.stat=statistic)
+    res <- data.frame(RS=RS,pvalue=p.value,p.stat=statistic,cor=pcor)
     # res2 <- res
   }
   return(res)

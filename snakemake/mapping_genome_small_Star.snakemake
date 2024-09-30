@@ -1,0 +1,662 @@
+include: 'common.snakemake'
+#include: 'peak_common.snakemake'
+
+from collections import OrderedDict
+
+#data_dir = config['data_dir']
+output_dir = config['output_dir']
+#rna_types = config['rna_types']
+#adaptor = config['adaptor']
+#min_read_length = config['min_read_length']
+genome_dir = config['genome_dir']
+#max_read_length = config['max_read_length']
+#min_base_quality = config['min_base_quality']
+#temp_dir = config['temp_dir']
+gn_peak_dir = config['output_dir']+"/call_peak_gbamStar"
+
+
+def get_all_inputs(wildcards):
+    available_inputs = dict(
+        #unmapped_other=expand('{output_dir}/unmapped/{sample_id}/other.fa.gz',
+        #    output_dir=output_dir, sample_id=sample_ids),
+        # map_genome=expand('{output_dir}/gbamStar/{sample_id}/{rna_type}.bam', output_dir=output_dir, sample_id=sample_ids, rna_type=['genome']),
+        map_genome=expand('{output_dir}/gbamStar/{sample_id}/{bam_dedup_dir}/{rna_type}.bam', output_dir=output_dir, sample_id=sample_ids, bam_dedup_dir=bam_dedup_dir, rna_type=['genome']),
+
+        # # tbigwig=expand('{output_dir}/tbigwig/{sample_id}.{rna_type}.bigWig',
+        # #     output_dir=output_dir, sample_id=sample_ids, rna_type=['transcriptome']),
+        # # tbigwig_normalized=expand('{output_dir}/tbigwig_normalized/{sample_id}.{rna_type}.bigWig',
+        # #     output_dir=output_dir, sample_id=sample_ids, rna_type=['transcriptome']),
+        # gbigwig=expand('{output_dir}/gbamStar_bigwig/{sample_id}.{rna_type}.{strand}.bigWig',
+        #     output_dir=output_dir, sample_id=sample_ids, rna_type=['genome'], strand=['+', '-']),
+        # gbigwig_normalized=expand('{output_dir}/gbamStar_bigwig_normalized/{sample_id}.{rna_type}.{strand}.bigWig',
+        #     output_dir=output_dir, sample_id=sample_ids, rna_type=['genome'], strand=['+', '-']),
+        # # gbigwig_normalized_log2=expand('{output_dir}/bigwig_normalized_log2/{sample_id}.{rna_type}.{strand}.bigWig',
+        # #     output_dir=output_dir, sample_id=sample_ids, rna_type=['other', 'transcriptome'], strand=['+', '-'])
+
+        # blockbuster
+        blockbuster_out=expand(gn_peak_dir+'/blockbuster_by_sample/min3/{sample_id}.blockbuster', sample_id=sample_ids),
+        blockbuster_raw=expand(gn_peak_dir+'/blockbuster_by_sample/min3/{sample_id}_{peak_type}.bed', sample_id=sample_ids, peak_type=['cluster','block']),
+        # blockbuster_block=expand(gn_peak_dir+'/blockbuster/min3_block.bed'),
+        # blockbuster_bed=expand(gn_peak_dir+'/blockbuster/blockbuster_min3.blockbuster'),
+        # blockbuster_bed2=expand(gn_peak_dir+'/blockbuster/blockbuster_min3_{peak_type}.bed',peak_type=['cluster','block']),
+        # blockbuster_gtf=expand(gn_peak_dir+'/blockbuster/blockbuster_min3.gtf'),
+        # peak_count_matrix_blockbuster=expand(gn_peak_dir+'/count_matrix/blockbuster_min3.txt')
+
+        # piranha
+        piranha_out=expand(gn_peak_dir+'/piranha_by_sample/b{bin_size}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha'], sample_id=sample_ids),
+        peak_piranha=expand(gn_peak_dir+'/piranha/b{bin_size}_p{pvalue}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha']),
+        # peak_count_matrix_piranha=expand(gn_peak_dir+'/count_matrix/piranha_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_piranha'])
+    
+        # clipper
+        clipper_out=expand(gn_peak_dir+'/clipper_by_sample/b{bin_size}_p{pvalue}/{sample_id}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper'], sample_id=sample_ids),
+        peak_clipper=expand(gn_peak_dir+'/clipper/b{bin_size}_p{pvalue}.bed',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper']),
+        # peak_count_matrix_clipper=expand(gn_peak_dir+'/count_matrix/clipper_b{bin_size}_p{pvalue}.txt',bin_size=config['bin_size'], pvalue=config['call_peak_pvalue_clipper'])
+    
+    )
+    enabled_inputs = list(available_inputs.keys())
+    inputs = []
+    for key, l in available_inputs.items():
+        if key in enabled_inputs:
+            inputs += l
+    return inputs
+
+rule all:
+    input:
+        get_all_inputs
+
+rule mapping_gn_Star:
+    input:
+        #reads='{output_dir}/unmapped/{sample_id}/clean.fa.gz',
+        reads=output_dir + '/trimmed/{sample_id}.fastq.gz',
+        index=genome_dir + '/genome_index/star/Genome'
+    output:
+        # unmapped=output_dir + '/unmapped/{sample_id}/genome.fa.gz',
+        bam=output_dir + '/gbamStar/{sample_id}/bam/genome.bam'
+	#bai=output_dir + '/gbamStar/{sample_id}/genome.bam.bai'
+    log:
+        output_dir + '/gbamStar/{sample_id}/log/rule.log'
+    threads: config['threads_mapping']
+    params:
+        STAR="/BioII/lulab_b/baopengfei/gitsoft/STAR-2.5.4a/bin/Linux_x86_64",
+        index=genome_dir + '/genome_index/star',
+        n=50, # hsa_gn: 50; other shorter: 20
+        # k=100, # multi-mapped:100; default:10
+        output_prefix=output_dir + '/gbamStar/{sample_id}/bam/',
+        output_star=output_dir + '/gbamStar/{sample_id}/bam/Aligned.out.bam'
+    shell:
+        '''
+        {params.STAR}/STAR \
+            --genomeDir {params.index} \
+            --readFilesIn {input.reads} \
+            --alignEndsType EndToEnd \
+            --runThreadN {threads} \
+            --outFileNamePrefix {params.output_prefix} \
+            --outSAMtype BAM Unsorted \
+            --outReadsUnmapped Fastx \
+            --readFilesCommand pigz -d -c \
+            --seedPerWindowNmax {params.n} > {log} 2>&1
+        # ln -s {params.output_star} {output.bam}
+        samtools sort -@ {threads} -o {output.bam} {params.output_star}
+        samtools index -@ {threads} {output.bam}
+        '''
+
+rule dedup:
+    input:
+        bam = output_dir+"/gbamStar/{sample_id}/bam/{rna_type}.bam"
+    output:
+        bam = output_dir+"/gbamStar/{sample_id}/bam-deduped/{rna_type}.bam",
+        bai = output_dir+"/gbamStar/{sample_id}/bam-deduped/{rna_type}.bam.bai",
+        # bam = output_dir+"/tbam/{sample_id}/"+bam_dedup_dir+"/{rna_type}.bam",
+        # bai = output_dir+"/tbam/{sample_id}/"+bam_dedup_dir+"/{rna_type}.bam.bai",
+    params:
+        # stat = "{output_dir}/tbam/{sample_id}/bam-deduped/{rna_type}",
+        tmpdir = temp_dir
+    threads: max(12,int(0.5*config['threads_mapping']))
+    wildcard_constraints:
+        rna_type='(?!merge).*',
+        # sample_id='\w+'
+    log:
+        output_dir+"/gbamStar/{sample_id}/log-dedup/{rna_type}.log"
+    conda:
+        "./envs/cfpeak.yml"
+    shell:
+        """
+        umi_tools dedup --temp-dir {params.tmpdir}  -I {input.bam} -S {output.bam} > {log} 
+        samtools index -@ 4 {output.bam}
+        """
+#sometimes meet mem error, fail/killed without warning, try add downsampling: --subset=0.2
+#consider add "|| cp {input.bam} {output.bam}" to avoid null bam (like long RNA-seq map to miRNA)
+#--output-stats={params.stat} seem consumes lots of mem
+#for long RNA-seq better not sort by pos and index dedup bam, tbam_to_bed below may need sort by name
+#samtools index -@ {threads} {output.bam}
+
+rule sort_gbam:
+    '''Sort genomic BAM file by coordinate
+    '''
+    input:
+        # output_dir+'/gbamStar/{sample_id}/{rna_type}.bam'
+        output_dir+"/gbamStar/{sample_id}/"+bam_dedup_dir+"/{rna_type}.bam",
+    output:
+        bam=output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam',
+        bai=output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam.bai'
+    params:
+        temp_dir=config['temp_dir']
+    shell:
+        '''samtools sort -T {params.temp_dir} -o {output.bam} {input}
+        samtools index {output.bam}
+        '''
+
+## bam to bed/bg/bw
+STARgbamtobed='''samtools view -bh {input} | bedtools bamtobed -split -i stdin | pigz -c -p {threads} > {output} # add splitting for gn STAR
+        '''
+rule gbamEM_to_bed:
+    input:
+        output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam',
+        # output_dir+'/gbamStar/{sample_id}/'+bam_dedup_dir+'-EM/{rna_type}/merged.sorted.bam',
+    output:
+        gn_peak_dir+'/gbamStar_bed/{sample_id}.{rna_type}.bed.gz'
+    threads: config['threads_mapping']
+    params: 
+        # mapq = config['min_map_quality'],
+        # subsample = config['downsample'],# 0.1,
+    # wildcard_constraints:
+    #     # sample_id='\w+'
+    run:
+        shell(STARgbamtobed)
+
+rule gbam_to_bedgraph:
+    input:
+        output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam'
+    output:
+        output_dir+'/gbamStar_bedgraph/{sample_id}.{rna_type}.{strand}.bedGraph'
+    params:
+        temp_dir=config['temp_dir']
+    shell:
+        '''bedtools genomecov -ibam {input} -strand {wildcards.strand} -bg -split \
+            | LC_COLLATE=C sort -T {params.temp_dir} -k1,1 -k2,2n > {output}
+        '''
+
+rule gbedgraph_to_bigwig:
+    input:
+        bedgraph=output_dir+'/gbamStar_bedgraph/{sample_id}.{rna_type}.{strand}.bedGraph',
+        chrom_sizes=genome_dir + '/chrom_sizes/genome'
+    output:
+        output_dir+'/gbamStar_bigwig/{sample_id}.{rna_type}.{strand}.bigWig'
+    shell:
+        '''{bin_dir}/bedGraphToBigWig {input.bedgraph} {input.chrom_sizes} {output}
+        '''
+
+rule read_counts_mapped_gn:
+    input: 
+        output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam'
+    output:
+        output_dir+'/stats/read_counts_mapped/{sample_id}/{rna_type}'
+    # conda:
+    #     "./envs/cfpeak.yml"
+    # wildcard_constraints:
+    #     rna_type='(?!promoter$)(?!enhancer$)(?!intron$)(?!repeats$)(?!genome).*'
+    shell:
+        '''bamtools count -in {input} > {output}
+        '''
+
+rule summarize_read_counts_gn:
+    input:
+        # output_dir+'/stats/read_counts_mapped/{sample_id}/{merge_type}' #merge19_sort merge11RNA_sort
+        mapped=lambda wildcards: expand(output_dir+'/stats/read_counts_mapped/{sample_id}/{rna_type}',
+            sample_id=sample_ids, rna_type='genome'), # + ['other', 'promoter', 'enhancer', 'intron', 'repeats']),
+    output:
+        output_dir+'/gbamstar_summary/read_counts.txt'
+    run:
+        import pandas as pd
+        import os
+        from collections import OrderedDict
+    
+        records = OrderedDict()
+        for sample_id in sample_ids:
+            records[sample_id] = {}
+        for filename in input.mapped:
+            sample_id, rna_type = filename.split(os.path.sep)[-2:]
+            with open(filename, 'r') as f:
+                records[sample_id][rna_type + '.mapped'] = int(f.read().strip())
+        # for filename in input.unmapped:
+        #     sample_id, rna_type = filename.split(os.path.sep)[-2:]
+        #     with open(filename, 'r') as f:
+        #         records[sample_id][rna_type + '.unmapped'] = int(f.read().strip())
+        records = pd.DataFrame.from_records(records)
+        records.columns.name = 'sample_id'
+        records.columns.name = 'item'
+        records.index.name = 'reads_type'
+        records.to_csv(output[0], sep='\t', header=True, index=True)
+
+rule normalize_gbigwig:
+    input:
+        summary=output_dir+'/gbamstar_summary/read_counts.txt',
+        # bam='{output_dir}/gbamStar/{sample_id}/{rna_type}.bam',
+        bam=output_dir+'/gbamStar_sorted/{sample_id}/{rna_type}.bam',
+        bigwig=output_dir+'/gbamStar_bigwig/{sample_id}.{rna_type}.{strand}.bigWig',
+        chrom_sizes=genome_dir + '/chrom_sizes/genome'
+    output:
+        bigwig=output_dir+'/gbamStar_bigwig_normalized/{sample_id}.{rna_type}.{strand}.bigWig',
+        bedgraph=temp(output_dir+'/gbamStar_bigwig_normalized/{sample_id}.{rna_type}.{strand}.bedGraph')
+    wildcard_constraints:
+        strand='[+-]'
+    run:
+        library_size = get_library_size_small(input.summary, wildcards.sample_id, 'genome')
+        shell(r'''{bin_dir}/bigWigToBedGraph {input.bigwig} stdout \
+            | awk -v d="{library_size}" 'BEGIN{{OFS="\t";FS="\t"}}{{print $1,$2,$3,1000000.0*$4/d}}' > {output.bedgraph}''')
+        shell(r'''{bin_dir}/bedGraphToBigWig {output.bedgraph} {input.chrom_sizes} {output.bigwig}''')
+
+
+
+
+
+
+peak_recurrence_gn='''cat {input.bed} \
+            | bedtools sort \
+            | bedtools genomecov -i - -strand + -g {input.chrom_sizes} -bg \
+            | awk -v s="+" 'BEGIN{{OFS="\t";FS="\t"}}{{print $1,$2,$3,"X",$4,s}}' \
+            > {output.pos}
+            cat {input.bed} \
+            | bedtools sort \
+            | bedtools genomecov -i - -strand - -g {input.chrom_sizes} -bg \
+            | awk -v s="-" 'BEGIN{{OFS="\t";FS="\t"}}{{print $1,$2,$3,"X",$4,s}}' \
+            > {output.neg}
+            cat {output.pos} {output.neg} | LC_COLLATE=C sort -k1,1 -k2,2n > {output.bed}
+        '''
+
+filter_peak_recurrence='''awk -v c={params.cov_num} '$5 >= c' {input} \
+            | bedtools merge -s -c 2,3,5,6 -o collapse,collapse,collapse,collapse \
+            | awk 'BEGIN{{OFS="\t";FS="\t"}} 
+            {{split($4,a,/,/); split($5,b,/,/); split($6,c,/,/); split($7,d,/,/);
+            cov=0.0;for(i=1;i<=length(a);i++){{cov+=c[i]*(b[i]-a[i]);}} 
+            cov /= $3-$2;
+            print $1,$2,$3,"peak_" NR,cov,d[1]
+            }}' > {output}
+        '''
+
+
+########################################
+# run piranha/call_peaks.R
+########################################
+#use primary-mapped as input
+rule bin_coverage:
+    input:
+        bed=gn_peak_dir+'/gbamStar_bed/{sample_id}.{rna_type}.bed.gz',
+        # gn_peak_dir+'/tbed_11RNA_primary/{sample_id}.bed.gz',
+        # bed=gn_peak_dir+'/tbed_RNA_EM/{sample_id}.bed.gz',
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+    output:
+        pos=gn_peak_dir+'/gbincov/{bin_size}/{sample_id}.{rna_type}.+.bed',
+        neg=gn_peak_dir+'/gbincov/{bin_size}/{sample_id}.{rna_type}.-.bed'
+    threads: 2 #config['threads_mapping']
+    params:
+        bin_size=config['bin_size']
+    conda:
+        "./envs/piranha.yml"
+    shell:
+        '''pigz -d -c {input.bed} | awk '$6=="+"' | LC_COLLATE=C sort -k1,1 -k2,2n | {bin_dir}/bin_coverage /dev/stdin {input.chrom_sizes} {output.pos} {params.bin_size}
+            pigz -d -c {input.bed} | awk '$6=="-"' | LC_COLLATE=C sort -k1,1 -k2,2n | {bin_dir}/bin_coverage /dev/stdin {input.chrom_sizes} {output.neg} {params.bin_size}
+        '''
+#cal cov each seperate strand
+#PE: pigz -d -c {input.bed} | awk 'BEGIN{{OFS="\t";FS="\t"}} {{print $1,$2,$3,$4,$5,"+"}}'
+# need sort before bin_coverage
+
+"""
+#note: piranha cannot run in (E) cluster: lack libso.1***
+rule call_peaks_piranha2:
+    input:
+        gn_peak_dir+'/tbincov/{bin_size}/{sample_id}.bed'
+    output:
+        gn_peak_dir+'/piranha_by_sample/b{bin_size}_p{pvalue_piranha}/{sample_id}.bed'
+    params:
+        #/lulabdata/shibinbin/projects/piranha-exrna-1.2.1/bin
+        distribution=config['distribution'],
+        #piranha_path="/Share2/home/lulab/shibinbin/projects/piranha-exrna-1.2.1/bin/"
+        piranha_path=config['piranha_path']
+    threads: config['threads_mapping']
+    shell:
+        '''{params.piranha_path}/Piranha -b {wildcards.bin_size} -d {params.distribution} \
+            -p {pvalue_piranha_param} -T bin_cov \
+            {input} | awk 'NF>=6' > {output}
+        '''
+"""
+
+#install.packages ("countreg", repos="http://R-Forge.R-project.org")
+rule call_peaks_piranha:
+    input:
+        # expand(gn_peak_dir+'/gbincov/{bin_size}/{sample_id}.{rna_type}.bed',
+        #     bin_size=bin_size,sample_id=sample_ids, rna_type=rna_types),
+        pos=gn_peak_dir+'/gbincov/{bin_size}/{sample_id}.genome.+.bed',
+        neg=gn_peak_dir+'/gbincov/{bin_size}/{sample_id}.genome.-.bed',
+    output:
+        # expand(gn_peak_dir+'/piranha_by_sample/b{bin_size}_p{pvalue_piranha}/{sample_id}.{rna_type}.bed',
+        #     bin_size=bin_size,pvalue_piranha=pvalue_piranha,sample_id=sample_ids, rna_type=rna_types),
+        pos=temp(gn_peak_dir+'/piranha_by_sample/b{bin_size}_p'+pvalue_piranha+'/{sample_id}.genome.+.bed'),
+        neg=temp(gn_peak_dir+'/piranha_by_sample/b{bin_size}_p'+pvalue_piranha+'/{sample_id}.genome.-.bed'),
+        mergeBed=gn_peak_dir+'/piranha_by_sample/b{bin_size}_p'+pvalue_piranha+'/{sample_id}.bed'
+    threads: 2 #config['threads_mapping']
+    params:
+        # tmpbed = gn_peak_dir+'/piranha_by_sample/b{bin_size}_p{pvalue_piranha}/{sample_id}.bed.tmp',
+        minPeakLength = config['min_peak_size'],
+        maxPeakLength = config['max_peak_size'],
+        background=0.99
+    conda: 
+        "envs/piranha.yml"
+    shell:
+        '''Rscript scripts/piranha_call_peaks.R -p {pvalue_piranha_param} -i {input.pos} -b {params.background} -o {output.pos} 
+        Rscript scripts/piranha_call_peaks.R -p {pvalue_piranha_param} -i {input.neg} -b {params.background} -o {output.neg} 
+        cat {output.pos} {output.neg} | awk '$3-$2>={params.minPeakLength} && $3-$2<={params.maxPeakLength}' | awk 'BEGIN{{OFS="\t";FS="\t"}} {{print $1,$2,$3,"peak_" NR,$5,$6}} ' | LC_COLLATE=C sort -k1,1 -k2,2n > {output.mergeBed}
+        '''
+#cal cov each all strand together
+#default: -p 0.01
+#-p 0.{pvalue_piranha} 
+
+rule peak_recurrence_piranha:
+    input:
+        bed=lambda wildcards: expand(gn_peak_dir+'/piranha_by_sample/b{bin_size}_p{pvalue_piranha}/{sample_id}.bed',
+            bin_size=bin_size,
+            pvalue_piranha=pvalue_piranha,
+            sample_id=sample_ids),
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+    output:
+        pos=temp(gn_peak_dir+'/piranha_recurrence/b{bin_size}_p{pvalue_piranha}.+.bed'),
+        neg=temp(gn_peak_dir+'/piranha_recurrence/b{bin_size}_p{pvalue_piranha}.-.bed'),
+        bed=gn_peak_dir+'/piranha_recurrence/b{bin_size}_p{pvalue_piranha}.bed' #.{strand}
+    threads: 2 #config['threads_mapping']
+    params: strand = strand
+    run:
+        shell(peak_recurrence_gn)
+
+rule filter_peak_by_recurrence_piranha:
+    input:
+        gn_peak_dir+'/piranha_recurrence/b{bin_size}_p{pvalue_piranha}.bed'
+    output:
+        gn_peak_dir+'/piranha/b{bin_size}_p{pvalue_piranha}.bed'
+    threads: 2 #config['threads_mapping']
+    params:
+        cov_num=cov_num
+    run:
+        shell(filter_peak_recurrence)
+
+
+
+
+########################################
+# run clipper
+########################################
+rule call_peaks_clipper:
+    input:
+        # output_dir+'/tbam/{sample_id}/'+bam_dedup_dir+'-EM/merge11RNA_sort/unique.sorted.revertFullLengthReads.sorted.bam',
+        output_dir+'/gbamStar_sorted/{sample_id}/genome.bam' 
+    output:
+        gn_peak_dir+'/clipper_by_sample/b{bin_size}_p{pvalue_clipper}/{sample_id}.bed'
+    log: gn_peak_dir+'/clipper_by_sample/b{bin_size}_p{pvalue_clipper}/log/{sample_id}.log'
+    threads: config['threads_mapping']
+    params:
+        # background=0.99
+        tmpbed = gn_peak_dir+'/clipper_by_sample/b{bin_size}_p{pvalue_clipper}/{sample_id}.bed.tmp',
+        minPeakLength = config['min_peak_size'],
+        maxPeakLength = config['max_peak_size'],
+        strandness2 = strandness2,
+        bin_size = config['bin_size'],
+    # conda:
+    #     "./envs/clipper.yml"
+    shell:
+        '''
+        (echo "start at `date`";
+        export PATH={clipper_dir}:$PATH;
+        {clipper_dir}/clipper  \
+            -s GRCh38_v29 --binomial 0.05 -v \
+            -b {input} \
+            -o {output} \
+            --processors {threads} --poisson-cutoff {pvalue_clipper_param} ;
+        awk '$3-$2>={params.minPeakLength} && $3-$2<={params.maxPeakLength}' {output} > {params.tmpbed};
+        mv {params.tmpbed} {output} ; 
+        echo "end at `date`" ) > {log} 2>&1
+        '''
+#--timeout 36000  
+# --reverse_strand {params.strandness2} # def:F
+#too time-consuming for hg38txNoRepeatsnewTxID
+# hg38txNoDNAnewTxID
+#Clipper outputs a bed8 file:
+#chromosome, genomic_start, genomic_stop, cluster_name, min_pval, strand, thick_start, thick_stop
+#default: --poisson-cutoff 0.05
+#--poisson-cutoff 0.{pvalue}
+
+rule peak_recurrence_clipper:
+    input:
+        bed=lambda wildcards: expand(gn_peak_dir+'/clipper_by_sample/b{bin_size}_p{pvalue_clipper}/{sample_id}.bed',
+            bin_size=bin_size,
+            pvalue_clipper=pvalue_clipper,
+            sample_id=sample_ids),
+        chrom_sizes=genome_dir+'/chrom_sizes/transcriptome_genome_sort_uniq_newTxID'
+    output:
+        pos=temp(gn_peak_dir+'/clipper_recurrence/b{bin_size}_p{pvalue_clipper}.+.bed'),
+        neg=temp(gn_peak_dir+'/clipper_recurrence/b{bin_size}_p{pvalue_clipper}.-.bed'),
+        bed=gn_peak_dir+'/clipper_recurrence/b{bin_size}_p{pvalue_clipper}.bed' # .{strand}
+    threads: 2 #config['threads_mapping']
+    params: strand = strand
+    run:
+        shell(peak_recurrence_gn)
+
+rule filter_peak_by_recurrence_clipper:
+    input:
+        gn_peak_dir+'/clipper_recurrence/b{bin_size}_p{pvalue_clipper}.bed'
+    output:
+        gn_peak_dir+'/clipper/b{bin_size}_p{pvalue_clipper}.bed'
+    threads: 2 #config['threads_mapping']
+    params:
+        cov_num=cov_num
+    run:
+        shell(filter_peak_recurrence)
+
+
+
+
+########################################
+# run blockbuster
+########################################
+#peak_dir = config['output_dir']+"/"+config['peak_subdir']
+rule call_peaks_blockbuster:
+    input:
+        # output_dir+'/gbamStar/{sample_id}/'+bam_dedup_dir+'-EM/genome/merged.sorted.bam',
+        gn_peak_dir+'/gbamStar_bed/{sample_id}.genome.bed.gz'
+    output:
+        inBed=temp(gn_peak_dir+'/gbamStar_bed/{sample_id}.reduced.bed'),
+        peakBed=gn_peak_dir+'/blockbuster_by_sample/min3/{sample_id}.blockbuster',
+        blockBed=gn_peak_dir+'/blockbuster_by_sample/min3/{sample_id}_block.bed',
+        clusterBed=gn_peak_dir+'/blockbuster_by_sample/min3/{sample_id}_cluster.bed',
+    log: gn_peak_dir+'/blockbuster_by_sample/min3/log/{sample_id}.log'
+    threads: 3 #config['threads_mapping']
+    params:
+        # background=0.99
+        tmpbed = gn_peak_dir+'/blockbuster_by_sample/min3/{sample_id}.blockbuster.tmp',
+        minPeakLength = config['min_peak_size'],
+        maxPeakLength = config['max_peak_size'],
+        # strandness2 = strandness2,
+        bin_size = config['bin_size'],
+        # cutoff = 3,
+        minReadNumEachDistinctSite = 3, # default:0 (not filter input reduced read bed)
+        blockH = 3, # block: eg.mat_miR (smaller, may overlap with each); default:2
+        clusterH = 3, # cluster: eg.pri_miR (larger, locally merged from block, usually not overlapped with each); default:10
+    # conda:
+    #     "./envs/blockbuster.yml"
+    shell:
+        r'''
+        (echo "start at `date`";
+        export PATH=/BioII/lulab_b/baopengfei/mambaforge/envs/blockbuster/bin:$PATH
+
+        python scripts/bamBed2blockbusterBed.py -b {input} -o {output.inBed}
+        blockbuster.x -format 1 -minBlockHeight {params.blockH} -minClusterHeight {params.clusterH} -print 1 -tagFilter {params.minReadNumEachDistinctSite} <(cat {output.inBed} | LC_COLLATE=C sort -k1,1 -k2,2n) > {output.peakBed}
+
+        grep -E '>' {output.peakBed} | \
+            awk 'BEGIN {{OFS=FS="\t"}} {{ print $2,$3,$4,$1,$6,$5}}' | \
+            sed s/'>'/''/g | \
+            LC_COLLATE=C sort -k1,1 -k2,2n \
+            > {output.clusterBed}
+        awk '$3-$2>={params.minPeakLength} && $3-$2<={params.maxPeakLength}' {output.clusterBed} | grep -E "^chr" | grep -vE "Un_|_random|_alt" > {params.tmpbed};
+        mv {params.tmpbed} {output.clusterBed}
+
+        grep -E -v '>' {output.peakBed} | \
+            awk 'BEGIN {{OFS=FS="\t"}} {{ print $2,$3,$4,$1,$6,$5}}' | \
+            LC_COLLATE=C sort -k1,1 -k2,2n \
+            > {output.blockBed}
+        awk '$3-$2>={params.minPeakLength} && $3-$2<={params.maxPeakLength}' {output.blockBed} | grep -E "^chr" | grep -vE "Un_|_random|_alt" > {params.tmpbed};
+        mv {params.tmpbed} {output.blockBed}
+
+        echo "end at `date`" ) > {log} 2>&1
+        '''
+#awk '$3-$2>=10 && $3-$2<=200' | grep -E "^chr" | grep -vE "Un_|_random|_alt|," | bedtools intersect -s -v -wa -a stdin -b /BioII/lulab_b/baopengfei/shared_reference/hg38/hg38_blacklist.bed > out.bed
+#add r''' to avoid shell error (\t to   )
+
+
+rule peak_consensus_blockbuster:
+    input:
+        # gn_peak_dir+'/gbamStar_bed/{sample_id}.genome.bed.gz'
+        lambda wildcards: expand(gn_peak_dir+'/blockbuster_by_sample/min{minReadNumEachDistinctSite}/{sample_id}_block.bed',minReadNumEachDistinctSite=3,sample_id=sample_ids),
+    output:
+        inBed=temp(gn_peak_dir+'/gbamStar_bed/min{minReadNumEachDistinctSite}_reduced.bed'),
+        # peakBed=gn_peak_dir+'/blockbuster_by_sample/min3/{sample_id}.blockbuster',
+        peakBed=gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}.blockbuster',
+        # blockBed=gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}_block.bed',
+        # clusterBed=gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}_cluster.bed',
+    log: gn_peak_dir+'/blockbuster/log/min{minReadNumEachDistinctSite}.log'
+    threads: 3 #config['threads_mapping']
+    params:
+        # background=0.99
+        bed=gn_peak_dir+"/blockbuster_by_sample/min{minReadNumEachDistinctSite}/{"+",".join(sample_ids)+"}_block.bed",
+        tmpbed = gn_peak_dir+'/blockbuster/min{minReadNumEachDistinctSite}.bed.tmp',
+        # minPeakLength = config['min_peak_size'],
+        # maxPeakLength = config['max_peak_size'],
+        # strandness2 = strandness2,
+        # bin_size = config['bin_size'],
+        # cutoff = 3,
+        minReadNumEachDistinctSite = 3, # default:0 (not filter input reduced read bed)
+        blockH = 3, # block: eg.mat_miR (smaller, may overlap with each); default:2
+        clusterH = 3, # cluster: eg.pri_miR (larger, locally merged from block, usually not overlapped with each); default:10
+    # conda:
+    #     "./envs/blockbuster.yml"
+    shell:
+        r'''
+        (echo "start at `date`";
+        export PATH=/BioII/lulab_b/baopengfei/mambaforge/envs/blockbuster/bin:$PATH
+
+        python scripts/bamBed2blockbusterBed.py -b <(cat {params.bed}) -o {output.inBed}
+        blockbuster.x -format 1 -minBlockHeight {params.blockH} -minClusterHeight {params.clusterH} -print 1 -tagFilter {params.minReadNumEachDistinctSite} <(cat {output.inBed} | LC_COLLATE=C sort -k1,1 -k2,2n) > {output.peakBed}
+
+        echo "end at `date`" ) > {log} 2>&1
+        '''
+
+#blockbuster2gtf
+rule blockbuster2gtf:
+    input:
+        gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}.blockbuster'
+    params:
+        blacklist = "/BioII/lulab_b/baopengfei/shared_reference/hg38/hg38_blacklist.bed",
+        minTxLength = 10,
+        maxTxLength = 200
+    # conda:
+    #     "./envs/blockbuster.yml" # base the same
+    output:
+        gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}.gtf'
+    shell:
+        '''
+        export PATH=/BioII/lulab_b/baopengfei/mambaforge/envs/blockbuster/bin:$PATH
+        python scripts/blockbuster2gtf.py --minTxLength {params.minTxLength} --maxTxLength {params.maxTxLength} -i {input} | bedtools intersect -v -wa -a stdin -b {params.blacklist} > {output}
+        '''
+        # shell(blockbuster2gtf)
+
+rule gtf2bed:
+    input:
+        gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}.gtf'
+    output:
+        block=gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}_block.bed',
+        cluster=gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}_cluster.bed'
+    shell:
+        r'''
+        awk 'BEGIN{{FS=OFS="\t"}} 
+        {{
+            match($9, /transcript_id "([^"]+)"/, arr);
+            print $1,$4-1,$5,arr[1],$6,$7
+        }}' {input} | LC_COLLATE=C sort -k1,1 -k2,2n | uniq > {output.block}
+        
+        #need test cluster: Process the input file to keep only one record per unique gene_id
+        awk 'BEGIN{FS=OFS="\t"} 
+        {
+            match($9, /gene_id "([^"]+)"/, arr);
+            if (!seen[arr[1]]++) {
+                print $1,$4-1,$5,arr[1],$6,$7
+            }
+        }' {input} | LC_COLLATE=C sort -k1,1 -k2,2n | uniq > {output.cluster}
+        '''
+        
+# #bed2gtf
+# bed2gtf="""cat {input} | awk 'BEGIN{{FS=OFS="\t"}} {{print $1,"hg38","exon",($2+1),$3,$5,$6,".","gene_id "$4}}' > {output}"""
+# rule bed2gtf:
+#     input:
+#         gn_peak_dir+'/blockbuster/blockbuster_min3_cluster.bed'
+#     output:
+#         gn_peak_dir+'/blockbuster/blockbuster_min3_cluster.gtf'
+#     run:
+#         shell(bed2gtf)
+
+# for STAR with splicing, better use featurecount for read count ? (bed to gtf)
+# get count matrix
+rule count_matrix_peak:
+    input:
+        gtf1=gn_peak_dir+'/blockbuster/blockbuster_min{minReadNumEachDistinctSite}.gtf',
+        bam=lambda wildcards: expand(output_dir+'/gbamStar/{sample_id}/'+bam_dedup_dir+'-EM/genome/{sample_id}.bam',sample_id=sample_ids) # ,rna_type='genome'
+        # bam=expand(output_dir+'/gbamStar/{sample_id}/'+bam_dedup_dir+'-EM/genome/merged.sorted.bam',sample_id=sample_ids) # ,rna_type='genome'
+    output:
+        gene_matrix1=gn_peak_dir+'/count_matrix/blockbuster_block_min{minReadNumEachDistinctSite}.txt', # region
+        gene_sum1=gn_peak_dir+"/count_matrix/blockbuster_block_min{minReadNumEachDistinctSite}.txt.summary",
+        gene_matrix2=gn_peak_dir+'/count_matrix/blockbuster_cluster_min{minReadNumEachDistinctSite}.txt', # region
+        gene_sum2=gn_peak_dir+"/count_matrix/blockbuster_cluster_min{minReadNumEachDistinctSite}.txt.summary",
+        # gene_matrix=outdir+"/matrix/count_matrix_{region}.txt",
+        # gene_sum=outdir+"/matrix/count_matrix_{region}.txt.summary",
+        # gene_CPM_TMM=outdir+"/matrix/CPM-TMM_matrix_{region}.txt",
+    log:
+        log1=gn_peak_dir+"/count_matrix/log/count_matrix_blockbuster_block_min{minReadNumEachDistinctSite}.log",
+        log2=gn_peak_dir+"/count_matrix/log/count_matrix_blockbuster_cluster_min{minReadNumEachDistinctSite}.log",
+        # CPM_TMM=gn_peak_dir+"/count_matrix/log/CPM-TMM_matrix_{region}.log",
+    conda:
+        # "envs/DNA.yml"
+        "envs/count_diff.yml"
+    threads: config['threads_mapping'] #16
+    params:
+        bam=output_dir+"/gbamStar/*/"+bam_dedup_dir+"-EM/genome/{"+",".join(sample_ids)+"}.bam",
+        tmp=gn_peak_dir+"/count_matrix/tmp_blockbuster_min{minReadNumEachDistinctSite}",
+        # region="{region}",
+        # -s: strandness # 1: forward, 2: reverse, 0:unstrand (default)
+    shell:
+        """
+        #--fracOverlap 0.5  # for overlapping features
+        featureCounts -T {threads} -O -s 1 -t exon -g transcript_id -M -p \
+            -a {input.gtf1} --fracOverlap 0.5 \
+            -o {output.gene_matrix1} {params.bam} \
+            > {log.log1} 2>&1
+        Rscript scripts/multiFeatureCounts2countMat.R \
+            -i {output.gene_matrix1}  \
+            -o {params.tmp} ;
+        mv {params.tmp} {output.gene_matrix1}
+
+        featureCounts -T {threads} -O -s 1 -t exon -g transcript_id -M -p \
+            -a {input.gtf1} --fracOverlap 0.5 \
+            -o {output.gene_matrix2} {params.bam} \
+            > {log.log2} 2>&1
+        Rscript scripts/multiFeatureCounts2countMat.R \
+            -i {output.gene_matrix2}  \
+            -o {params.tmp} ;
+        mv {params.tmp} {output.gene_matrix2}
+        """
+# Rscript scripts/run-NormCountMat.R \
+#     -i {output.gene_matrix} \
+#     -o {output.gene_CPM_TMM} \
+#     -m TMM \
+#     > {log.CPM_TMM} 2>&1
+
+# Rscript scripts/run-NormCountMat.R \
+#     -i {output.gene_matrix} \
+#     -o {output.gene_CPM} \
+#     -m none \
+#     > {log.CPM} 2>&1

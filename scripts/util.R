@@ -1741,11 +1741,15 @@ diff.v3.dcb <- function(mat,sample.table,samples,group,form, useExternalLibSize=
     counts.pos <- NULL
   }
 
+  # message(geneLength)
+  # message(missing(geneLength))
   if (filterType=="small"){
     keep <- rowSums(counts>=1) >= 0.5*length(samples)
   }else if(filterType=="long"){
-    if (missing(geneLength)) {
+    if (!missing(geneLength)) {
       gene.len = geneLength
+      message("gL[1]: ",geneLength[1])
+      # stop("no gene length provided")
     }else{
       if(featureType=="gene"){
         gene.len = as.numeric(unlist(lapply(strsplit(rownames(counts), "|", fixed = T), function(x) x[2])))
@@ -1754,8 +1758,13 @@ diff.v3.dcb <- function(mat,sample.table,samples,group,form, useExternalLibSize=
       }
     }
 
-    #tpm_mat <- tpm(count = counts, gene.len = gene.len)
-    tpm_mat <- countToCpm(count.matrix =counts, useExternalLibSize = useExternalLibSize, filterLowExp = F, normMethod = "none", logValue = F, pseudoCount = 1, outType = "tpm", gene.len = gene.len)
+    
+    if(useExternalLibSize[1]=="FALSE"){
+      tpm_mat <- countToCpm(count.matrix =counts, filterLowExp = F, normMethod = norm_method, logValue = F, pseudoCount = 1, outType = "tpm", gene.len = gene.len)
+    }else if(is.numeric(useExternalLibSize[1])){
+      #tpm_mat <- tpm(count = counts, gene.len = gene.len)
+      tpm_mat <- countToCpm(count.matrix =counts, filterLowExp = F, normMethod = norm_method, logValue = F, pseudoCount = 1, outType = "tpm", gene.len = gene.len, useExternalLibSize = useExternalLibSize)
+    }
 
     keep <- rowSums(tpm_mat >= 1) >= 0.5*length(samples)
 

@@ -238,8 +238,9 @@ echo $cfpeakMAP
     # MAP="gn" # tx gn
     # cfpeakMAP="tx" # tx gn
 
-    for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2}; # TCGA-COAD_small_NC_NCpool
+    # for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2}; # TCGA-COAD_small_NC_NCpool
     # for dst in CNP0003091_urine_NCpool GSE129255 GSE112343_NCpool GSE56686 snc_pandora_hsa_HeLa_NCpool encode_small_colon_NCpool
+    for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2,CNP0003091_urine_NCpool,GSE129255,GSE112343_NCpool,GSE56686,snc_pandora_hsa_HeLa_NCpool,encode_small_colon_NCpool,TCGA-COAD_small_NC_NCpool}; # TCGA-COAD_small_NC_NCpool
     do
         echo $dst
         outDir=/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/output/${dst}
@@ -290,7 +291,8 @@ echo $cfpeakMAP
 
     # for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2}; # AGO2_IP_NCpool2
     # for dst in CNP0003091_urine_NCpool GSE129255 GSE112343_NCpool GSE56686 snc_pandora_hsa_HeLa_NCpool encode_small_colon_NCpool
-    for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2}; # TCGA-COAD_small_NC_NCpool
+    # for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2}; # TCGA-COAD_small_NC_NCpool
+    for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2,CNP0003091_urine_NCpool,GSE129255,GSE112343_NCpool,GSE56686,snc_pandora_hsa_HeLa_NCpool,encode_small_colon_NCpool,TCGA-COAD_small_NC_NCpool}; # TCGA-COAD_small_NC_NCpool
     do
         echo $dst
         outDir=/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/output/${dst}
@@ -331,7 +333,8 @@ echo $cfpeakMAP
     ## test AUROC
     # for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2}; # AGO2_IP_NCpool2
     # for dst in CNP0003091_urine_NCpool GSE129255 GSE112343_NCpool GSE56686 snc_pandora_hsa_HeLa_NCpool encode_small_colon_NCpool
-    for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2}; # TCGA-COAD_small_NC_NCpool
+    # for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2}; # TCGA-COAD_small_NC_NCpool
+    for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2,CNP0003091_urine_NCpool,GSE129255,GSE112343_NCpool,GSE56686,snc_pandora_hsa_HeLa_NCpool,encode_small_colon_NCpool,TCGA-COAD_small_NC_NCpool}; # TCGA-COAD_small_NC_NCpool
     do
         echo $dst
         outDir=/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/output/${dst}
@@ -386,29 +389,51 @@ echo $cfpeakMAP
                 fi
                 
                 cat test/${dst}_${BED}_${smp}_${MAP2}.bed.tmp | LC_COLLATE=C sort -k1,1 -k2,2n | bedtools merge -s -c 4,5,6 -o first,max,distinct -i stdin > test/${dst}_${BED}_${smp}.bed.tmp2 # max --> mean
-                bedtools intersect -split -s -u -wa -a ${standard_bed} -b test/${dst}_${BED}_${smp}.bed.tmp2 > test/${dst}_gbamStarUniq_block_${smp}_${BED}_called.bed        
-                bedtools intersect -split -s -u -wa -a ${standard_False_bed} -b test/${dst}_${BED}_${smp}.bed.tmp2 > test/${dst}_gbamStarEMmulti_block_${smp}_15_filter_false_${BED}_called.bed
-                cat test/${dst}_gbamStarEMmulti_block_${smp}_15_filter_false_${BED}_called.bed test/${dst}_gbamStarUniq_block_${smp}_${BED}_called.bed > tmp.${dst}.${smp}.bed
-                
-                bedtools intersect -split -s -u -wa -a test/${dst}_${BED}_${smp}.bed.tmp2 -b tmp.${dst}.${smp}.bed > test/${dst}_${BED}_${smp}_called.bed
-            # done
-            # for BED in "${arr[@]}" 
-            # do
 
-                ### opt1: rm not called standard for each method (normal but AUC~0.5, normal AUPR)
-                TYPE="called"
+                # ### opt1: rm not called standard for each method (normal but AUC~0.5, normal AUPR)
+                # bedtools intersect -split -s -u -wa -a ${standard_bed} -b test/${dst}_${BED}_${smp}.bed.tmp2 > test/${dst}_gbamStarUniq_block_${smp}_${BED}_called.bed        
+                # bedtools intersect -split -s -u -wa -a ${standard_False_bed} -b test/${dst}_${BED}_${smp}.bed.tmp2 > test/${dst}_gbamStarEMmulti_block_${smp}_15_filter_false_${BED}_called.bed
+                # cat test/${dst}_gbamStarEMmulti_block_${smp}_15_filter_false_${BED}_called.bed test/${dst}_gbamStarUniq_block_${smp}_${BED}_called.bed > tmp.${dst}.${smp}.bed
+
+                # bedtools intersect -split -s -u -wa -a test/${dst}_${BED}_${smp}.bed.tmp2 -b tmp.${dst}.${smp}.bed > test/${dst}_${BED}_${smp}_called.bed
+
+                # TYPE="called"
+                # echo "start $BED `date`"
+                # standard_bed2="test/${dst}_gbamStarUniq_block_${smp}_${BED}_called.bed" # Pos
+                # standard_False_bed2="test/${dst}_gbamStarEMmulti_block_${smp}_15_filter_false_${BED}_called.bed" # Neg
+                # output=test/${dst}_${BED}_${smp}_called.bed # rank by 4th column
+                # output_tbl="test/${dst}_${BED}_${smp}_${MAP2}_${TYPE}.txt" #
+                # cal_confusion_mat2_EM.sh  -i $output  -s ${standard_bed2} -m ${BED} -r replicate -t ${CORES} -f ${standard_False_bed2} >  $output_tbl  
+
+                # ### opt1.2: use all
+                # TYPE="all3"
+                # echo "start $BED `date`"
+                # standard_bed2="$standard_bed" # Pos
+                # standard_False_bed2="$standard_False_bed" # Neg
+                # output=test/${dst}_${BED}_${smp}.bed.tmp2 # rank by 4th column
+                # output_tbl="test/${dst}_${BED}_${smp}_${MAP2}_${TYPE}.txt" #
+                # cal_confusion_mat2_EM.sh  -i $output  -s ${standard_bed2} -m ${BED} -r replicate -t ${CORES} -f ${standard_False_bed2} >  $output_tbl  
+
+                ### opt1.3: use all
+                TYPE="all4"
                 echo "start $BED `date`"
-                standard_bed2="test/${dst}_gbamStarUniq_block_${smp}_${BED}_called.bed" # Pos
-                standard_False_bed2="test/${dst}_gbamStarEMmulti_block_${smp}_15_filter_false_${BED}_called.bed" # Neg
-                output=test/${dst}_${BED}_${smp}_called.bed # rank by 4th column
+                standard_bed2="$standard_bed" # Pos
+                standard_False_bed2="$standard_False_bed" # Neg
+                output=test/${dst}_${BED}_${smp}.bed.tmp2 # rank by 4th column
                 output_tbl="test/${dst}_${BED}_${smp}_${MAP2}_${TYPE}.txt" #
-                cal_confusion_mat2_EM.sh  -i $output  -s ${standard_bed2} -m ${BED} -r replicate -t ${CORES} -f ${standard_False_bed2} >  $output_tbl  
+                cal_confusion_mat2_EM2.sh  -i $output  -s ${standard_bed2} -m ${BED} -r replicate -t ${CORES} -f ${standard_False_bed2} >  $output_tbl  
 
-                # opt2: use all standard ( low AUC & AUPR, only compare F1 and precision due to redundant peaks)
-                TYPE="all"
-                output="test/${dst}_${BED}_${smp}.bed.tmp2" # rank by 4th column
-                output_tbl="test/${dst}_${BED}_${smp}_${MAP2}_${TYPE}.txt" # why not much changed
-                cal_confusion_mat2.sh  -i $output  -s ${standard_bed} -m ${BED} -r replicate -t ${CORES} >  $output_tbl  
+                # # opt2: use all standard ( low AUC & AUPR, only compare F1 and precision due to redundant peaks)
+                # TYPE="all"
+                # output="test/${dst}_${BED}_${smp}.bed.tmp2" # rank by 4th column
+                # output_tbl="test/${dst}_${BED}_${smp}_${MAP2}_${TYPE}.txt" # why not much changed
+                # cal_confusion_mat2.sh  -i $output  -s ${standard_bed} -m ${BED} -r replicate -t ${CORES} >  $output_tbl  
+
+                # # opt2 v3: use all standard ( low AUC & AUPR, only compare F1 and precision due to redundant peaks)
+                # TYPE="all2"
+                # output="test/${dst}_${BED}_${smp}.bed.tmp2" # rank by 4th column
+                # output_tbl="test/${dst}_${BED}_${smp}_${MAP2}_${TYPE}.txt" # why not much changed
+                # cal_confusion_mat3.sh  -i $output  -s ${standard_bed} -m ${BED} -r replicate -t ${CORES} >  $output_tbl  
             done
         done
     done

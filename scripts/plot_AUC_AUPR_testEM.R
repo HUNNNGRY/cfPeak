@@ -43,7 +43,7 @@ calculate_auroc_aupr <- function(TP, TN, FP, FN) {
 
 #
 
-# calculate confusion matrix (deprecated) -----------------------------------------------------------------------
+# calculate confusion matrix (deprecated, test-only) -----------------------------------------------------------------------
 #setwd("/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/") 
 #
 #mypal <- pal_d3_adaptive("category10", alpha = 0.9)(9)
@@ -51,9 +51,9 @@ black.col <- alpha("grey90",0.3)
 methCols <- c("Piranha"="#1F77B4E5","CLIPper"="#FF7F0EE5","CLAM"="#2CA02CE5","cfPeak"="red","cfPeak.CNN"="firebrick","blockbuster"="#9467BDE5","blockbuster.k100"="#9C564BE5","blockbuster.EM"="#E377C2E5")
 
 
-MAP="gn" # gn tx
+MAP="tx" # gn tx
 cfpeakMAP="tx" # gn tx
-TYPE="called" # "all"  called
+TYPE="all4" # all  all2 all3 all4  called
 message(MAP," mode")
 dir.create(paste0("./figure/",MAP,"_",cfpeakMAP,"_",TYPE))
 
@@ -114,6 +114,8 @@ for (dst in dsts){
           method.name <- method
           
           tmp <- read.table(inputFile,header = T,sep = "")
+          tmp$specificity <- 1-tmp$fpr
+          tmp$replicate <- ""
           colnames(tmp)[colnames(tmp)=="replicate"] <- "sample"
           colnames(tmp)[colnames(tmp)=="counts"] <- "cutoff"
           tmp$method <- method.name
@@ -137,7 +139,7 @@ for (dst in dsts){
     #res.df[1:3]
     # summary(res.df$fpr)
     # omit any record that not in [0,1]
-    res.df <- res.df[res.df$precision>=0 & res.df$precision<=1 & res.df$recall>=0 & res.df$recall<=1 & res.df$fpr>=0 & res.df$fpr<=1 & res.df$f1>=0 & res.df$f1<=1 ,]
+    res.df <- res.df[res.df$precision>=0 & res.df$precision<=1 & res.df$recall>=0 & res.df$recall<=1 & res.df$fpr>=0 & res.df$fpr<=1 & res.df$f1>=0 & res.df$f1<=1 & res.df$specificity>=0 & res.df$specificity<=1 ,]
     res.df <- res.df[res.df$method %in% methods.labs,]
     
     ## plot standard-overlap/recall/precison pie/bar plot 
@@ -147,7 +149,7 @@ for (dst in dsts){
       # dplyr::summarise() %>% 
       dplyr::arrange(cutoff) %>% # only select min cutoff (all peaks)
       dplyr::distinct(method, sample, dst, .keep_all = TRUE) %>% 
-      tidyr::pivot_longer(cols = precision:f1, names_to = "group",values_to = "number") %>%
+      tidyr::pivot_longer(cols = precision:specificity, names_to = "group",values_to = "number") %>%
       dplyr::mutate(total.peak.num=TP+FP+TN+FN, no.number=1-number) %>% # TN+FN=0
       tidyr::pivot_longer(cols = c("number","no.number"), names_to = "group.fill",values_to = "number") %>%
       dplyr::mutate(method2=paste0(method,".",group.fill)) %>% 
@@ -385,7 +387,7 @@ for (dst in dsts){
     
   }
 }
-
+#
 
 
 
@@ -412,14 +414,14 @@ dsts <- c(tissue.dsts,nonblood.dsts,blood.dsts)
 
 for(MAP in c("tx")){ # gn
   for(cfpeakMAP in c("tx")){ # "gn"
-    for(TYPE in c("all")){ # called
+    for(TYPE in c("all4")){ # called,  all,  all2, all3, all4
 
       
       #MAP="gn" # gn tx
 # cfpeakMAP="tx" # gn (depre) tx
 # TYPE="called" # "all"  called
 message(MAP," mode")
-dir.create(paste0("./figure/",MAP,"_",cfpeakMAP,"_",TYPE))
+#dir.create(paste0("./figure/",MAP,"_",cfpeakMAP,"_",TYPE))
 
 if(MAP == "tx"){
   methods <- c("Piranha","CLIPper","CLAM","bowtie2_cfpeak") #StarEM_win50,Star_k100,bowtie2_cfpeak,,Piranha,CLIPper,CLAM  ,"bowtie2_cfpeakCNN" "StarEM_win50"
@@ -475,6 +477,8 @@ for (dst in dsts){
       method.name <- method
       
       tmp <- read.table(inputFile,header = T,sep = "")
+      tmp$specificity <- 1-tmp$fpr
+      tmp$replicate <- ""
       colnames(tmp)[colnames(tmp)=="replicate"] <- "sample"
       colnames(tmp)[colnames(tmp)=="counts"] <- "cutoff"
       tmp$method <- method.name
@@ -500,7 +504,7 @@ unique(res.df$dst)
 #res.df[1:3]
 # summary(res.df$fpr)
 # omit any record that not in [0,1]
-res.df <- res.df[res.df$precision>=0 & res.df$precision<=1 & res.df$recall>=0 & res.df$recall<=1 & res.df$fpr>=0 & res.df$fpr<=1 & res.df$f1>=0 & res.df$f1<=1 ,]
+res.df <- res.df[res.df$precision>=0 & res.df$precision<=1 & res.df$recall>=0 & res.df$recall<=1 & res.df$fpr>=0 & res.df$fpr<=1 & res.df$f1>=0 & res.df$f1<=1 & res.df$specificity>=0 & res.df$specificity<=1 ,]
 res.df <- res.df[res.df$method %in% methods.labs,]
 
 
@@ -516,7 +520,7 @@ res.df2 <- dplyr::as_tibble(res.df2) %>%
   # dplyr::mutate(AUROC=calculate_auroc_aupr(TP, TN, FP, FN)$AUROC,AUPR=calculate_auroc_aupr(TP, TN, FP, FN)$AUPR) %>%
   dplyr::arrange(cutoff) %>% # only select min cutoff (all peaks)
   dplyr::distinct(method, sample, dst, .keep_all = TRUE) %>% 
-  tidyr::pivot_longer(cols = precision:f1, names_to = "group",values_to = "number") %>%
+  tidyr::pivot_longer(cols = precision:specificity, names_to = "group",values_to = "number") %>%
   dplyr::mutate(total.peak.num=TP+FP+TN+FN, no.number=1-number) %>% # TN+FN=0
   tidyr::pivot_longer(cols = c("number","no.number"), names_to = "group.fill",values_to = "number") %>%
   dplyr::mutate(method2=paste0(method,".",group.fill))
@@ -608,20 +612,27 @@ res.df2$sample <- gsub("TCGA-4T-AA8H-01A-11H-A41D-13_mirna_gdc_realn","01A",res.
 res.df2$sample <- gsub("TCGA-A6-2685-11A-01R-1757-13_mirna_gdc_realn","11A",res.df2$sample,fixed = T)
 res.df2$X2 <- paste0(res.df2$X," ",res.df2$sample)
 res.df2$X2 <- factor(res.df2$X2,levels = unique(res.df2$X2))
-
+#res.df2$Specificity <- 1-res.df2$fpr
 
 #str(res.df2)
 for (g in unique(res.df2$group)){
   # g <- "precision"
+  # if(g == "fpr"){
+  #   res.df2
+  # }
   print(g)
   tmp <- res.df2[res.df2$group==g,]
   tmp <- tmp[tmp$group.fill=="number",]
   maxY <- max(tmp$number)
-  
+  if(g=="fpr"){
+    g="FPR"
+  }else{
+    g <- tocapital(g)
+  }
   ggpubr::ggbarplot(data = tmp, x = "X2", y = "number", fill = "method", position = position_dodge(width = 0.8)) + #, add="mean_se", facet.by=c("dataset")
     # scale_fill_d3()+
     scale_fill_manual(values = methCols) +
-    labs(title="",x="", y = stringr::str_to_title(g))+
+    labs(title="",x="", y = g)+ # stringr::str_to_title(g)
     # xlim(c(0,1))+   
     # ylim(c(0,1))+
     scale_y_continuous(breaks = seq(0,maxY,round(maxY/3,digits = 1))) +
@@ -648,6 +659,49 @@ for (g in unique(res.df2$group)){
 #
 
 
+
+### plot single dst (GSE71008_NCpool2) (fig3)
+this.dst <- "GSE71008_NCpool2"  # 
+for (g in unique(res.df2$group)){
+  # g <- "precision"
+  print(g)
+  tmp <- res.df2[res.df2$group==g & res.df2$dst==this.dst,]
+  tmp <- tmp[tmp$group.fill=="number",]
+  ggpubr::ggbarplot(data = tmp, x = "method", y = "number", fill = "method", position = position_stack(), width = 0.5) + # , add="mean_se", , facet.by=c("group")
+    # stat_compare_means(#aes(x=type, y=ratio, group=site), # ref.group="Flank",  # 
+    #   comparisons = list(c("Domain","Flank")),
+    #   label="p.signif",  # ..p.signif../..p.format..
+    #   # symnum.args=list(cutpoints = c(0, 0.0001, 0.001, 0.01,1),symbols = c( "***", "**", "*", "ns")),
+    #   method = "wilcox.test", method.args = list(alternative = "greater"),  # greater means ref.group less
+    #   label.x.npc = 0.8, label.y.npc = 0.8, vjust = 0.9, #step.increase = 0.08,
+    #   hide.ns=T,size =14, paired = T
+    # ) +
+    # facet_grid(site~.,scales = "free")+ # facet_grid seem not work well with ggbarplot
+    # scale_fill_manual(values = c('firebrick','salmon'))+ #c("red","grey90")
+    # scale_x_discrete(label=c("Domain Ratio","MIR Ratio"))+
+  # scale_fill_d3_adaptive()+
+  # scale_fill_manual(values = c(black.col,mypal[1],black.col,mypal[2],black.col,mypal[3],black.col,mypal[4])) +
+  scale_fill_manual(values = c(mypal[1],mypal[2],mypal[3],mypal[4])) +
+    geom_text(aes(x=method,y=0.15*max(tmp$number),label=label),size=6,color="black",angle=90)+
+    labs(title="",x="", y = tocapital(g))+
+    # xlim(c(0,1))+   
+    # ylim(c(0,1))+
+    theme_minimal() +  # base_size=12
+    theme(#axis.ticks.x=element_blank(),
+      #strip.text.y = element_blank(),
+      aspect.ratio = 1,
+      strip.text = element_text(size=20),
+      axis.title.x = element_text(size=20),
+      axis.title.y = element_text(size=24),
+      axis.text.x = element_text(size = 20,vjust = 1,hjust = 1, angle = 45, color="black"), #
+      axis.text.y = element_text(size = 20),
+      plot.title = element_text(size=20),
+      # strip.text = element_blank(),
+      legend.position = "none", #c(0.9,0.8),#,#
+      legend.text = element_text(size= 16),
+      legend.title= element_text(size= 16))
+  ggsave(paste0("./figure/",this.dst,"_",g,".png"),width = 5,height = 5)
+}
 
 
 
