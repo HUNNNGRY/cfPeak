@@ -413,3 +413,24 @@ write.table(bed2, outFile,quote=F,row.names=F,col.names=T,sep="\t")
 # add orphan type label
 
 # add GWAS leading SNP,gene
+
+
+
+
+
+# bed2 <- data.table::fread(outFile,data.table = F,header = T,sep = '\t',check.names = F,stringsAsFactors = F)
+# table( bed2$tx_type %in% dna)
+# bed2.rna <- bed2[!bed2$tx_type %in% dna,]
+# bed2.dna <- bed2[bed2$tx_type %in% dna,]
+# dna.fa <- data.table::fread(inFdr.8DNA.gn,data.table = F,header = F,sep = ',',check.names = F,stringsAsFactors = F)
+# fa <- data.table::fread("/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/output/TCGA_small16/call_peak_all/cfpeakCNN/b5_d50_p1_8DNA_gn.bed.exp.fa",data.table = F,header = F,sep = ',',check.names = F,stringsAsFactors = F)
+# rownames(dna.fa) <- dna.fa$V1
+# rownames(dna.fa) <- gsub("(+)","",rownames(dna.fa),fixed = T)
+# rownames(dna.fa) <- gsub("(-)","",rownames(dna.fa) ,fixed = T)
+# rownames(dna.fa) <- gsub(">","",rownames(dna.fa) ,fixed = T)
+# dim(dna.fa)
+# dim(bed2.dna)
+# bed2.dna$MFE_fasta <- dna.fa$V5[match(bed2.dna$name,rownames(dna.fa))]
+# bed2.dna$MFE_fasta[1:3]
+# bed2 <- as.data.frame(rbind(bed2.rna,bed2.dna))
+# #
