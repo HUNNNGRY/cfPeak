@@ -21,7 +21,7 @@
 	
 cd $pre
 
-for tx in 11RNA 8DNA_gn
+for tx in 8DNA_gn 11RNA
 do
 	i="${outpre}/output/$dst/call_peak${dedup}/${method}_${tx}.bed"
 	cat ${i} | awk ' $3-$2 <= 200 {print $0}' | grep -v "," | cut -f1-6 > ${i}.tmp  # #filter too large peak, too slow; bed12 fail to slop block, lead to wrong ext.fa

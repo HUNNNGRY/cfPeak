@@ -34,15 +34,18 @@ export PATH=/BioII/lulab_b/baopengfei/shared_utils:/BioII/lulab_b/baopengfei/sha
 # done
 
 # for dst in TCGA-COAD_small_NC_NCpool CNP0003091_urine_NCpool GSE129255 GSE112343_NCpool GSE56686 snc_pandora_hsa_HeLa_NCpool encode_small_colon_NCpool
-for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2};
+# for dst in {GSE71008_NCpool2,GSE94533_NCpool2,GSE123972_NCpool2,GSE110381_NCpool2,GSE94582_NCpool2,Phospho-RNA-seq_NCpool2,AGO2_IP_NCpool2};
+for dst in {WSQ_SMARTer_NEB_NCpool2,i-pico_NCpool2}; # ,ipico,GSE278414,FTC_long
 do
 echo $dst
-if [ $dst = "AGO2_IP_NCpool2" ]; then
+# if [ $dst = "AGO2_IP_NCpool2" ]; then
+if [[ $dst =~ ^(AGO2_IP_NCpool2|FTC_long|ipico|GSE278414)$ ]]; then
+
 dedup="_dedup"
 else
 dedup="_all"
 fi
-
+echo $dedup
 outDir=/BioII/lulab_b/baopengfei/projects/WCHSU-FTC/output/${dst}
 CORES=10
 cp /BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/data/$dst/sample_ids.txt /BioII/lulab_b/baopengfei/projects/WCHSU-FTC/exSeek-dev/data/$dst/sample_ids_raw.txt
@@ -60,7 +63,7 @@ do
 done
 done
 
-#update smp ids (TGIRT not deduped, UMI is tricky in EM)
+#update smp ids (TGIRT-seq not deduped, UMI is tricky in EM)
 ## re-run StarEM snakemake --until mapping_gn_StarEM call_peaks_blockbuster with trim fq (smp_15)
 #get StarEM bam (mk standard false)
 ## re-run call_peak snakemake --until merge_tbam_EM_19 call_peaks_piranha with trim fq (smp_15)

@@ -455,7 +455,7 @@ plotSurv <- function(exprVec,sample.table,time.col="OS_time",event.col="OS",pale
       data = sample.table.tmp
     ) + xlab("Survival time (mon.)")+
       ylab(event.col)+
-      labs(title = x) #+ tmp.theme
+      labs(title = "") #+ tmp.theme
     # print(p)
   }else if(facet %in% colnames(sample.table.tmp)){
     p <- ggsurvplot_facet( # ggsurvplot_facet
@@ -468,7 +468,7 @@ plotSurv <- function(exprVec,sample.table,time.col="OS_time",event.col="OS",pale
       palette = "jco", pval = TRUE #, nrow = 1
     ) + xlab("Survival time (mon.)")+
       ylab(event.col)+
-      labs(title = x) # + tmp.theme
+      labs(title = "") # + tmp.theme
     #   theme_tq() +
     #   # scale_fill_tq() +
     #   # scale_color_tq() +
