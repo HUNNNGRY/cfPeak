@@ -224,7 +224,7 @@ Distributed under the GPL-2.0 License License. See `LICENSE` for more informatio
 
 ## Contact
 
-@hunnngry (b.p.f@qq.com)
+@hunnngry (bpf19@tsinghua.org.cn)
 
 @lulab (lulab1@tsinghua.edu.cn)
 
