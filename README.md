@@ -232,7 +232,7 @@ Distributed under the GPL-2.0 License License. See `LICENSE` for more informatio
 
 ## References
 
-* submitted, 2023, CfRNA peak analysis finds recurrently protected narrow regions with clinical potential.
+* Pengfei Bao et al., 2025, Peak analysis of cell-free RNA finds recurrently protected narrow regions with clinical potential. Genome Biology (Accepted).
 
 ## Appendix
 
